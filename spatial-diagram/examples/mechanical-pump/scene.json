@@ -995,7 +995,7 @@
           },
           "properties": {
             "role": "instrumentation",
-            "range": "0\u201316 bar"
+            "range": "0–16 bar"
           },
           "explode": [
             80,
@@ -1200,7 +1200,7 @@
           },
           "explode": [
             0,
-            80,
+            18,
             -297
           ]
         }
@@ -1216,16 +1216,20 @@
         "anchor": "impeller.eye"
       },
       "offset": [
-        34,
-        -18
+        -180,
+        30
       ],
       "group": "hydraulics",
-      "emphasis": "primary"
+      "emphasis": "primary",
+      "side": "left",
+      "visibleWhen": {
+        "explodeMin": 0.2
+      }
     },
     {
       "id": "ann-casing",
       "type": "label",
-      "text": "Volute casing \u00b7 ductile iron",
+      "text": "Volute casing · ductile iron",
       "target": {
         "anchor": "pump-housing.center"
       },
@@ -1244,11 +1248,12 @@
         "anchor": "inlet-flange.face"
       },
       "offset": [
-        30,
-        -16
+        -240,
+        12
       ],
       "group": "connections",
-      "emphasis": "warning"
+      "emphasis": "warning",
+      "side": "left"
     },
     {
       "id": "ann-outlet",
@@ -1286,8 +1291,8 @@
         "anchor": "bearing-housing.top"
       },
       "offset": [
-        -36,
-        -12
+        -170,
+        -70
       ],
       "side": "left",
       "group": "drivetrain"
@@ -1326,10 +1331,11 @@
         "anchor": "pressure-gauge"
       },
       "offset": [
-        32,
-        -14
+        120,
+        -46
       ],
-      "group": "instrumentation"
+      "group": "instrumentation",
+      "side": "right"
     },
     {
       "id": "dim-motor",
@@ -1358,7 +1364,12 @@
       "enabled": true,
       "slider": true,
       "autoStagger": true,
-      "easing": "ease-in-out"
+      "easing": "ease-in-out",
+      "stops": [
+        0,
+        0.65,
+        1
+      ]
     },
     "xray": true,
     "section": {
@@ -1407,6 +1418,87 @@
           "motor"
         ],
         "reason": "The open cage rings have bounding boxes spanning their empty centers. The motor shaft passes through those open centers, clear of the guard rails; AABB overlap is a conservative false positive."
+      }
+    ]
+  },
+  "detailViews": [
+    {
+      "id": "detail-gauge",
+      "label": "A",
+      "target": {
+        "anchor": "pressure-gauge"
+      },
+      "magnification": 3,
+      "caption": "Discharge gauge",
+      "placement": "left"
+    }
+  ],
+  "tour": {
+    "steps": [
+      {
+        "id": "overview",
+        "title": "End-suction pump",
+        "caption": "Motor, coupling and bearing frame drive a closed impeller inside a volute casing.",
+        "camera": "auto",
+        "explode": 0
+      },
+      {
+        "id": "hydraulics",
+        "title": "Hydraulic end",
+        "caption": "The casing cover, gasket and impeller come off along the shaft axis; flow enters the impeller eye and leaves through the volute.",
+        "camera": {
+          "azimuth": 20,
+          "elevation": 22
+        },
+        "explode": 0.65,
+        "highlight": [
+          "pump-housing",
+          "casing-cover",
+          "casing-gasket",
+          "impeller",
+          "wear-ring",
+          "inlet-flange",
+          "outlet-flange"
+        ]
+      },
+      {
+        "id": "section",
+        "title": "Section along the shaft",
+        "caption": "A lengthwise section with hatched caps shows the impeller, wear ring and cartridge seal inside the casing.",
+        "camera": {
+          "azimuth": 115,
+          "elevation": 22
+        },
+        "explode": 0,
+        "modes": {
+          "section": true
+        },
+        "section": {
+          "axis": "x",
+          "position": 0.5
+        }
+      },
+      {
+        "id": "drivetrain",
+        "title": "Drivetrain",
+        "caption": "Shaft, cartridge seal, bearing housing and flexible coupling connect the motor to the impeller.",
+        "camera": {
+          "azimuth": 40,
+          "elevation": 26
+        },
+        "explode": 1,
+        "modes": {
+          "section": false
+        },
+        "highlight": [
+          "shaft",
+          "seal-cartridge",
+          "seal-gland",
+          "bearing-housing",
+          "coupling",
+          "coupling-guard",
+          "motor"
+        ]
       }
     ]
   }

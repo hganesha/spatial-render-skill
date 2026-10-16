@@ -143,6 +143,12 @@ export function geometryAABB(def) {
       }
       return b || makeAABB([-5, -5, -5], [5, 5, 5]);
     }
+    case 'loft': {
+      const sections = g.sections || [];
+      if (!sections.length) return makeAABB([-5, -5, -5], [5, 5, 5]);
+      return makeAABB([Math.min(...sections.map(s => (s.x || 0) - s.width / 2)), Math.min(...sections.map(s => s.bottom)), Math.min(...sections.map(s => s.z))],
+        [Math.max(...sections.map(s => (s.x || 0) + s.width / 2)), Math.max(...sections.map(s => s.top)), Math.max(...sections.map(s => s.z))]);
+    }
     case 'import':
       throw new Error('External mesh import is not supported.');
     case 'board': {
@@ -253,7 +259,7 @@ export function normalizeSpec(spec) {
   s.annotations = s.annotations || [];
   s.interactions = Object.assign({
     orbit: true, select: true, inspect: true, explode: true,
-    xray: true, section: true, isolate: true, ghost: true, flow: true
+    xray: true, section: true, isolate: true, ghost: true, flow: true, measure: true, tree: true
   }, s.interactions || {});
   s.behaviors = s.behaviors || [];
   for (const a of s.assemblies) {
@@ -461,6 +467,27 @@ export function validateSceneSpec(spec) {
     if (b.amount != null && (b.amount < 0 || b.amount > 1)) warn('behavior:amount', `Behavior amount ${b.amount} outside [0,1].`, b.type);
   }
 
+  // detail views and tour steps reference components/anchors by id
+  const detailIds=new Set();
+  for (const detail of spec.detailViews || []) {
+    if (detailIds.has(detail.id)) err('detail:dup', `Duplicate detail view id "${detail.id}".`, detail.id);
+    detailIds.add(detail.id);
+    if (detail.target?.anchor && !anchorRefs.has(detail.target.anchor)) err('detail:anchor', `Detail view "${detail.id}" references unknown anchor "${detail.target.anchor}".`, detail.id);
+  }
+  for (const [index, step] of (spec.tour?.steps || []).entries()) {
+    const label = step.id || `step ${index + 1}`;
+    for (const id of step.highlight || []) if (!componentIds.has(id)) err('tour:component', `Tour step "${label}" highlights unknown component "${id}".`, label);
+    if (step.select && !componentIds.has(step.select)) err('tour:component', `Tour step "${label}" selects unknown component "${step.select}".`, label);
+    if (step.camera?.focus && !componentIds.has(step.camera.focus)) err('tour:component', `Tour step "${label}" focuses unknown component "${step.camera.focus}".`, label);
+    if (step.explode && typeof step.explode === 'object') for (const id of Object.keys(step.explode)) if (!assemblyIds.has(id)) err('tour:assembly', `Tour step "${label}" explodes unknown assembly "${id}".`, label);
+    const groups = new Set((spec.annotations || []).map(a => a.group).filter(Boolean));
+    for (const group of Object.keys(step.annotationGroups || {})) if (!groups.has(group)) warn('tour:group', `Tour step "${label}" toggles unknown annotation group "${group}".`, label);
+  }
+  for (const ann of spec.annotations || []) {
+    const when = ann.visibleWhen;
+    if (when && when.explodeMin != null && when.explodeMax != null && when.explodeMin > when.explodeMax) err('annotation:visibleWhen', `Annotation "${ann.id}" has explodeMin > explodeMax.`, ann.id);
+  }
+
   if(spec.metadata?.auditExceptions && !Array.isArray(spec.metadata.auditExceptions)) {err('audit:exception','auditExceptions must be an array.');return issues;}
   for(const exception of spec.metadata?.auditExceptions || []) {
     if(exception?.code!=='audit:intersecting' || !Array.isArray(exception.components) || exception.components.length!==2 || !exception.components.every(id=>componentIds.has(id)) || typeof exception.reason!=='string' || !exception.reason.trim()) err('audit:exception','Audit exceptions need two component IDs, audit:intersecting, and a reason.');
@@ -613,8 +640,10 @@ function transformAuditBox(box, transforms) {
 }
 
 function validateGeometryNumbers(g, id, err) {
-  const positive = new Set(['width','height','depth','length','thickness','radius','tube','tubeR','baseH','finH','finT','postW','wall','shaftR','shaftL','headR','headH','hubR','spacing','inletR','outletR','boltCircle','neckR','frameT','hubRatio','angle']);
-  const counts = new Set(['fins','blades','count','chips','bolts','segments']);
+  const positive = new Set(['width','height','depth','length','thickness','radius','tube','tubeR','baseH','finH','finT','postW','wall','shaftR','shaftL','headR','headH','hubR','spacing','inletR','outletR','boltCircle','neckR','frameT','hubRatio',
+    'span','chord','rimRadius','damperRadius','wire','grip','mufflerRadius','tipRadius','tipLength','endplateHeight','hatRadius','hatHeight']);
+  const counts = new Set(['fins','blades','count','chips','bolts','segments','spokes','coils','cylinders','elements','modules','tips','runners','subdivisions']);
+  if (g.kind === 'loft' && g.thickness !== undefined && !(g.thickness > 0)) err('geometry:parameter', `Component "${id}" loft thickness must be positive.`, id);
   for (const obj of [g, g.params || {}]) for (const [key,value] of Object.entries(obj)) {
     if ((positive.has(key) && !(key==='radius' && ['box','chamferBox','roundedBox'].includes(g.kind)) && typeof value === 'number' && value <= 0) ||
         (counts.has(key) && (!Number.isInteger(value) || value < 1)) ||
@@ -628,6 +657,14 @@ function validateGeometryNumbers(g, id, err) {
   if(g.kind==='tube' && (g.path?.length || 0)<2) err('geometry:path','Tube needs at least two path points.',id);
   if(g.kind==='extrude' && (g.profile?.length || 0)<3) err('geometry:profile','Extrusion needs at least three profile points.',id);
   if(g.kind==='lathe' && (g.profile?.length || 0)<2) err('geometry:profile','Lathe needs at least two profile points.',id);
+  if(g.kind==='loft') {
+    const sections=Array.isArray(g.sections)?g.sections:[];
+    if(new Set(sections.map(s=>s?.z)).size<2) err('geometry:sections',`Component "${id}" loft needs at least two sections at different z.`,id);
+    for(const s of sections) if(s && Number.isFinite(s.top) && Number.isFinite(s.bottom) && s.top<s.bottom) err('geometry:sections',`Component "${id}" loft section at z=${s.z} has top below bottom.`,id);
+    if(Array.isArray(g.arc) && g.arc.length===2 && !(g.arc[1]>g.arc[0] && g.arc[1]-g.arc[0]<=360)) err('geometry:arc',`Component "${id}" loft arc must increase and span at most 360°.`,id);
+  }
+  if(g.params?.holes!==undefined && !(Number.isInteger(g.params.holes) && g.params.holes>=0)) err('geometry:parameter',`Component "${id}" has invalid holes.`,id);
+  if(g.params?.shape!==undefined && g.kind==='control-arm' && !['a-arm','link'].includes(g.params.shape)) err('geometry:parameter','Control-arm shape must be "a-arm" or "link".',id);
   if(g.params?.size!==undefined && g.kind==='fan' && typeof g.params.size!=='number') err('geometry:parameter','Fan size must be a number.',id);
   if(g.params?.size!==undefined && g.kind==='generic-recipe' && !Array.isArray(g.params.size)) err('geometry:parameter','Generic-recipe size must be a vec3.',id);
   for(const key of ['feet','flanges','shroud','sidePanels']) if(g.params?.[key]!==undefined && typeof g.params[key]!=='boolean') err('geometry:parameter',`${key} must be boolean.`,id);

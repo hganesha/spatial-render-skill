@@ -1,0 +1,6608 @@
+{
+  "$schema": "../../schemas/scene.schema.json",
+  "scene": {
+    "id": "track-car-exploded",
+    "title": "GT Track Car — Exploded Systems Study",
+    "description": "Representative rear-engine two-door GT track car decomposed into aero, body, chassis, powertrain and cockpit systems.",
+    "type": "exploded-view",
+    "style": "studio-light",
+    "renderMode": "webgl",
+    "units": "mm",
+    "fidelity": "representative",
+    "lighting": "studio",
+    "camera": {
+      "mode": "isometric",
+      "projection": "perspective",
+      "azimuth": 52,
+      "elevation": 24,
+      "fov": 32,
+      "framing": "fit-padded"
+    },
+    "annotationStyle": "balloon",
+    "labelLayout": "margins",
+    "illustration": {
+      "spotColor": "#D55E00",
+      "shading": "tonal",
+      "palette": "okabe-ito"
+    },
+    "drawing": {
+      "lineWeight": 1.1
+    }
+  },
+  "materials": {
+    "paint-silver": {
+      "preset": "aluminum",
+      "color": "#c9ccd1",
+      "metalness": 0.62,
+      "roughness": 0.3
+    },
+    "cfrp": {
+      "preset": "plastic-black",
+      "texture": "carbon",
+      "color": "#24272c",
+      "metalness": 0.3,
+      "roughness": 0.36
+    },
+    "alu": {
+      "preset": "aluminum",
+      "finish": "satin"
+    },
+    "titanium": {
+      "preset": "titanium",
+      "color": "#8e8b85"
+    },
+    "magnesium": {
+      "preset": "steel-dark",
+      "color": "#2b2e34",
+      "metalness": 0.55,
+      "roughness": 0.4
+    },
+    "steel": {
+      "preset": "steel-dark",
+      "color": "#525860",
+      "metalness": 0.75,
+      "roughness": 0.45
+    },
+    "glass-tint": {
+      "preset": "glass",
+      "color": "#a3c2d2",
+      "opacity": 0.36
+    },
+    "spring-red": {
+      "preset": "plastic-black",
+      "color": "#c8102e",
+      "metalness": 0.35,
+      "roughness": 0.38
+    },
+    "ccb": {
+      "preset": "steel-dark",
+      "color": "#686c73",
+      "metalness": 0.25,
+      "roughness": 0.62
+    },
+    "alcantara": {
+      "preset": "rubber",
+      "color": "#26292e"
+    },
+    "tail-red": {
+      "preset": "emissive-amber",
+      "color": "#ff3a3a",
+      "emissive": "#ff1414",
+      "emissiveIntensity": 1
+    }
+  },
+  "assemblies": [
+    {
+      "id": "car",
+      "label": "GT track car",
+      "components": [
+        {
+          "id": "biw",
+          "label": "Body-in-white",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "tub",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -300,
+                      "width": 1760,
+                      "top": 910,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -210,
+                      "width": 1758.2,
+                      "top": 905.5,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -120,
+                      "width": 1756.4,
+                      "top": 901,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -30,
+                      "width": 1754.6,
+                      "top": 896.5,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 60,
+                      "width": 1754.6,
+                      "top": 892,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 150,
+                      "width": 1755.5,
+                      "top": 887.5,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 240,
+                      "width": 1756.4,
+                      "top": 883,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 330,
+                      "width": 1757.3,
+                      "top": 878,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 420,
+                      "width": 1758.2,
+                      "top": 872,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 510,
+                      "width": 1759.1,
+                      "top": 866,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 600,
+                      "width": 1760,
+                      "top": 860,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 690,
+                      "width": 1769,
+                      "top": 850.4,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 780,
+                      "width": 1778,
+                      "top": 840.7,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 870,
+                      "width": 1787,
+                      "top": 831.1,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 880,
+                      "width": 1788,
+                      "top": 830,
+                      "bottom": 140,
+                      "exponent": 4
+                    }
+                  ],
+                  "exponent": 4,
+                  "segments": 20,
+                  "subdivisions": 1,
+                  "arc": [
+                    121,
+                    419
+                  ],
+                  "thickness": 22
+                },
+                "material": "paint-silver"
+              },
+              {
+                "name": "front-rail",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    90,
+                    110,
+                    1170
+                  ],
+                  "radius": 10
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    -430,
+                    300,
+                    1465
+                  ]
+                }
+              },
+              {
+                "name": "strut-tower",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    160,
+                    340,
+                    250
+                  ],
+                  "radius": 14
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    -545,
+                    520,
+                    1228
+                  ]
+                }
+              },
+              {
+                "name": "rear-rail",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    100,
+                    90,
+                    1760
+                  ],
+                  "radius": 10
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    -520,
+                    460,
+                    -1180
+                  ]
+                }
+              },
+              {
+                "name": "shock-tower",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    180,
+                    400,
+                    270
+                  ],
+                  "radius": 14
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    -560,
+                    580,
+                    -1229
+                  ]
+                }
+              },
+              {
+                "name": "quarter-glass",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -1150,
+                      "width": 1424,
+                      "top": 1020.7,
+                      "bottom": 972.4
+                    },
+                    {
+                      "z": -1070,
+                      "width": 1411.2,
+                      "top": 1039,
+                      "bottom": 947.1
+                    },
+                    {
+                      "z": -990,
+                      "width": 1398.3,
+                      "top": 1063,
+                      "bottom": 915.6
+                    },
+                    {
+                      "z": -910,
+                      "width": 1384.6,
+                      "top": 1087,
+                      "bottom": 880.1
+                    },
+                    {
+                      "z": -830,
+                      "width": 1370.9,
+                      "top": 1115.2,
+                      "bottom": 840.5
+                    },
+                    {
+                      "z": -750,
+                      "width": 1357.1,
+                      "top": 1144,
+                      "bottom": 800.3
+                    },
+                    {
+                      "z": -670,
+                      "width": 1343.4,
+                      "top": 1172.8,
+                      "bottom": 760.1
+                    },
+                    {
+                      "z": -590,
+                      "width": 1333.1,
+                      "top": 1202.8,
+                      "bottom": 718.6
+                    },
+                    {
+                      "z": -510,
+                      "width": 1324,
+                      "top": 1233.2,
+                      "bottom": 676.8
+                    },
+                    {
+                      "z": -430,
+                      "width": 1314.9,
+                      "top": 1263.6,
+                      "bottom": 635
+                    },
+                    {
+                      "z": -350,
+                      "width": 1305.7,
+                      "top": 1284.3,
+                      "bottom": 602.9
+                    },
+                    {
+                      "z": -270,
+                      "width": 1299,
+                      "top": 1299.1,
+                      "bottom": 578
+                    },
+                    {
+                      "z": -262,
+                      "width": 1298.7,
+                      "top": 1300.5,
+                      "bottom": 575.7
+                    }
+                  ],
+                  "exponent": 2.4,
+                  "segments": 14,
+                  "subdivisions": 1,
+                  "arc": [
+                    162.6,
+                    182
+                  ],
+                  "thickness": 6
+                },
+                "material": "glass-tint"
+              },
+              {
+                "name": "cant-rail",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -1150,
+                      "width": 1424,
+                      "top": 1020.7,
+                      "bottom": 972.4
+                    },
+                    {
+                      "z": -1070,
+                      "width": 1411.2,
+                      "top": 1039,
+                      "bottom": 947.1
+                    },
+                    {
+                      "z": -990,
+                      "width": 1398.3,
+                      "top": 1063,
+                      "bottom": 915.6
+                    },
+                    {
+                      "z": -910,
+                      "width": 1384.6,
+                      "top": 1087,
+                      "bottom": 880.1
+                    },
+                    {
+                      "z": -830,
+                      "width": 1370.9,
+                      "top": 1115.2,
+                      "bottom": 840.5
+                    },
+                    {
+                      "z": -750,
+                      "width": 1357.1,
+                      "top": 1144,
+                      "bottom": 800.3
+                    },
+                    {
+                      "z": -670,
+                      "width": 1343.4,
+                      "top": 1172.8,
+                      "bottom": 760.1
+                    },
+                    {
+                      "z": -590,
+                      "width": 1333.1,
+                      "top": 1202.8,
+                      "bottom": 718.6
+                    },
+                    {
+                      "z": -510,
+                      "width": 1324,
+                      "top": 1233.2,
+                      "bottom": 676.8
+                    },
+                    {
+                      "z": -430,
+                      "width": 1314.9,
+                      "top": 1263.6,
+                      "bottom": 635
+                    },
+                    {
+                      "z": -350,
+                      "width": 1305.7,
+                      "top": 1284.3,
+                      "bottom": 602.9
+                    },
+                    {
+                      "z": -270,
+                      "width": 1299,
+                      "top": 1299.1,
+                      "bottom": 578
+                    },
+                    {
+                      "z": -190,
+                      "width": 1296.3,
+                      "top": 1312.5,
+                      "bottom": 556.5
+                    },
+                    {
+                      "z": -110,
+                      "width": 1293.7,
+                      "top": 1316.5,
+                      "bottom": 544.5
+                    },
+                    {
+                      "z": -30,
+                      "width": 1291,
+                      "top": 1320.5,
+                      "bottom": 532.5
+                    },
+                    {
+                      "z": 50,
+                      "width": 1295,
+                      "top": 1319.5,
+                      "bottom": 525.5
+                    },
+                    {
+                      "z": 130,
+                      "width": 1303,
+                      "top": 1315.5,
+                      "bottom": 521.5
+                    },
+                    {
+                      "z": 210,
+                      "width": 1311,
+                      "top": 1309.7,
+                      "bottom": 519.3
+                    },
+                    {
+                      "z": 290,
+                      "width": 1319,
+                      "top": 1291,
+                      "bottom": 530
+                    },
+                    {
+                      "z": 370,
+                      "width": 1341,
+                      "top": 1272.3,
+                      "bottom": 538.3
+                    },
+                    {
+                      "z": 450,
+                      "width": 1365,
+                      "top": 1223.3,
+                      "bottom": 576.7
+                    },
+                    {
+                      "z": 530,
+                      "width": 1395,
+                      "top": 1167.5,
+                      "bottom": 621.8
+                    },
+                    {
+                      "z": 610,
+                      "width": 1435,
+                      "top": 1107.5,
+                      "bottom": 670.4
+                    },
+                    {
+                      "z": 690,
+                      "width": 1475,
+                      "top": 1047.5,
+                      "bottom": 713.2
+                    },
+                    {
+                      "z": 770,
+                      "width": 1522,
+                      "top": 980.5,
+                      "bottom": 763.1
+                    },
+                    {
+                      "z": 850,
+                      "width": 1570,
+                      "top": 912.5,
+                      "bottom": 813.9
+                    },
+                    {
+                      "z": 880,
+                      "width": 1588,
+                      "top": 887,
+                      "bottom": 833
+                    }
+                  ],
+                  "exponent": 2.4,
+                  "segments": 14,
+                  "subdivisions": 1,
+                  "arc": [
+                    152.6,
+                    162
+                  ],
+                  "thickness": 10
+                },
+                "material": "paint-silver"
+              },
+              {
+                "name": "front-rail",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    90,
+                    110,
+                    1170
+                  ],
+                  "radius": 10
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    430,
+                    300,
+                    1465
+                  ]
+                }
+              },
+              {
+                "name": "strut-tower",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    160,
+                    340,
+                    250
+                  ],
+                  "radius": 14
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    545,
+                    520,
+                    1228
+                  ]
+                }
+              },
+              {
+                "name": "rear-rail",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    100,
+                    90,
+                    1760
+                  ],
+                  "radius": 10
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    520,
+                    460,
+                    -1180
+                  ]
+                }
+              },
+              {
+                "name": "shock-tower",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    180,
+                    400,
+                    270
+                  ],
+                  "radius": 14
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    560,
+                    580,
+                    -1229
+                  ]
+                }
+              },
+              {
+                "name": "quarter-glass",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -1150,
+                      "width": 1424,
+                      "top": 1020.7,
+                      "bottom": 972.4
+                    },
+                    {
+                      "z": -1070,
+                      "width": 1411.2,
+                      "top": 1039,
+                      "bottom": 947.1
+                    },
+                    {
+                      "z": -990,
+                      "width": 1398.3,
+                      "top": 1063,
+                      "bottom": 915.6
+                    },
+                    {
+                      "z": -910,
+                      "width": 1384.6,
+                      "top": 1087,
+                      "bottom": 880.1
+                    },
+                    {
+                      "z": -830,
+                      "width": 1370.9,
+                      "top": 1115.2,
+                      "bottom": 840.5
+                    },
+                    {
+                      "z": -750,
+                      "width": 1357.1,
+                      "top": 1144,
+                      "bottom": 800.3
+                    },
+                    {
+                      "z": -670,
+                      "width": 1343.4,
+                      "top": 1172.8,
+                      "bottom": 760.1
+                    },
+                    {
+                      "z": -590,
+                      "width": 1333.1,
+                      "top": 1202.8,
+                      "bottom": 718.6
+                    },
+                    {
+                      "z": -510,
+                      "width": 1324,
+                      "top": 1233.2,
+                      "bottom": 676.8
+                    },
+                    {
+                      "z": -430,
+                      "width": 1314.9,
+                      "top": 1263.6,
+                      "bottom": 635
+                    },
+                    {
+                      "z": -350,
+                      "width": 1305.7,
+                      "top": 1284.3,
+                      "bottom": 602.9
+                    },
+                    {
+                      "z": -270,
+                      "width": 1299,
+                      "top": 1299.1,
+                      "bottom": 578
+                    },
+                    {
+                      "z": -262,
+                      "width": 1298.7,
+                      "top": 1300.5,
+                      "bottom": 575.7
+                    }
+                  ],
+                  "exponent": 2.4,
+                  "segments": 14,
+                  "subdivisions": 1,
+                  "arc": [
+                    -2,
+                    17.4
+                  ],
+                  "thickness": 6
+                },
+                "material": "glass-tint"
+              },
+              {
+                "name": "cant-rail",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -1150,
+                      "width": 1424,
+                      "top": 1020.7,
+                      "bottom": 972.4
+                    },
+                    {
+                      "z": -1070,
+                      "width": 1411.2,
+                      "top": 1039,
+                      "bottom": 947.1
+                    },
+                    {
+                      "z": -990,
+                      "width": 1398.3,
+                      "top": 1063,
+                      "bottom": 915.6
+                    },
+                    {
+                      "z": -910,
+                      "width": 1384.6,
+                      "top": 1087,
+                      "bottom": 880.1
+                    },
+                    {
+                      "z": -830,
+                      "width": 1370.9,
+                      "top": 1115.2,
+                      "bottom": 840.5
+                    },
+                    {
+                      "z": -750,
+                      "width": 1357.1,
+                      "top": 1144,
+                      "bottom": 800.3
+                    },
+                    {
+                      "z": -670,
+                      "width": 1343.4,
+                      "top": 1172.8,
+                      "bottom": 760.1
+                    },
+                    {
+                      "z": -590,
+                      "width": 1333.1,
+                      "top": 1202.8,
+                      "bottom": 718.6
+                    },
+                    {
+                      "z": -510,
+                      "width": 1324,
+                      "top": 1233.2,
+                      "bottom": 676.8
+                    },
+                    {
+                      "z": -430,
+                      "width": 1314.9,
+                      "top": 1263.6,
+                      "bottom": 635
+                    },
+                    {
+                      "z": -350,
+                      "width": 1305.7,
+                      "top": 1284.3,
+                      "bottom": 602.9
+                    },
+                    {
+                      "z": -270,
+                      "width": 1299,
+                      "top": 1299.1,
+                      "bottom": 578
+                    },
+                    {
+                      "z": -190,
+                      "width": 1296.3,
+                      "top": 1312.5,
+                      "bottom": 556.5
+                    },
+                    {
+                      "z": -110,
+                      "width": 1293.7,
+                      "top": 1316.5,
+                      "bottom": 544.5
+                    },
+                    {
+                      "z": -30,
+                      "width": 1291,
+                      "top": 1320.5,
+                      "bottom": 532.5
+                    },
+                    {
+                      "z": 50,
+                      "width": 1295,
+                      "top": 1319.5,
+                      "bottom": 525.5
+                    },
+                    {
+                      "z": 130,
+                      "width": 1303,
+                      "top": 1315.5,
+                      "bottom": 521.5
+                    },
+                    {
+                      "z": 210,
+                      "width": 1311,
+                      "top": 1309.7,
+                      "bottom": 519.3
+                    },
+                    {
+                      "z": 290,
+                      "width": 1319,
+                      "top": 1291,
+                      "bottom": 530
+                    },
+                    {
+                      "z": 370,
+                      "width": 1341,
+                      "top": 1272.3,
+                      "bottom": 538.3
+                    },
+                    {
+                      "z": 450,
+                      "width": 1365,
+                      "top": 1223.3,
+                      "bottom": 576.7
+                    },
+                    {
+                      "z": 530,
+                      "width": 1395,
+                      "top": 1167.5,
+                      "bottom": 621.8
+                    },
+                    {
+                      "z": 610,
+                      "width": 1435,
+                      "top": 1107.5,
+                      "bottom": 670.4
+                    },
+                    {
+                      "z": 690,
+                      "width": 1475,
+                      "top": 1047.5,
+                      "bottom": 713.2
+                    },
+                    {
+                      "z": 770,
+                      "width": 1522,
+                      "top": 980.5,
+                      "bottom": 763.1
+                    },
+                    {
+                      "z": 850,
+                      "width": 1570,
+                      "top": 912.5,
+                      "bottom": 813.9
+                    },
+                    {
+                      "z": 880,
+                      "width": 1588,
+                      "top": 887,
+                      "bottom": 833
+                    }
+                  ],
+                  "exponent": 2.4,
+                  "segments": 14,
+                  "subdivisions": 1,
+                  "arc": [
+                    18,
+                    27.4
+                  ],
+                  "thickness": 10
+                },
+                "material": "paint-silver"
+              },
+              {
+                "name": "bulkhead",
+                "geometry": {
+                  "kind": "box",
+                  "size": [
+                    1560,
+                    480,
+                    30
+                  ]
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    0,
+                    520,
+                    890
+                  ]
+                }
+              },
+              {
+                "name": "crash-beam",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    1300,
+                    100,
+                    90
+                  ],
+                  "radius": 12
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    0,
+                    330,
+                    2060
+                  ]
+                }
+              },
+              {
+                "name": "rear-crossmember",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    1160,
+                    90,
+                    100
+                  ],
+                  "radius": 12
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    0,
+                    480,
+                    -2060
+                  ]
+                }
+              },
+              {
+                "name": "engine-cradle",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    900,
+                    90,
+                    90
+                  ],
+                  "radius": 10
+                },
+                "material": "alu",
+                "transform": {
+                  "position": [
+                    0,
+                    230,
+                    -1520
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "paint-silver",
+          "transform": {
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "sill": [
+              880,
+              300,
+              300
+            ],
+            "roof": [
+              0,
+              1322,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              1,
+              0
+            ],
+            "distance": 1,
+            "order": 6
+          },
+          "properties": {
+            "role": "structure",
+            "materialName": "Aluminium / high-tensile steel",
+            "construction": "bonded aluminium-steel hybrid (representative)"
+          }
+        },
+        {
+          "id": "bonnet",
+          "label": "Front bonnet",
+          "parent": "biw",
+          "geometry": {
+            "kind": "loft",
+            "sections": [
+              {
+                "z": 880,
+                "width": 1840,
+                "top": 860,
+                "bottom": 182.1
+              },
+              {
+                "z": 928,
+                "width": 1845.5,
+                "top": 847.7,
+                "bottom": 340.7
+              },
+              {
+                "z": 940,
+                "width": 1846.9,
+                "top": 844.6,
+                "bottom": 371.4
+              },
+              {
+                "z": 1000,
+                "width": 1848.7,
+                "top": 836.6,
+                "bottom": 486.2
+              },
+              {
+                "z": 1028,
+                "width": 1849.1,
+                "top": 833.6,
+                "bottom": 526
+              },
+              {
+                "z": 1060,
+                "width": 1849.6,
+                "top": 830.1,
+                "bottom": 563.8
+              },
+              {
+                "z": 1120,
+                "width": 1850.4,
+                "top": 823.7,
+                "bottom": 615.8
+              },
+              {
+                "z": 1180,
+                "width": 1851.3,
+                "top": 817.2,
+                "bottom": 646.9
+              },
+              {
+                "z": 1228,
+                "width": 1852,
+                "top": 812,
+                "bottom": 658
+              },
+              {
+                "z": 1240,
+                "width": 1851.7,
+                "top": 811.5,
+                "bottom": 658.2
+              },
+              {
+                "z": 1300,
+                "width": 1850.4,
+                "top": 808.8,
+                "bottom": 647.8
+              },
+              {
+                "z": 1360,
+                "width": 1849.1,
+                "top": 806.2,
+                "bottom": 617.8
+              },
+              {
+                "z": 1420,
+                "width": 1847.8,
+                "top": 803.5,
+                "bottom": 565.4
+              },
+              {
+                "z": 1428,
+                "width": 1847.6,
+                "top": 803.2,
+                "bottom": 556.5
+              },
+              {
+                "z": 1480,
+                "width": 1846.4,
+                "top": 800.9,
+                "bottom": 484.4
+              },
+              {
+                "z": 1528,
+                "width": 1843.1,
+                "top": 797.4,
+                "bottom": 391
+              },
+              {
+                "z": 1540,
+                "width": 1841.8,
+                "top": 796.3,
+                "bottom": 361.7
+              },
+              {
+                "z": 1588,
+                "width": 1836.8,
+                "top": 791.8,
+                "bottom": 198.2
+              },
+              {
+                "z": 1600,
+                "width": 1835.6,
+                "top": 790.7,
+                "bottom": 133.6
+              },
+              {
+                "z": 1612,
+                "width": 1834.4,
+                "top": 789.5,
+                "bottom": 36.7
+              },
+              {
+                "z": 1620,
+                "width": 1833.5,
+                "top": 788.8,
+                "bottom": -232.3
+              },
+              {
+                "z": 1660,
+                "width": 1829.4,
+                "top": 785.1,
+                "bottom": -226.8
+              },
+              {
+                "z": 1720,
+                "width": 1823.1,
+                "top": 779.5,
+                "bottom": -215.7
+              },
+              {
+                "z": 1780,
+                "width": 1810.4,
+                "top": 773.9,
+                "bottom": -198.8
+              },
+              {
+                "z": 1840,
+                "width": 1791.2,
+                "top": 762,
+                "bottom": -175.6
+              },
+              {
+                "z": 1900,
+                "width": 1772,
+                "top": 747,
+                "bottom": -149.3
+              },
+              {
+                "z": 1960,
+                "width": 1752.8,
+                "top": 732,
+                "bottom": -122.9
+              },
+              {
+                "z": 2000,
+                "width": 1740,
+                "top": 722,
+                "bottom": -105.4
+              }
+            ],
+            "exponent": 3,
+            "segments": 12,
+            "subdivisions": 1,
+            "arc": [
+              70.6,
+              109.4
+            ],
+            "thickness": 8
+          },
+          "material": "cfrp",
+          "anchors": {
+            "top": [
+              0,
+              804,
+              1500
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              640,
+              520
+            ],
+            "distance": 824.6,
+            "order": 2
+          },
+          "properties": {
+            "role": "aero body panel",
+            "materialName": "CFRP",
+            "vents": "twin heat extractors (symbolic)"
+          }
+        },
+        {
+          "id": "fender-l",
+          "label": "Front fender (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "loft",
+            "sections": [
+              {
+                "z": 880,
+                "width": 1840,
+                "top": 860,
+                "bottom": 182.1
+              },
+              {
+                "z": 928,
+                "width": 1845.5,
+                "top": 847.7,
+                "bottom": 340.7
+              },
+              {
+                "z": 940,
+                "width": 1846.9,
+                "top": 844.6,
+                "bottom": 371.4
+              },
+              {
+                "z": 1000,
+                "width": 1848.7,
+                "top": 836.6,
+                "bottom": 486.2
+              },
+              {
+                "z": 1028,
+                "width": 1849.1,
+                "top": 833.6,
+                "bottom": 526
+              },
+              {
+                "z": 1060,
+                "width": 1849.6,
+                "top": 830.1,
+                "bottom": 563.8
+              },
+              {
+                "z": 1120,
+                "width": 1850.4,
+                "top": 823.7,
+                "bottom": 615.8
+              },
+              {
+                "z": 1180,
+                "width": 1851.3,
+                "top": 817.2,
+                "bottom": 646.9
+              },
+              {
+                "z": 1228,
+                "width": 1852,
+                "top": 812,
+                "bottom": 658
+              },
+              {
+                "z": 1240,
+                "width": 1851.7,
+                "top": 811.5,
+                "bottom": 658.2
+              },
+              {
+                "z": 1300,
+                "width": 1850.4,
+                "top": 808.8,
+                "bottom": 647.8
+              },
+              {
+                "z": 1360,
+                "width": 1849.1,
+                "top": 806.2,
+                "bottom": 617.8
+              },
+              {
+                "z": 1420,
+                "width": 1847.8,
+                "top": 803.5,
+                "bottom": 565.4
+              },
+              {
+                "z": 1428,
+                "width": 1847.6,
+                "top": 803.2,
+                "bottom": 556.5
+              },
+              {
+                "z": 1480,
+                "width": 1846.4,
+                "top": 800.9,
+                "bottom": 484.4
+              },
+              {
+                "z": 1528,
+                "width": 1843.1,
+                "top": 797.4,
+                "bottom": 391
+              },
+              {
+                "z": 1540,
+                "width": 1841.8,
+                "top": 796.3,
+                "bottom": 361.7
+              },
+              {
+                "z": 1588,
+                "width": 1836.8,
+                "top": 791.8,
+                "bottom": 198.2
+              },
+              {
+                "z": 1600,
+                "width": 1835.6,
+                "top": 790.7,
+                "bottom": 133.6
+              },
+              {
+                "z": 1612,
+                "width": 1834.4,
+                "top": 789.5,
+                "bottom": 36.7
+              },
+              {
+                "z": 1620,
+                "width": 1833.5,
+                "top": 788.8,
+                "bottom": -232.3
+              },
+              {
+                "z": 1660,
+                "width": 1829.4,
+                "top": 785.1,
+                "bottom": -226.8
+              },
+              {
+                "z": 1720,
+                "width": 1823.1,
+                "top": 779.5,
+                "bottom": -215.7
+              },
+              {
+                "z": 1780,
+                "width": 1810.4,
+                "top": 773.9,
+                "bottom": -198.8
+              },
+              {
+                "z": 1840,
+                "width": 1791.2,
+                "top": 762,
+                "bottom": -175.6
+              },
+              {
+                "z": 1900,
+                "width": 1772,
+                "top": 747,
+                "bottom": -149.3
+              },
+              {
+                "z": 1960,
+                "width": 1752.8,
+                "top": 732,
+                "bottom": -122.9
+              },
+              {
+                "z": 2000,
+                "width": 1740,
+                "top": 722,
+                "bottom": -105.4
+              }
+            ],
+            "exponent": 3,
+            "segments": 12,
+            "subdivisions": 1,
+            "arc": [
+              0,
+              69.4
+            ],
+            "thickness": 7
+          },
+          "material": "paint-silver",
+          "anchors": {
+            "arch": [
+              900,
+              760,
+              1028
+            ],
+            "top": [
+              760,
+              740,
+              1500
+            ]
+          },
+          "explode": {
+            "direction": [
+              760,
+              180,
+              260
+            ],
+            "distance": 823.2,
+            "order": 2
+          },
+          "properties": {
+            "role": "wide arch with vents",
+            "materialName": "CFRP / painted",
+            "qty": 2
+          }
+        },
+        {
+          "id": "fender-r",
+          "label": "Front fender (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "loft",
+            "sections": [
+              {
+                "z": 880,
+                "width": 1840,
+                "top": 860,
+                "bottom": 182.1
+              },
+              {
+                "z": 928,
+                "width": 1845.5,
+                "top": 847.7,
+                "bottom": 340.7
+              },
+              {
+                "z": 940,
+                "width": 1846.9,
+                "top": 844.6,
+                "bottom": 371.4
+              },
+              {
+                "z": 1000,
+                "width": 1848.7,
+                "top": 836.6,
+                "bottom": 486.2
+              },
+              {
+                "z": 1028,
+                "width": 1849.1,
+                "top": 833.6,
+                "bottom": 526
+              },
+              {
+                "z": 1060,
+                "width": 1849.6,
+                "top": 830.1,
+                "bottom": 563.8
+              },
+              {
+                "z": 1120,
+                "width": 1850.4,
+                "top": 823.7,
+                "bottom": 615.8
+              },
+              {
+                "z": 1180,
+                "width": 1851.3,
+                "top": 817.2,
+                "bottom": 646.9
+              },
+              {
+                "z": 1228,
+                "width": 1852,
+                "top": 812,
+                "bottom": 658
+              },
+              {
+                "z": 1240,
+                "width": 1851.7,
+                "top": 811.5,
+                "bottom": 658.2
+              },
+              {
+                "z": 1300,
+                "width": 1850.4,
+                "top": 808.8,
+                "bottom": 647.8
+              },
+              {
+                "z": 1360,
+                "width": 1849.1,
+                "top": 806.2,
+                "bottom": 617.8
+              },
+              {
+                "z": 1420,
+                "width": 1847.8,
+                "top": 803.5,
+                "bottom": 565.4
+              },
+              {
+                "z": 1428,
+                "width": 1847.6,
+                "top": 803.2,
+                "bottom": 556.5
+              },
+              {
+                "z": 1480,
+                "width": 1846.4,
+                "top": 800.9,
+                "bottom": 484.4
+              },
+              {
+                "z": 1528,
+                "width": 1843.1,
+                "top": 797.4,
+                "bottom": 391
+              },
+              {
+                "z": 1540,
+                "width": 1841.8,
+                "top": 796.3,
+                "bottom": 361.7
+              },
+              {
+                "z": 1588,
+                "width": 1836.8,
+                "top": 791.8,
+                "bottom": 198.2
+              },
+              {
+                "z": 1600,
+                "width": 1835.6,
+                "top": 790.7,
+                "bottom": 133.6
+              },
+              {
+                "z": 1612,
+                "width": 1834.4,
+                "top": 789.5,
+                "bottom": 36.7
+              },
+              {
+                "z": 1620,
+                "width": 1833.5,
+                "top": 788.8,
+                "bottom": -232.3
+              },
+              {
+                "z": 1660,
+                "width": 1829.4,
+                "top": 785.1,
+                "bottom": -226.8
+              },
+              {
+                "z": 1720,
+                "width": 1823.1,
+                "top": 779.5,
+                "bottom": -215.7
+              },
+              {
+                "z": 1780,
+                "width": 1810.4,
+                "top": 773.9,
+                "bottom": -198.8
+              },
+              {
+                "z": 1840,
+                "width": 1791.2,
+                "top": 762,
+                "bottom": -175.6
+              },
+              {
+                "z": 1900,
+                "width": 1772,
+                "top": 747,
+                "bottom": -149.3
+              },
+              {
+                "z": 1960,
+                "width": 1752.8,
+                "top": 732,
+                "bottom": -122.9
+              },
+              {
+                "z": 2000,
+                "width": 1740,
+                "top": 722,
+                "bottom": -105.4
+              }
+            ],
+            "exponent": 3,
+            "segments": 12,
+            "subdivisions": 1,
+            "arc": [
+              110.6,
+              180
+            ],
+            "thickness": 7
+          },
+          "material": "paint-silver",
+          "anchors": {
+            "arch": [
+              -900,
+              760,
+              1028
+            ],
+            "top": [
+              -760,
+              740,
+              1500
+            ]
+          },
+          "explode": {
+            "direction": [
+              -760,
+              180,
+              260
+            ],
+            "distance": 823.2,
+            "order": 2
+          },
+          "properties": {
+            "role": "wide arch with vents",
+            "materialName": "CFRP / painted",
+            "qty": 2
+          }
+        },
+        {
+          "id": "front-fascia",
+          "label": "Front fascia",
+          "parent": "biw",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "cover",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": 1990,
+                      "width": 1743.2,
+                      "top": 724.5,
+                      "bottom": 200
+                    },
+                    {
+                      "z": 2030,
+                      "width": 1716,
+                      "top": 705.6,
+                      "bottom": 200
+                    },
+                    {
+                      "z": 2070,
+                      "width": 1684,
+                      "top": 683.7,
+                      "bottom": 200
+                    },
+                    {
+                      "z": 2110,
+                      "width": 1652,
+                      "top": 661.9,
+                      "bottom": 200
+                    },
+                    {
+                      "z": 2150,
+                      "width": 1620,
+                      "top": 640,
+                      "bottom": 200
+                    },
+                    {
+                      "z": 2190,
+                      "width": 1510,
+                      "top": 600,
+                      "bottom": 200
+                    },
+                    {
+                      "z": 2230,
+                      "width": 1400,
+                      "top": 560,
+                      "bottom": 200
+                    }
+                  ],
+                  "exponent": 3,
+                  "segments": 16,
+                  "subdivisions": 1
+                },
+                "material": "paint-silver"
+              },
+              {
+                "name": "intake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    330,
+                    150,
+                    60
+                  ],
+                  "radius": 18
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    -560,
+                    360,
+                    2205
+                  ]
+                }
+              },
+              {
+                "name": "intake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    520,
+                    150,
+                    60
+                  ],
+                  "radius": 18
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    0,
+                    360,
+                    2205
+                  ]
+                }
+              },
+              {
+                "name": "intake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    330,
+                    150,
+                    60
+                  ],
+                  "radius": 18
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    560,
+                    360,
+                    2205
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "paint-silver",
+          "anchors": {
+            "nose": [
+              0,
+              450,
+              2232
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              -60,
+              760
+            ],
+            "distance": 762.4,
+            "order": 1
+          },
+          "properties": {
+            "role": "bumper cover",
+            "materialName": "Composite / other"
+          }
+        },
+        {
+          "id": "splitter",
+          "label": "Front splitter",
+          "parent": "front-fascia",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "blade",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    1720,
+                    16,
+                    380
+                  ],
+                  "radius": 6
+                }
+              },
+              {
+                "name": "end-fence",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    12,
+                    90,
+                    300
+                  ],
+                  "radius": 3
+                },
+                "transform": {
+                  "position": [
+                    -840,
+                    50,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "end-fence",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    12,
+                    90,
+                    300
+                  ],
+                  "radius": 3
+                },
+                "transform": {
+                  "position": [
+                    840,
+                    50,
+                    0
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              0,
+              150,
+              2150
+            ]
+          },
+          "anchors": {
+            "lip": [
+              0,
+              8,
+              180
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              -260,
+              900
+            ],
+            "distance": 936.8,
+            "order": 0
+          },
+          "properties": {
+            "role": "front downforce",
+            "materialName": "CFRP"
+          }
+        },
+        {
+          "id": "front-aero",
+          "label": "Active front aero",
+          "parent": "front-fascia",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "flap",
+                "geometry": {
+                  "kind": "airfoil-wing",
+                  "params": {
+                    "span": 300,
+                    "chord": 70,
+                    "angle": 18,
+                    "elements": 1,
+                    "endplates": false,
+                    "mounts": false
+                  }
+                },
+                "transform": {
+                  "position": [
+                    -560,
+                    330,
+                    2170
+                  ]
+                }
+              },
+              {
+                "name": "flap",
+                "geometry": {
+                  "kind": "airfoil-wing",
+                  "params": {
+                    "span": 300,
+                    "chord": 70,
+                    "angle": 18,
+                    "elements": 1,
+                    "endplates": false,
+                    "mounts": false
+                  }
+                },
+                "transform": {
+                  "position": [
+                    -560,
+                    376,
+                    2160
+                  ]
+                }
+              },
+              {
+                "name": "flap",
+                "geometry": {
+                  "kind": "airfoil-wing",
+                  "params": {
+                    "span": 480,
+                    "chord": 70,
+                    "angle": 18,
+                    "elements": 1,
+                    "endplates": false,
+                    "mounts": false
+                  }
+                },
+                "transform": {
+                  "position": [
+                    0,
+                    330,
+                    2170
+                  ]
+                }
+              },
+              {
+                "name": "flap",
+                "geometry": {
+                  "kind": "airfoil-wing",
+                  "params": {
+                    "span": 480,
+                    "chord": 70,
+                    "angle": 18,
+                    "elements": 1,
+                    "endplates": false,
+                    "mounts": false
+                  }
+                },
+                "transform": {
+                  "position": [
+                    0,
+                    376,
+                    2160
+                  ]
+                }
+              },
+              {
+                "name": "flap",
+                "geometry": {
+                  "kind": "airfoil-wing",
+                  "params": {
+                    "span": 300,
+                    "chord": 70,
+                    "angle": 18,
+                    "elements": 1,
+                    "endplates": false,
+                    "mounts": false
+                  }
+                },
+                "transform": {
+                  "position": [
+                    560,
+                    330,
+                    2170
+                  ]
+                }
+              },
+              {
+                "name": "flap",
+                "geometry": {
+                  "kind": "airfoil-wing",
+                  "params": {
+                    "span": 300,
+                    "chord": 70,
+                    "angle": 18,
+                    "elements": 1,
+                    "endplates": false,
+                    "mounts": false
+                  }
+                },
+                "transform": {
+                  "position": [
+                    560,
+                    376,
+                    2160
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "cfrp",
+          "anchors": {
+            "flaps": [
+              560,
+              380,
+              2180
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              -120,
+              780
+            ],
+            "distance": 789.2,
+            "order": 0
+          },
+          "properties": {
+            "role": "variable flap system",
+            "materialName": "CFRP"
+          }
+        },
+        {
+          "id": "front-diffuser",
+          "label": "Front diffuser",
+          "parent": "biw",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "floor",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    1420,
+                    14,
+                    640
+                  ],
+                  "radius": 4
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    420
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    -520,
+                    -36,
+                    60
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    420
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    -260,
+                    -36,
+                    60
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    420
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    260,
+                    -36,
+                    60
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    420
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    520,
+                    -36,
+                    60
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              0,
+              132,
+              1720
+            ]
+          },
+          "anchors": {
+            "floor": [
+              400,
+              -6,
+              200
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              -420,
+              520
+            ],
+            "distance": 668.4,
+            "order": 0
+          },
+          "properties": {
+            "role": "underbody",
+            "materialName": "CFRP"
+          }
+        },
+        {
+          "id": "headlamp-l",
+          "label": "Headlamp (left)",
+          "parent": "fender-l",
+          "geometry": {
+            "kind": "headlamp",
+            "params": {
+              "radius": 104,
+              "depth": 92,
+              "modules": 4
+            }
+          },
+          "material": "paint-silver",
+          "transform": {
+            "position": [
+              640,
+              700,
+              1905
+            ],
+            "rotation": [
+              70,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "lens": [
+              0,
+              6,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              120,
+              120,
+              880
+            ],
+            "distance": 896.2,
+            "order": 2
+          },
+          "properties": {
+            "role": "matrix LED (representative)",
+            "materialName": "Composite / other",
+            "qty": 2
+          }
+        },
+        {
+          "id": "headlamp-r",
+          "label": "Headlamp (right)",
+          "parent": "fender-r",
+          "geometry": {
+            "kind": "headlamp",
+            "params": {
+              "radius": 104,
+              "depth": 92,
+              "modules": 4
+            }
+          },
+          "material": "paint-silver",
+          "transform": {
+            "position": [
+              -640,
+              700,
+              1905
+            ],
+            "rotation": [
+              70,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "lens": [
+              0,
+              6,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              -120,
+              120,
+              880
+            ],
+            "distance": 896.2,
+            "order": 2
+          },
+          "properties": {
+            "role": "matrix LED (representative)",
+            "materialName": "Composite / other",
+            "qty": 2
+          }
+        },
+        {
+          "id": "door-l",
+          "label": "Door (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "skin",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -280,
+                      "width": 1811.6,
+                      "top": 939,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -200,
+                      "width": 1810,
+                      "top": 935,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -120,
+                      "width": 1808.4,
+                      "top": 931,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -40,
+                      "width": 1806.8,
+                      "top": 927,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 40,
+                      "width": 1806.4,
+                      "top": 923,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 120,
+                      "width": 1807.2,
+                      "top": 919,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 200,
+                      "width": 1808,
+                      "top": 915,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 280,
+                      "width": 1808.8,
+                      "top": 911,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 360,
+                      "width": 1809.6,
+                      "top": 906,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 440,
+                      "width": 1810.4,
+                      "top": 900.7,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 520,
+                      "width": 1811.2,
+                      "top": 895.3,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 600,
+                      "width": 1812,
+                      "top": 890,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 680,
+                      "width": 1820,
+                      "top": 881.4,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 760,
+                      "width": 1828,
+                      "top": 872.9,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 840,
+                      "width": 1836,
+                      "top": 864.3,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 850,
+                      "width": 1837,
+                      "top": 863.2,
+                      "bottom": 140,
+                      "exponent": 4
+                    }
+                  ],
+                  "exponent": 4,
+                  "segments": 16,
+                  "subdivisions": 1,
+                  "arc": [
+                    -58,
+                    59
+                  ],
+                  "thickness": 9
+                },
+                "material": "paint-silver"
+              },
+              {
+                "name": "glass",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -238,
+                      "width": 1297.9,
+                      "top": 1305,
+                      "bottom": 568.8
+                    },
+                    {
+                      "z": -158,
+                      "width": 1295.3,
+                      "top": 1314.1,
+                      "bottom": 551.7
+                    },
+                    {
+                      "z": -78,
+                      "width": 1292.6,
+                      "top": 1318.1,
+                      "bottom": 539.7
+                    },
+                    {
+                      "z": 2,
+                      "width": 1290.2,
+                      "top": 1321.9,
+                      "bottom": 527.9
+                    },
+                    {
+                      "z": 82,
+                      "width": 1298.2,
+                      "top": 1317.9,
+                      "bottom": 523.9
+                    },
+                    {
+                      "z": 162,
+                      "width": 1306.2,
+                      "top": 1313.9,
+                      "bottom": 519.9
+                    },
+                    {
+                      "z": 242,
+                      "width": 1314.2,
+                      "top": 1302.2,
+                      "bottom": 523.6
+                    },
+                    {
+                      "z": 322,
+                      "width": 1326.6,
+                      "top": 1283.5,
+                      "bottom": 533.5
+                    },
+                    {
+                      "z": 402,
+                      "width": 1350.6,
+                      "top": 1255.3,
+                      "bottom": 551.1
+                    },
+                    {
+                      "z": 482,
+                      "width": 1374.6,
+                      "top": 1202,
+                      "bottom": 593.7
+                    },
+                    {
+                      "z": 562,
+                      "width": 1411,
+                      "top": 1143.5,
+                      "bottom": 641.6
+                    },
+                    {
+                      "z": 642,
+                      "width": 1451,
+                      "top": 1083.5,
+                      "bottom": 687.5
+                    },
+                    {
+                      "z": 722,
+                      "width": 1493.2,
+                      "top": 1021.3,
+                      "bottom": 732.6
+                    },
+                    {
+                      "z": 802,
+                      "width": 1541.2,
+                      "top": 953.3,
+                      "bottom": 783.4
+                    },
+                    {
+                      "z": 840,
+                      "width": 1564,
+                      "top": 921,
+                      "bottom": 807.6
+                    }
+                  ],
+                  "exponent": 2.4,
+                  "segments": 14,
+                  "subdivisions": 1,
+                  "arc": [
+                    -2,
+                    17.4
+                  ],
+                  "thickness": 5
+                },
+                "material": "glass-tint"
+              },
+              {
+                "name": "mirror",
+                "geometry": {
+                  "kind": "roundedBox",
+                  "size": [
+                    90,
+                    80,
+                    170
+                  ],
+                  "radius": 26
+                },
+                "material": "paint-silver",
+                "transform": {
+                  "position": [
+                    965,
+                    985,
+                    700
+                  ]
+                }
+              },
+              {
+                "name": "mirror-arm",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    70,
+                    20,
+                    34
+                  ],
+                  "radius": 6
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    915,
+                    960,
+                    720
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "paint-silver",
+          "anchors": {
+            "handle": [
+              905,
+              760,
+              120
+            ]
+          },
+          "explode": {
+            "direction": [
+              1000,
+              40,
+              80
+            ],
+            "distance": 1004,
+            "order": 2
+          },
+          "properties": {
+            "role": "lightweight door",
+            "materialName": "CFRP / painted",
+            "qty": 2
+          }
+        },
+        {
+          "id": "door-r",
+          "label": "Door (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "skin",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -280,
+                      "width": 1811.6,
+                      "top": 939,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -200,
+                      "width": 1810,
+                      "top": 935,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -120,
+                      "width": 1808.4,
+                      "top": 931,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": -40,
+                      "width": 1806.8,
+                      "top": 927,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 40,
+                      "width": 1806.4,
+                      "top": 923,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 120,
+                      "width": 1807.2,
+                      "top": 919,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 200,
+                      "width": 1808,
+                      "top": 915,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 280,
+                      "width": 1808.8,
+                      "top": 911,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 360,
+                      "width": 1809.6,
+                      "top": 906,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 440,
+                      "width": 1810.4,
+                      "top": 900.7,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 520,
+                      "width": 1811.2,
+                      "top": 895.3,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 600,
+                      "width": 1812,
+                      "top": 890,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 680,
+                      "width": 1820,
+                      "top": 881.4,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 760,
+                      "width": 1828,
+                      "top": 872.9,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 840,
+                      "width": 1836,
+                      "top": 864.3,
+                      "bottom": 140,
+                      "exponent": 4
+                    },
+                    {
+                      "z": 850,
+                      "width": 1837,
+                      "top": 863.2,
+                      "bottom": 140,
+                      "exponent": 4
+                    }
+                  ],
+                  "exponent": 4,
+                  "segments": 16,
+                  "subdivisions": 1,
+                  "arc": [
+                    121,
+                    238
+                  ],
+                  "thickness": 9
+                },
+                "material": "paint-silver"
+              },
+              {
+                "name": "glass",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -238,
+                      "width": 1297.9,
+                      "top": 1305,
+                      "bottom": 568.8
+                    },
+                    {
+                      "z": -158,
+                      "width": 1295.3,
+                      "top": 1314.1,
+                      "bottom": 551.7
+                    },
+                    {
+                      "z": -78,
+                      "width": 1292.6,
+                      "top": 1318.1,
+                      "bottom": 539.7
+                    },
+                    {
+                      "z": 2,
+                      "width": 1290.2,
+                      "top": 1321.9,
+                      "bottom": 527.9
+                    },
+                    {
+                      "z": 82,
+                      "width": 1298.2,
+                      "top": 1317.9,
+                      "bottom": 523.9
+                    },
+                    {
+                      "z": 162,
+                      "width": 1306.2,
+                      "top": 1313.9,
+                      "bottom": 519.9
+                    },
+                    {
+                      "z": 242,
+                      "width": 1314.2,
+                      "top": 1302.2,
+                      "bottom": 523.6
+                    },
+                    {
+                      "z": 322,
+                      "width": 1326.6,
+                      "top": 1283.5,
+                      "bottom": 533.5
+                    },
+                    {
+                      "z": 402,
+                      "width": 1350.6,
+                      "top": 1255.3,
+                      "bottom": 551.1
+                    },
+                    {
+                      "z": 482,
+                      "width": 1374.6,
+                      "top": 1202,
+                      "bottom": 593.7
+                    },
+                    {
+                      "z": 562,
+                      "width": 1411,
+                      "top": 1143.5,
+                      "bottom": 641.6
+                    },
+                    {
+                      "z": 642,
+                      "width": 1451,
+                      "top": 1083.5,
+                      "bottom": 687.5
+                    },
+                    {
+                      "z": 722,
+                      "width": 1493.2,
+                      "top": 1021.3,
+                      "bottom": 732.6
+                    },
+                    {
+                      "z": 802,
+                      "width": 1541.2,
+                      "top": 953.3,
+                      "bottom": 783.4
+                    },
+                    {
+                      "z": 840,
+                      "width": 1564,
+                      "top": 921,
+                      "bottom": 807.6
+                    }
+                  ],
+                  "exponent": 2.4,
+                  "segments": 14,
+                  "subdivisions": 1,
+                  "arc": [
+                    162.6,
+                    182
+                  ],
+                  "thickness": 5
+                },
+                "material": "glass-tint"
+              },
+              {
+                "name": "mirror",
+                "geometry": {
+                  "kind": "roundedBox",
+                  "size": [
+                    90,
+                    80,
+                    170
+                  ],
+                  "radius": 26
+                },
+                "material": "paint-silver",
+                "transform": {
+                  "position": [
+                    -965,
+                    985,
+                    700
+                  ]
+                }
+              },
+              {
+                "name": "mirror-arm",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    70,
+                    20,
+                    34
+                  ],
+                  "radius": 6
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    -915,
+                    960,
+                    720
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "paint-silver",
+          "anchors": {
+            "handle": [
+              -905,
+              760,
+              120
+            ]
+          },
+          "explode": {
+            "direction": [
+              -1000,
+              40,
+              80
+            ],
+            "distance": 1004,
+            "order": 2
+          },
+          "properties": {
+            "role": "lightweight door",
+            "materialName": "CFRP / painted",
+            "qty": 2
+          }
+        },
+        {
+          "id": "sill-l",
+          "label": "Side sill (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "extrude",
+            "profile": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                92,
+                0,
+                0
+              ],
+              [
+                108,
+                34,
+                0
+              ],
+              [
+                26,
+                66,
+                0
+              ],
+              [
+                0,
+                66,
+                0
+              ]
+            ],
+            "depth": 1130,
+            "bevel": 3
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              880,
+              150,
+              -290
+            ]
+          },
+          "anchors": {
+            "blade": [
+              70,
+              30,
+              560
+            ]
+          },
+          "explode": {
+            "direction": [
+              720,
+              -260,
+              0
+            ],
+            "distance": 765.5,
+            "order": 1
+          },
+          "properties": {
+            "role": "CFRP aerodynamic sill",
+            "materialName": "CFRP",
+            "qty": 2
+          }
+        },
+        {
+          "id": "sill-r",
+          "label": "Side sill (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "extrude",
+            "profile": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                -92,
+                0,
+                0
+              ],
+              [
+                -108,
+                34,
+                0
+              ],
+              [
+                -26,
+                66,
+                0
+              ],
+              [
+                0,
+                66,
+                0
+              ]
+            ],
+            "depth": 1130,
+            "bevel": 3
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              -880,
+              150,
+              -290
+            ]
+          },
+          "anchors": {
+            "blade": [
+              -70,
+              30,
+              560
+            ]
+          },
+          "explode": {
+            "direction": [
+              -720,
+              -260,
+              0
+            ],
+            "distance": 765.5,
+            "order": 1
+          },
+          "properties": {
+            "role": "CFRP aerodynamic sill",
+            "materialName": "CFRP",
+            "qty": 2
+          }
+        },
+        {
+          "id": "windscreen",
+          "label": "Windscreen",
+          "parent": "biw",
+          "geometry": {
+            "kind": "loft",
+            "sections": [
+              {
+                "z": 392,
+                "width": 1347.6,
+                "top": 1262,
+                "bottom": 545.7
+              },
+              {
+                "z": 472,
+                "width": 1371.6,
+                "top": 1208.7,
+                "bottom": 588.4
+              },
+              {
+                "z": 552,
+                "width": 1406,
+                "top": 1151,
+                "bottom": 635.4
+              },
+              {
+                "z": 632,
+                "width": 1446,
+                "top": 1091,
+                "bottom": 682.1
+              },
+              {
+                "z": 712,
+                "width": 1487.2,
+                "top": 1029.8,
+                "bottom": 726.2
+              },
+              {
+                "z": 792,
+                "width": 1535.2,
+                "top": 961.8,
+                "bottom": 777.1
+              },
+              {
+                "z": 872,
+                "width": 1583.2,
+                "top": 893.8,
+                "bottom": 827.9
+              },
+              {
+                "z": 890,
+                "width": 1594,
+                "top": 878.5,
+                "bottom": 836.4
+              }
+            ],
+            "exponent": 2.4,
+            "segments": 14,
+            "subdivisions": 1,
+            "arc": [
+              28,
+              152
+            ],
+            "thickness": 6
+          },
+          "material": "glass-tint",
+          "anchors": {
+            "centre": [
+              0,
+              1089,
+              640
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              560,
+              420
+            ],
+            "distance": 700,
+            "order": 2
+          },
+          "properties": {
+            "role": "lightweight laminated glass",
+            "materialName": "Laminated glass"
+          }
+        },
+        {
+          "id": "roof",
+          "label": "Roof panel",
+          "parent": "biw",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "roof",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -380,
+                      "width": 1309.1,
+                      "top": 1278.7,
+                      "bottom": 612.7
+                    },
+                    {
+                      "z": -300,
+                      "width": 1300,
+                      "top": 1293.5,
+                      "bottom": 586.5
+                    },
+                    {
+                      "z": -220,
+                      "width": 1297.3,
+                      "top": 1308.3,
+                      "bottom": 563.7
+                    },
+                    {
+                      "z": -140,
+                      "width": 1294.7,
+                      "top": 1315,
+                      "bottom": 549
+                    },
+                    {
+                      "z": -60,
+                      "width": 1292,
+                      "top": 1319,
+                      "bottom": 537
+                    },
+                    {
+                      "z": 20,
+                      "width": 1292,
+                      "top": 1321,
+                      "bottom": 527
+                    },
+                    {
+                      "z": 100,
+                      "width": 1300,
+                      "top": 1317,
+                      "bottom": 523
+                    },
+                    {
+                      "z": 180,
+                      "width": 1308,
+                      "top": 1313,
+                      "bottom": 519
+                    },
+                    {
+                      "z": 260,
+                      "width": 1316,
+                      "top": 1298,
+                      "bottom": 526
+                    },
+                    {
+                      "z": 340,
+                      "width": 1332,
+                      "top": 1279.3,
+                      "bottom": 535.3
+                    },
+                    {
+                      "z": 380,
+                      "width": 1344,
+                      "top": 1270,
+                      "bottom": 539.3
+                    }
+                  ],
+                  "exponent": 2.4,
+                  "segments": 14,
+                  "subdivisions": 1,
+                  "arc": [
+                    28,
+                    152
+                  ],
+                  "thickness": 8
+                },
+                "material": "cfrp"
+              },
+              {
+                "name": "rear-screen",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -1250,
+                      "width": 1440,
+                      "top": 1002,
+                      "bottom": 997.2
+                    },
+                    {
+                      "z": -1170,
+                      "width": 1427.2,
+                      "top": 1016.9,
+                      "bottom": 977.9
+                    },
+                    {
+                      "z": -1090,
+                      "width": 1414.4,
+                      "top": 1033,
+                      "bottom": 954.9
+                    },
+                    {
+                      "z": -1010,
+                      "width": 1401.6,
+                      "top": 1057,
+                      "bottom": 923.9
+                    },
+                    {
+                      "z": -930,
+                      "width": 1388,
+                      "top": 1081,
+                      "bottom": 889
+                    },
+                    {
+                      "z": -850,
+                      "width": 1374.3,
+                      "top": 1108,
+                      "bottom": 850.6
+                    },
+                    {
+                      "z": -770,
+                      "width": 1360.6,
+                      "top": 1136.8,
+                      "bottom": 810.3
+                    },
+                    {
+                      "z": -690,
+                      "width": 1346.9,
+                      "top": 1165.6,
+                      "bottom": 770.1
+                    },
+                    {
+                      "z": -610,
+                      "width": 1335.4,
+                      "top": 1195.2,
+                      "bottom": 729.1
+                    },
+                    {
+                      "z": -530,
+                      "width": 1326.3,
+                      "top": 1225.6,
+                      "bottom": 687.3
+                    },
+                    {
+                      "z": -450,
+                      "width": 1317.1,
+                      "top": 1256,
+                      "bottom": 645.4
+                    },
+                    {
+                      "z": -392,
+                      "width": 1310.5,
+                      "top": 1276.5,
+                      "bottom": 616.7
+                    }
+                  ],
+                  "exponent": 2.4,
+                  "segments": 14,
+                  "subdivisions": 1,
+                  "arc": [
+                    28,
+                    152
+                  ],
+                  "thickness": 5
+                },
+                "material": "glass-tint"
+              }
+            ]
+          },
+          "material": "cfrp",
+          "anchors": {
+            "top": [
+              0,
+              1330,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              820,
+              40
+            ],
+            "distance": 821,
+            "order": 2
+          },
+          "properties": {
+            "role": "lightweight panel",
+            "materialName": "CFRP"
+          }
+        },
+        {
+          "id": "rear-body",
+          "label": "Rear body panel",
+          "parent": "biw",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "quarters-and-deck",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -2050,
+                      "width": 1805.2,
+                      "top": 937.5,
+                      "bottom": -342.5
+                    },
+                    {
+                      "z": -1990,
+                      "width": 1826.3,
+                      "top": 951.3,
+                      "bottom": -362.2
+                    },
+                    {
+                      "z": -1930,
+                      "width": 1847.4,
+                      "top": 958.8,
+                      "bottom": -375.7
+                    },
+                    {
+                      "z": -1870,
+                      "width": 1861.6,
+                      "top": 966.3,
+                      "bottom": -389.2
+                    },
+                    {
+                      "z": -1810,
+                      "width": 1868.8,
+                      "top": 973.8,
+                      "bottom": -402.7
+                    },
+                    {
+                      "z": -1750,
+                      "width": 1876,
+                      "top": 978.3,
+                      "bottom": -413.3
+                    },
+                    {
+                      "z": -1690,
+                      "width": 1883.2,
+                      "top": 982.3,
+                      "bottom": -422.6
+                    },
+                    {
+                      "z": -1630,
+                      "width": 1890.4,
+                      "top": 986.3,
+                      "bottom": -123.1
+                    },
+                    {
+                      "z": -1621,
+                      "width": 1891.5,
+                      "top": 986.9,
+                      "bottom": -44
+                    },
+                    {
+                      "z": -1613,
+                      "width": 1892.4,
+                      "top": 987.5,
+                      "bottom": 6.3
+                    },
+                    {
+                      "z": -1589,
+                      "width": 1894.2,
+                      "top": 989.1,
+                      "bottom": 114.7
+                    },
+                    {
+                      "z": -1570,
+                      "width": 1894.6,
+                      "top": 990.3,
+                      "bottom": 178
+                    },
+                    {
+                      "z": -1529,
+                      "width": 1895.5,
+                      "top": 993.1,
+                      "bottom": 281
+                    },
+                    {
+                      "z": -1510,
+                      "width": 1895.9,
+                      "top": 994.3,
+                      "bottom": 318.5
+                    },
+                    {
+                      "z": -1450,
+                      "width": 1897.2,
+                      "top": 995.9,
+                      "bottom": 411.6
+                    },
+                    {
+                      "z": -1429,
+                      "width": 1897.7,
+                      "top": 996.3,
+                      "bottom": 436.6
+                    },
+                    {
+                      "z": -1390,
+                      "width": 1898.5,
+                      "top": 997,
+                      "bottom": 474.6
+                    },
+                    {
+                      "z": -1330,
+                      "width": 1899.8,
+                      "top": 998.1,
+                      "bottom": 514.4
+                    },
+                    {
+                      "z": -1270,
+                      "width": 1901.1,
+                      "top": 999.2,
+                      "bottom": 534.6
+                    },
+                    {
+                      "z": -1229,
+                      "width": 1902,
+                      "top": 1000,
+                      "bottom": 538
+                    },
+                    {
+                      "z": -1210,
+                      "width": 1901.5,
+                      "top": 999.2,
+                      "bottom": 537.9
+                    },
+                    {
+                      "z": -1150,
+                      "width": 1899.9,
+                      "top": 996.6,
+                      "bottom": 526
+                    },
+                    {
+                      "z": -1090,
+                      "width": 1898.4,
+                      "top": 993.9,
+                      "bottom": 495.1
+                    },
+                    {
+                      "z": -1030,
+                      "width": 1896.8,
+                      "top": 991.3,
+                      "bottom": 442.8
+                    },
+                    {
+                      "z": -1029,
+                      "width": 1896.8,
+                      "top": 991.3,
+                      "bottom": 441.7
+                    },
+                    {
+                      "z": -970,
+                      "width": 1892.9,
+                      "top": 987.9,
+                      "bottom": 364.1
+                    },
+                    {
+                      "z": -929,
+                      "width": 1888.7,
+                      "top": 984.9,
+                      "bottom": 289.2
+                    },
+                    {
+                      "z": -910,
+                      "width": 1886.7,
+                      "top": 983.6,
+                      "bottom": 246
+                    },
+                    {
+                      "z": -869,
+                      "width": 1882.5,
+                      "top": 980.6,
+                      "bottom": 123.1
+                    },
+                    {
+                      "z": -850,
+                      "width": 1880.6,
+                      "top": 979.3,
+                      "bottom": 41.4
+                    },
+                    {
+                      "z": -845,
+                      "width": 1880.1,
+                      "top": 978.9,
+                      "bottom": 14.8
+                    },
+                    {
+                      "z": -837,
+                      "width": 1879.2,
+                      "top": 978.4,
+                      "bottom": -35.4
+                    },
+                    {
+                      "z": -790,
+                      "width": 1874.4,
+                      "top": 975,
+                      "bottom": -438.4
+                    },
+                    {
+                      "z": -730,
+                      "width": 1868.2,
+                      "top": 970.7,
+                      "bottom": -435.7
+                    },
+                    {
+                      "z": -670,
+                      "width": 1862.1,
+                      "top": 966.4,
+                      "bottom": -432.9
+                    },
+                    {
+                      "z": -610,
+                      "width": 1854.5,
+                      "top": 962.1,
+                      "bottom": -430.2
+                    },
+                    {
+                      "z": -550,
+                      "width": 1846.3,
+                      "top": 957.9,
+                      "bottom": -427.4
+                    },
+                    {
+                      "z": -490,
+                      "width": 1838.1,
+                      "top": 953.6,
+                      "bottom": -424.7
+                    },
+                    {
+                      "z": -430,
+                      "width": 1829.8,
+                      "top": 949.3,
+                      "bottom": -421.9
+                    },
+                    {
+                      "z": -370,
+                      "width": 1821.6,
+                      "top": 945,
+                      "bottom": -419.2
+                    },
+                    {
+                      "z": -310,
+                      "width": 1813.4,
+                      "top": 940.7,
+                      "bottom": -416.5
+                    },
+                    {
+                      "z": -300,
+                      "width": 1812,
+                      "top": 940,
+                      "bottom": -416
+                    }
+                  ],
+                  "exponent": 3,
+                  "segments": 22,
+                  "subdivisions": 1,
+                  "arc": [
+                    0,
+                    180
+                  ],
+                  "thickness": 8
+                },
+                "material": "paint-silver"
+              },
+              {
+                "name": "rear-fascia",
+                "geometry": {
+                  "kind": "loft",
+                  "sections": [
+                    {
+                      "z": -2372,
+                      "width": 1180,
+                      "top": 720,
+                      "bottom": 300
+                    },
+                    {
+                      "z": -2340,
+                      "width": 1500,
+                      "top": 780,
+                      "bottom": 230
+                    },
+                    {
+                      "z": -2300,
+                      "width": 1640,
+                      "top": 840,
+                      "bottom": 230
+                    },
+                    {
+                      "z": -2260,
+                      "width": 1674.7,
+                      "top": 864,
+                      "bottom": 230
+                    },
+                    {
+                      "z": -2220,
+                      "width": 1709.3,
+                      "top": 888,
+                      "bottom": 230
+                    },
+                    {
+                      "z": -2180,
+                      "width": 1744,
+                      "top": 905,
+                      "bottom": 230
+                    },
+                    {
+                      "z": -2140,
+                      "width": 1773.5,
+                      "top": 915,
+                      "bottom": 230
+                    },
+                    {
+                      "z": -2100,
+                      "width": 1787.6,
+                      "top": 925,
+                      "bottom": 230
+                    },
+                    {
+                      "z": -2062,
+                      "width": 1801,
+                      "top": 934.5,
+                      "bottom": 230
+                    }
+                  ],
+                  "exponent": 3,
+                  "segments": 20,
+                  "subdivisions": 1,
+                  "arc": [
+                    -28,
+                    208
+                  ],
+                  "thickness": 8
+                },
+                "material": "paint-silver"
+              },
+              {
+                "name": "light-bar",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    1480,
+                    26,
+                    24
+                  ],
+                  "radius": 6
+                },
+                "material": "tail-red",
+                "transform": {
+                  "position": [
+                    0,
+                    770,
+                    -2318
+                  ]
+                }
+              },
+              {
+                "name": "deck-vent",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    880,
+                    8,
+                    46
+                  ],
+                  "radius": 2
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    0,
+                    999,
+                    -1500
+                  ]
+                }
+              },
+              {
+                "name": "deck-vent",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    880,
+                    8,
+                    46
+                  ],
+                  "radius": 2
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    0,
+                    993,
+                    -1590
+                  ]
+                }
+              },
+              {
+                "name": "deck-vent",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    880,
+                    8,
+                    46
+                  ],
+                  "radius": 2
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    0,
+                    987,
+                    -1680
+                  ]
+                }
+              },
+              {
+                "name": "deck-vent",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    880,
+                    8,
+                    46
+                  ],
+                  "radius": 2
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    0,
+                    981,
+                    -1770
+                  ]
+                }
+              },
+              {
+                "name": "deck-vent",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    880,
+                    8,
+                    46
+                  ],
+                  "radius": 2
+                },
+                "material": "cfrp",
+                "transform": {
+                  "position": [
+                    0,
+                    971.5,
+                    -1860
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "paint-silver",
+          "anchors": {
+            "deck": [
+              0,
+              1000,
+              -1700
+            ],
+            "haunch": [
+              940,
+              760,
+              -1559
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              380,
+              -1500
+            ],
+            "distance": 1547.4,
+            "order": 1
+          },
+          "properties": {
+            "role": "engine deck & vents",
+            "materialName": "Composite / other"
+          }
+        },
+        {
+          "id": "rear-diffuser",
+          "label": "Rear diffuser",
+          "parent": "biw",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "floor",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    1460,
+                    14,
+                    520
+                  ],
+                  "radius": 4
+                },
+                "transform": {
+                  "rotation": [
+                    -8,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    430
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    -600,
+                    30,
+                    -30
+                  ],
+                  "rotation": [
+                    -8,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    430
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    -400,
+                    30,
+                    -30
+                  ],
+                  "rotation": [
+                    -8,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    430
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    -200,
+                    30,
+                    -30
+                  ],
+                  "rotation": [
+                    -8,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    430
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    200,
+                    30,
+                    -30
+                  ],
+                  "rotation": [
+                    -8,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    430
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    400,
+                    30,
+                    -30
+                  ],
+                  "rotation": [
+                    -8,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "strake",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    8,
+                    70,
+                    430
+                  ],
+                  "radius": 2
+                },
+                "transform": {
+                  "position": [
+                    600,
+                    30,
+                    -30
+                  ],
+                  "rotation": [
+                    -8,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              0,
+              135,
+              -2190
+            ]
+          },
+          "anchors": {
+            "strakes": [
+              400,
+              100,
+              -200
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              -320,
+              -1100
+            ],
+            "distance": 1145.6,
+            "order": 0
+          },
+          "properties": {
+            "role": "CFRP aerodynamic element",
+            "materialName": "CFRP"
+          }
+        },
+        {
+          "id": "swan-neck-l",
+          "label": "Swan-neck support (left)",
+          "parent": "rear-body",
+          "geometry": {
+            "kind": "extrude",
+            "profile": [
+              [
+                1617.5,
+                980.8,
+                0
+              ],
+              [
+                1646.8,
+                1103.6,
+                0
+              ],
+              [
+                1713.6,
+                1238.2,
+                0
+              ],
+              [
+                1836.4,
+                1323.2,
+                0
+              ],
+              [
+                1966.7,
+                1334.3,
+                0
+              ],
+              [
+                2034.7,
+                1285.2,
+                0
+              ],
+              [
+                2055.3,
+                1314.8,
+                0
+              ],
+              [
+                1973.3,
+                1369.7,
+                0
+              ],
+              [
+                1823.6,
+                1356.8,
+                0
+              ],
+              [
+                1686.4,
+                1261.8,
+                0
+              ],
+              [
+                1613.2,
+                1116.4,
+                0
+              ],
+              [
+                1582.5,
+                989.2,
+                0
+              ]
+            ],
+            "depth": 22,
+            "bevel": 2
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              279,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "anchors": {
+            "crest": [
+              1900,
+              1350,
+              11
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              1060,
+              -1560
+            ],
+            "distance": 1886.1,
+            "order": 1
+          },
+          "properties": {
+            "role": "CFRP active-aero mount",
+            "materialName": "CFRP",
+            "qty": 2
+          }
+        },
+        {
+          "id": "swan-neck-r",
+          "label": "Swan-neck support (right)",
+          "parent": "rear-body",
+          "geometry": {
+            "kind": "extrude",
+            "profile": [
+              [
+                1617.5,
+                980.8,
+                0
+              ],
+              [
+                1646.8,
+                1103.6,
+                0
+              ],
+              [
+                1713.6,
+                1238.2,
+                0
+              ],
+              [
+                1836.4,
+                1323.2,
+                0
+              ],
+              [
+                1966.7,
+                1334.3,
+                0
+              ],
+              [
+                2034.7,
+                1285.2,
+                0
+              ],
+              [
+                2055.3,
+                1314.8,
+                0
+              ],
+              [
+                1973.3,
+                1369.7,
+                0
+              ],
+              [
+                1823.6,
+                1356.8,
+                0
+              ],
+              [
+                1686.4,
+                1261.8,
+                0
+              ],
+              [
+                1613.2,
+                1116.4,
+                0
+              ],
+              [
+                1582.5,
+                989.2,
+                0
+              ]
+            ],
+            "depth": 22,
+            "bevel": 2
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              -301,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "anchors": {
+            "crest": [
+              1900,
+              1350,
+              11
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              1060,
+              -1560
+            ],
+            "distance": 1886.1,
+            "order": 1
+          },
+          "properties": {
+            "role": "CFRP active-aero mount",
+            "materialName": "CFRP",
+            "qty": 2
+          }
+        },
+        {
+          "id": "rear-wing",
+          "label": "Active rear wing",
+          "parent": "swan-neck-l",
+          "geometry": {
+            "kind": "airfoil-wing",
+            "params": {
+              "span": 1720,
+              "chord": 340,
+              "angle": 7,
+              "elements": 2,
+              "endplateHeight": 300
+            }
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              0,
+              1262,
+              -2040
+            ]
+          },
+          "anchors": {
+            "tip": [
+              860,
+              40,
+              0
+            ],
+            "top": [
+              0,
+              30,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              1300,
+              -1640
+            ],
+            "distance": 2092.7,
+            "order": 0
+          },
+          "properties": {
+            "role": "multi-element DRS (representative)",
+            "materialName": "CFRP"
+          }
+        },
+        {
+          "id": "radiator-centre",
+          "label": "Centre radiator",
+          "parent": "biw",
+          "geometry": {
+            "kind": "radiator",
+            "params": {
+              "width": 720,
+              "height": 420,
+              "depth": 50
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              0,
+              470,
+              1790
+            ],
+            "rotation": [
+              -50,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "core": [
+              0,
+              0,
+              26
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              420,
+              720
+            ],
+            "distance": 833.5,
+            "order": 3
+          },
+          "properties": {
+            "role": "main radiator",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "radiator-l",
+          "label": "Auxiliary radiator (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "radiator",
+            "params": {
+              "width": 300,
+              "height": 260,
+              "depth": 40
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              640,
+              300,
+              1900
+            ],
+            "rotation": [
+              0,
+              20,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              360,
+              120,
+              640
+            ],
+            "distance": 744,
+            "order": 3
+          },
+          "properties": {
+            "role": "auxiliary radiator",
+            "materialName": "Aluminium (machined)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "radiator-r",
+          "label": "Auxiliary radiator (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "radiator",
+            "params": {
+              "width": 300,
+              "height": 260,
+              "depth": 40
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              -640,
+              300,
+              1900
+            ],
+            "rotation": [
+              0,
+              -20,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              -360,
+              120,
+              640
+            ],
+            "distance": 744,
+            "order": 3
+          },
+          "properties": {
+            "role": "auxiliary radiator",
+            "materialName": "Aluminium (machined)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "lower-arm-fl",
+          "label": "Front lower wishbone (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 400,
+              "depth": 380,
+              "radius": 14
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              300,
+              210,
+              1228
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "joint": [
+              400,
+              0,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              280,
+              -120,
+              0
+            ],
+            "distance": 304.6,
+            "order": 5
+          },
+          "properties": {
+            "role": "double wishbone",
+            "materialName": "Aluminium (machined)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "upper-arm-fl",
+          "label": "Front upper wishbone (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 330,
+              "depth": 260,
+              "radius": 12
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              350,
+              565,
+              1228
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              300,
+              100,
+              0
+            ],
+            "distance": 316.2,
+            "order": 5
+          },
+          "properties": {
+            "role": "double wishbone",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "coilover-fl",
+          "label": "Front coilover (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "coilover",
+            "params": {
+              "length": 360,
+              "radius": 46
+            }
+          },
+          "material": "spring-red",
+          "transform": {
+            "position": [
+              560,
+              450,
+              1363
+            ],
+            "rotation": [
+              0,
+              0,
+              10
+            ]
+          },
+          "explode": {
+            "direction": [
+              260,
+              320,
+              0
+            ],
+            "distance": 412.3,
+            "order": 5
+          },
+          "properties": {
+            "role": "adjustable damper",
+            "materialName": "High-tensile steel"
+          }
+        },
+        {
+          "id": "brake-fl",
+          "label": "Front brake (left)",
+          "parent": "lower-arm-fl",
+          "geometry": {
+            "kind": "brake-assembly",
+            "params": {
+              "radius": 205,
+              "thickness": 36,
+              "caliperAngle": 240
+            }
+          },
+          "material": "ccb",
+          "transform": {
+            "position": [
+              712,
+              345,
+              1228
+            ],
+            "rotation": [
+              0,
+              0,
+              -90
+            ]
+          },
+          "anchors": {
+            "caliper": [
+              -88,
+              40,
+              -153
+            ]
+          },
+          "explode": {
+            "direction": [
+              480,
+              0,
+              60
+            ],
+            "distance": 483.7,
+            "order": 4
+          },
+          "properties": {
+            "role": "carbon-ceramic (CCB)",
+            "materialName": "Carbon-ceramic (CCB)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "wheel-fl",
+          "label": "Front wheel (left)",
+          "parent": "brake-fl",
+          "geometry": {
+            "kind": "wheel",
+            "params": {
+              "radius": 345,
+              "width": 275,
+              "spokes": 10
+            }
+          },
+          "material": "magnesium",
+          "transform": {
+            "position": [
+              790,
+              345,
+              1228
+            ],
+            "rotation": [
+              0,
+              0,
+              -90
+            ]
+          },
+          "anchors": {
+            "hub": [
+              0,
+              170.5,
+              0
+            ],
+            "tread": [
+              0,
+              0,
+              345
+            ]
+          },
+          "explode": {
+            "direction": [
+              820,
+              0,
+              80
+            ],
+            "distance": 823.9,
+            "order": 3
+          },
+          "properties": {
+            "role": "forged centre-lock wheel",
+            "materialName": "Magnesium (forged)",
+            "qty": 4,
+            "size": "275/35 R20 (representative)"
+          }
+        },
+        {
+          "id": "lower-arm-rl",
+          "label": "Rear lower arm (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 400,
+              "depth": 400,
+              "radius": 15
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              320,
+              220,
+              -1229
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "joint": [
+              400,
+              0,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              280,
+              -120,
+              0
+            ],
+            "distance": 304.6,
+            "order": 5
+          },
+          "properties": {
+            "role": "multi-link",
+            "materialName": "Aluminium (machined)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "upper-link-rl",
+          "label": "Rear upper link (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 300,
+              "radius": 12,
+              "shape": "link"
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              360,
+              570,
+              -1199
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              300,
+              100,
+              0
+            ],
+            "distance": 316.2,
+            "order": 5
+          },
+          "properties": {
+            "role": "multi-link",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "toe-link-rl",
+          "label": "Rear toe link (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 320,
+              "radius": 11,
+              "shape": "link"
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              330,
+              330,
+              -1399
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              300,
+              -40,
+              -60
+            ],
+            "distance": 308.5,
+            "order": 5
+          },
+          "properties": {
+            "role": "multi-link",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "coilover-rl",
+          "label": "Rear coilover (left)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "coilover",
+            "params": {
+              "length": 380,
+              "radius": 48
+            }
+          },
+          "material": "spring-red",
+          "transform": {
+            "position": [
+              565,
+              480,
+              -1094
+            ],
+            "rotation": [
+              0,
+              0,
+              8
+            ]
+          },
+          "explode": {
+            "direction": [
+              260,
+              320,
+              0
+            ],
+            "distance": 412.3,
+            "order": 5
+          },
+          "properties": {
+            "role": "adjustable damper",
+            "materialName": "High-tensile steel"
+          }
+        },
+        {
+          "id": "brake-rl",
+          "label": "Rear brake (left)",
+          "parent": "lower-arm-rl",
+          "geometry": {
+            "kind": "brake-assembly",
+            "params": {
+              "radius": 195,
+              "thickness": 34,
+              "caliperAngle": 120
+            }
+          },
+          "material": "ccb",
+          "transform": {
+            "position": [
+              702,
+              362,
+              -1229
+            ],
+            "rotation": [
+              0,
+              0,
+              -90
+            ]
+          },
+          "anchors": {
+            "caliper": [
+              -84,
+              40,
+              146
+            ]
+          },
+          "explode": {
+            "direction": [
+              480,
+              0,
+              -60
+            ],
+            "distance": 483.7,
+            "order": 4
+          },
+          "properties": {
+            "role": "carbon-ceramic (CCB)",
+            "materialName": "Carbon-ceramic (CCB)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "wheel-rl",
+          "label": "Rear wheel (left)",
+          "parent": "brake-rl",
+          "geometry": {
+            "kind": "wheel",
+            "params": {
+              "radius": 362,
+              "width": 335,
+              "spokes": 10
+            }
+          },
+          "material": "magnesium",
+          "transform": {
+            "position": [
+              780,
+              362,
+              -1229
+            ],
+            "rotation": [
+              0,
+              0,
+              -90
+            ]
+          },
+          "anchors": {
+            "hub": [
+              0,
+              207.7,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              820,
+              0,
+              -80
+            ],
+            "distance": 823.9,
+            "order": 3
+          },
+          "properties": {
+            "role": "forged centre-lock wheel",
+            "materialName": "Magnesium (forged)",
+            "qty": 2,
+            "size": "335/30 R21 (representative)"
+          }
+        },
+        {
+          "id": "lower-arm-fr",
+          "label": "Front lower wishbone (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 400,
+              "depth": 380,
+              "radius": 14
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              -300,
+              210,
+              1228
+            ],
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "anchors": {
+            "joint": [
+              400,
+              0,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              -280,
+              -120,
+              0
+            ],
+            "distance": 304.6,
+            "order": 5
+          },
+          "properties": {
+            "role": "double wishbone",
+            "materialName": "Aluminium (machined)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "upper-arm-fr",
+          "label": "Front upper wishbone (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 330,
+              "depth": 260,
+              "radius": 12
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              -350,
+              565,
+              1228
+            ],
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              -300,
+              100,
+              0
+            ],
+            "distance": 316.2,
+            "order": 5
+          },
+          "properties": {
+            "role": "double wishbone",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "coilover-fr",
+          "label": "Front coilover (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "coilover",
+            "params": {
+              "length": 360,
+              "radius": 46
+            }
+          },
+          "material": "spring-red",
+          "transform": {
+            "position": [
+              -560,
+              450,
+              1363
+            ],
+            "rotation": [
+              0,
+              0,
+              -10
+            ]
+          },
+          "explode": {
+            "direction": [
+              -260,
+              320,
+              0
+            ],
+            "distance": 412.3,
+            "order": 5
+          },
+          "properties": {
+            "role": "adjustable damper",
+            "materialName": "High-tensile steel"
+          }
+        },
+        {
+          "id": "brake-fr",
+          "label": "Front brake (right)",
+          "parent": "lower-arm-fr",
+          "geometry": {
+            "kind": "brake-assembly",
+            "params": {
+              "radius": 205,
+              "thickness": 36,
+              "caliperAngle": 300
+            }
+          },
+          "material": "ccb",
+          "transform": {
+            "position": [
+              -712,
+              345,
+              1228
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          },
+          "anchors": {
+            "caliper": [
+              -88,
+              40,
+              -153
+            ]
+          },
+          "explode": {
+            "direction": [
+              -480,
+              0,
+              60
+            ],
+            "distance": 483.7,
+            "order": 4
+          },
+          "properties": {
+            "role": "carbon-ceramic (CCB)",
+            "materialName": "Carbon-ceramic (CCB)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "wheel-fr",
+          "label": "Front wheel (right)",
+          "parent": "brake-fr",
+          "geometry": {
+            "kind": "wheel",
+            "params": {
+              "radius": 345,
+              "width": 275,
+              "spokes": 10
+            }
+          },
+          "material": "magnesium",
+          "transform": {
+            "position": [
+              -790,
+              345,
+              1228
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          },
+          "anchors": {
+            "hub": [
+              0,
+              170.5,
+              0
+            ],
+            "tread": [
+              0,
+              0,
+              345
+            ]
+          },
+          "explode": {
+            "direction": [
+              -820,
+              0,
+              80
+            ],
+            "distance": 823.9,
+            "order": 3
+          },
+          "properties": {
+            "role": "forged centre-lock wheel",
+            "materialName": "Magnesium (forged)",
+            "qty": 4,
+            "size": "275/35 R20 (representative)"
+          }
+        },
+        {
+          "id": "lower-arm-rr",
+          "label": "Rear lower arm (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 400,
+              "depth": 400,
+              "radius": 15
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              -320,
+              220,
+              -1229
+            ],
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "anchors": {
+            "joint": [
+              400,
+              0,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              -280,
+              -120,
+              0
+            ],
+            "distance": 304.6,
+            "order": 5
+          },
+          "properties": {
+            "role": "multi-link",
+            "materialName": "Aluminium (machined)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "upper-link-rr",
+          "label": "Rear upper link (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 300,
+              "radius": 12,
+              "shape": "link"
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              -360,
+              570,
+              -1199
+            ],
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              -300,
+              100,
+              0
+            ],
+            "distance": 316.2,
+            "order": 5
+          },
+          "properties": {
+            "role": "multi-link",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "toe-link-rr",
+          "label": "Rear toe link (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "control-arm",
+            "params": {
+              "span": 320,
+              "radius": 11,
+              "shape": "link"
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              -330,
+              330,
+              -1399
+            ],
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              -300,
+              -40,
+              -60
+            ],
+            "distance": 308.5,
+            "order": 5
+          },
+          "properties": {
+            "role": "multi-link",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "coilover-rr",
+          "label": "Rear coilover (right)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "coilover",
+            "params": {
+              "length": 380,
+              "radius": 48
+            }
+          },
+          "material": "spring-red",
+          "transform": {
+            "position": [
+              -565,
+              480,
+              -1094
+            ],
+            "rotation": [
+              0,
+              0,
+              -8
+            ]
+          },
+          "explode": {
+            "direction": [
+              -260,
+              320,
+              0
+            ],
+            "distance": 412.3,
+            "order": 5
+          },
+          "properties": {
+            "role": "adjustable damper",
+            "materialName": "High-tensile steel"
+          }
+        },
+        {
+          "id": "brake-rr",
+          "label": "Rear brake (right)",
+          "parent": "lower-arm-rr",
+          "geometry": {
+            "kind": "brake-assembly",
+            "params": {
+              "radius": 195,
+              "thickness": 34,
+              "caliperAngle": 60
+            }
+          },
+          "material": "ccb",
+          "transform": {
+            "position": [
+              -702,
+              362,
+              -1229
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          },
+          "anchors": {
+            "caliper": [
+              -84,
+              40,
+              146
+            ]
+          },
+          "explode": {
+            "direction": [
+              -480,
+              0,
+              -60
+            ],
+            "distance": 483.7,
+            "order": 4
+          },
+          "properties": {
+            "role": "carbon-ceramic (CCB)",
+            "materialName": "Carbon-ceramic (CCB)",
+            "qty": 2
+          }
+        },
+        {
+          "id": "wheel-rr",
+          "label": "Rear wheel (right)",
+          "parent": "brake-rr",
+          "geometry": {
+            "kind": "wheel",
+            "params": {
+              "radius": 362,
+              "width": 335,
+              "spokes": 10
+            }
+          },
+          "material": "magnesium",
+          "transform": {
+            "position": [
+              -780,
+              362,
+              -1229
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          },
+          "anchors": {
+            "hub": [
+              0,
+              207.7,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              -820,
+              0,
+              -80
+            ],
+            "distance": 823.9,
+            "order": 3
+          },
+          "properties": {
+            "role": "forged centre-lock wheel",
+            "materialName": "Magnesium (forged)",
+            "qty": 2,
+            "size": "335/30 R21 (representative)"
+          }
+        },
+        {
+          "id": "steering-rack",
+          "label": "Steering rack",
+          "parent": "biw",
+          "geometry": {
+            "kind": "steering-rack",
+            "params": {
+              "length": 900,
+              "radius": 28
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              0,
+              300,
+              1110
+            ]
+          },
+          "anchors": {
+            "housing": [
+              120,
+              28,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              -260,
+              80
+            ],
+            "distance": 272,
+            "order": 4
+          },
+          "properties": {
+            "role": "electro-mechanical (EPS)",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "engine",
+          "label": "Flat-six engine",
+          "parent": "biw",
+          "geometry": {
+            "kind": "flat-engine",
+            "params": {
+              "cylinders": 6,
+              "length": 600,
+              "width": 840,
+              "height": 500
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              0,
+              420,
+              -1700
+            ]
+          },
+          "anchors": {
+            "cover": [
+              -400,
+              120,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              980,
+              -300
+            ],
+            "distance": 1024.9,
+            "order": 4
+          },
+          "properties": {
+            "role": "naturally aspirated flat-six (representative)",
+            "materialName": "Aluminium (machined)",
+            "layout": "rear, behind the axle"
+          }
+        },
+        {
+          "id": "plenum",
+          "label": "Induction plenum",
+          "parent": "engine",
+          "geometry": {
+            "kind": "intake-plenum",
+            "params": {
+              "length": 560,
+              "width": 300,
+              "height": 150,
+              "runners": 6
+            }
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              0,
+              650,
+              -1700
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              150,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              1330,
+              -300
+            ],
+            "distance": 1363.4,
+            "order": 4
+          },
+          "properties": {
+            "role": "variable-length (representative)",
+            "materialName": "CFRP"
+          }
+        },
+        {
+          "id": "transaxle",
+          "label": "Dual-clutch transaxle",
+          "parent": "engine",
+          "geometry": {
+            "kind": "transaxle",
+            "params": {
+              "length": 560,
+              "width": 400,
+              "height": 330
+            }
+          },
+          "material": "alu",
+          "transform": {
+            "position": [
+              0,
+              360,
+              -1120
+            ]
+          },
+          "anchors": {
+            "case": [
+              100,
+              160,
+              100
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              640,
+              120
+            ],
+            "distance": 651.2,
+            "order": 4
+          },
+          "properties": {
+            "role": "7-speed dual-clutch (representative)",
+            "materialName": "Aluminium (machined)"
+          }
+        },
+        {
+          "id": "driveshaft-l",
+          "label": "Drive shaft (left)",
+          "parent": "transaxle",
+          "geometry": {
+            "kind": "tube",
+            "path": [
+              [
+                230,
+                333,
+                -1232
+              ],
+              [
+                470,
+                348,
+                -1231
+              ],
+              [
+                660,
+                362,
+                -1229
+              ]
+            ],
+            "radius": 24
+          },
+          "material": "steel",
+          "explode": {
+            "direction": [
+              60,
+              640,
+              120
+            ],
+            "distance": 653.9,
+            "order": 4
+          },
+          "properties": {
+            "role": "constant-velocity shaft",
+            "materialName": "High-tensile steel",
+            "qty": 2
+          }
+        },
+        {
+          "id": "driveshaft-r",
+          "label": "Drive shaft (right)",
+          "parent": "transaxle",
+          "geometry": {
+            "kind": "tube",
+            "path": [
+              [
+                -230,
+                333,
+                -1232
+              ],
+              [
+                -470,
+                348,
+                -1231
+              ],
+              [
+                -660,
+                362,
+                -1229
+              ]
+            ],
+            "radius": 24
+          },
+          "material": "steel",
+          "explode": {
+            "direction": [
+              -60,
+              640,
+              120
+            ],
+            "distance": 653.9,
+            "order": 4
+          },
+          "properties": {
+            "role": "constant-velocity shaft",
+            "materialName": "High-tensile steel",
+            "qty": 2
+          }
+        },
+        {
+          "id": "exhaust",
+          "label": "Exhaust",
+          "parent": "engine",
+          "geometry": {
+            "kind": "exhaust",
+            "params": {
+              "span": 880,
+              "mufflerRadius": 100,
+              "length": 360,
+              "tips": 2,
+              "tipRadius": 52,
+              "tipLength": 150
+            }
+          },
+          "material": "titanium",
+          "transform": {
+            "position": [
+              0,
+              330,
+              -2140
+            ],
+            "rotation": [
+              -90,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "tips": [
+              0,
+              200,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              1080,
+              -980
+            ],
+            "distance": 1458.4,
+            "order": 4
+          },
+          "properties": {
+            "role": "centre exit",
+            "materialName": "Titanium"
+          }
+        },
+        {
+          "id": "seat-l",
+          "label": "Bucket seat (driver)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "bucket-seat",
+            "params": {
+              "width": 500,
+              "height": 940,
+              "depth": 560,
+              "accentMaterial": "spring-red"
+            }
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              340,
+              165,
+              80
+            ]
+          },
+          "anchors": {
+            "headrest": [
+              0,
+              900,
+              -240
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              850,
+              250
+            ],
+            "distance": 886,
+            "order": 3
+          },
+          "properties": {
+            "role": "lightweight race seat",
+            "materialName": "CFRP",
+            "qty": 2
+          }
+        },
+        {
+          "id": "seat-r",
+          "label": "Bucket seat (passenger)",
+          "parent": "biw",
+          "geometry": {
+            "kind": "bucket-seat",
+            "params": {
+              "width": 500,
+              "height": 940,
+              "depth": 560,
+              "accentMaterial": "spring-red"
+            }
+          },
+          "material": "cfrp",
+          "transform": {
+            "position": [
+              -340,
+              165,
+              80
+            ]
+          },
+          "anchors": {
+            "headrest": [
+              0,
+              900,
+              -240
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              850,
+              250
+            ],
+            "distance": 886,
+            "order": 3
+          },
+          "properties": {
+            "role": "lightweight race seat",
+            "materialName": "CFRP",
+            "qty": 2
+          }
+        },
+        {
+          "id": "dashboard",
+          "label": "Dashboard module",
+          "parent": "biw",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "name": "beam",
+                "geometry": {
+                  "kind": "roundedBox",
+                  "size": [
+                    1280,
+                    150,
+                    300
+                  ],
+                  "radius": 40
+                }
+              },
+              {
+                "name": "binnacle",
+                "geometry": {
+                  "kind": "roundedBox",
+                  "size": [
+                    460,
+                    100,
+                    230
+                  ],
+                  "radius": 30
+                },
+                "transform": {
+                  "position": [
+                    360,
+                    110,
+                    -40
+                  ]
+                }
+              },
+              {
+                "name": "gauge",
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 58,
+                  "height": 20,
+                  "segments": 32
+                },
+                "material": "steel",
+                "transform": {
+                  "position": [
+                    228,
+                    90,
+                    -150
+                  ],
+                  "rotation": [
+                    90,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "gauge",
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 58,
+                  "height": 20,
+                  "segments": 32
+                },
+                "material": "steel",
+                "transform": {
+                  "position": [
+                    360,
+                    90,
+                    -150
+                  ],
+                  "rotation": [
+                    90,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "gauge",
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 58,
+                  "height": 20,
+                  "segments": 32
+                },
+                "material": "steel",
+                "transform": {
+                  "position": [
+                    492,
+                    90,
+                    -150
+                  ],
+                  "rotation": [
+                    90,
+                    0,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "mfd",
+                "geometry": {
+                  "kind": "chamferBox",
+                  "size": [
+                    260,
+                    150,
+                    14
+                  ],
+                  "radius": 6
+                },
+                "material": "glass-tint",
+                "transform": {
+                  "position": [
+                    0,
+                    60,
+                    -150
+                  ]
+                }
+              },
+              {
+                "name": "console",
+                "geometry": {
+                  "kind": "roundedBox",
+                  "size": [
+                    300,
+                    300,
+                    420
+                  ],
+                  "radius": 40
+                },
+                "transform": {
+                  "position": [
+                    0,
+                    -290,
+                    -200
+                  ]
+                }
+              }
+            ]
+          },
+          "material": "alcantara",
+          "transform": {
+            "position": [
+              0,
+              780,
+              700
+            ]
+          },
+          "anchors": {
+            "binnacle": [
+              360,
+              160,
+              -40
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              700,
+              700
+            ],
+            "distance": 989.9,
+            "order": 3
+          },
+          "properties": {
+            "role": "instrument cluster & MFD",
+            "materialName": "Composite / other"
+          }
+        },
+        {
+          "id": "steering-wheel",
+          "label": "Steering wheel",
+          "parent": "dashboard",
+          "geometry": {
+            "kind": "steering-wheel",
+            "params": {
+              "radius": 175,
+              "grip": 16
+            }
+          },
+          "material": "alcantara",
+          "transform": {
+            "position": [
+              360,
+              860,
+              470
+            ],
+            "rotation": [
+              -70,
+              0,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              700,
+              640
+            ],
+            "distance": 948.5,
+            "order": 3
+          },
+          "properties": {
+            "role": "quick-release wheel",
+            "materialName": "Composite / other"
+          }
+        },
+        {
+          "id": "roll-cage",
+          "label": "Roll cage",
+          "parent": "biw",
+          "geometry": {
+            "kind": "roll-cage",
+            "params": {
+              "width": 1520,
+              "height": 1010,
+              "length": 1300,
+              "radius": 20,
+              "topRatio": 0.57
+            }
+          },
+          "material": "steel",
+          "transform": {
+            "position": [
+              0,
+              162,
+              50
+            ]
+          },
+          "anchors": {
+            "hoop": [
+              0,
+              1010,
+              -416
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              1450,
+              -250
+            ],
+            "distance": 1471.4,
+            "order": 3
+          },
+          "properties": {
+            "role": "titanium / high-tensile steel",
+            "materialName": "High-tensile steel"
+          }
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "id": "ann-splitter",
+      "type": "label",
+      "text": "Front splitter",
+      "target": {
+        "anchor": "splitter.lip"
+      },
+      "group": "aero",
+      "item": 1
+    },
+    {
+      "id": "ann-front-aero",
+      "type": "label",
+      "text": "Active front aero",
+      "target": {
+        "anchor": "front-aero.flaps"
+      },
+      "group": "aero",
+      "item": 2
+    },
+    {
+      "id": "ann-front-diffuser",
+      "type": "label",
+      "text": "Front diffuser",
+      "target": {
+        "anchor": "front-diffuser.floor"
+      },
+      "group": "aero",
+      "item": 3
+    },
+    {
+      "id": "ann-headlamp-l",
+      "type": "label",
+      "text": "LED headlamp module",
+      "target": {
+        "anchor": "headlamp-l.lens"
+      },
+      "group": "body",
+      "item": 4
+    },
+    {
+      "id": "ann-bonnet",
+      "type": "label",
+      "text": "Front bonnet",
+      "target": {
+        "anchor": "bonnet.top"
+      },
+      "group": "body",
+      "item": 5
+    },
+    {
+      "id": "ann-radiator",
+      "type": "label",
+      "text": "Cooling radiator",
+      "target": {
+        "anchor": "radiator-centre.core"
+      },
+      "group": "powertrain",
+      "item": 6
+    },
+    {
+      "id": "ann-wishbone",
+      "type": "label",
+      "text": "Front double wishbone",
+      "target": {
+        "anchor": "lower-arm-fl.joint"
+      },
+      "group": "chassis",
+      "item": 7
+    },
+    {
+      "id": "ann-steering",
+      "type": "label",
+      "text": "Steering rack",
+      "target": {
+        "anchor": "steering-rack.housing"
+      },
+      "group": "chassis",
+      "item": 8
+    },
+    {
+      "id": "ann-fender-l",
+      "type": "label",
+      "text": "Front fender",
+      "target": {
+        "anchor": "fender-l.arch"
+      },
+      "group": "body",
+      "item": 9
+    },
+    {
+      "id": "ann-brake-f",
+      "type": "label",
+      "text": "Front brake assembly",
+      "target": {
+        "anchor": "brake-fl.caliper"
+      },
+      "group": "chassis",
+      "item": 10
+    },
+    {
+      "id": "ann-wheel-f",
+      "type": "label",
+      "text": "Forged centre-lock wheel",
+      "target": {
+        "anchor": "wheel-fl.hub"
+      },
+      "group": "chassis",
+      "item": 11
+    },
+    {
+      "id": "ann-roof",
+      "type": "label",
+      "text": "Roof panel",
+      "target": {
+        "anchor": "roof.top"
+      },
+      "group": "body",
+      "item": 12
+    },
+    {
+      "id": "ann-windscreen",
+      "type": "label",
+      "text": "Windscreen",
+      "target": {
+        "anchor": "windscreen.centre"
+      },
+      "group": "body",
+      "item": 13
+    },
+    {
+      "id": "ann-seat",
+      "type": "label",
+      "text": "Bucket seat",
+      "target": {
+        "anchor": "seat-l.headrest"
+      },
+      "group": "cockpit",
+      "item": 14
+    },
+    {
+      "id": "ann-dashboard",
+      "type": "label",
+      "text": "Dashboard module",
+      "target": {
+        "anchor": "dashboard.binnacle"
+      },
+      "group": "cockpit",
+      "item": 15
+    },
+    {
+      "id": "ann-cage",
+      "type": "label",
+      "text": "Roll cage",
+      "target": {
+        "anchor": "roll-cage.hoop"
+      },
+      "group": "cockpit",
+      "item": 16
+    },
+    {
+      "id": "ann-sill-l",
+      "type": "label",
+      "text": "Side sill",
+      "target": {
+        "anchor": "sill-l.blade"
+      },
+      "group": "aero",
+      "item": 17
+    },
+    {
+      "id": "ann-multilink",
+      "type": "label",
+      "text": "Rear multi-link",
+      "target": {
+        "anchor": "lower-arm-rl.joint"
+      },
+      "group": "chassis",
+      "item": 18
+    },
+    {
+      "id": "ann-brake-r",
+      "type": "label",
+      "text": "Rear brake assembly",
+      "target": {
+        "anchor": "brake-rl.caliper"
+      },
+      "group": "chassis",
+      "item": 19
+    },
+    {
+      "id": "ann-wheel-r",
+      "type": "label",
+      "text": "Rear wheel",
+      "target": {
+        "anchor": "wheel-rl.hub"
+      },
+      "group": "chassis",
+      "item": 20
+    },
+    {
+      "id": "ann-engine",
+      "type": "label",
+      "text": "Flat-six engine",
+      "target": {
+        "anchor": "engine.cover"
+      },
+      "group": "powertrain",
+      "item": 21
+    },
+    {
+      "id": "ann-plenum",
+      "type": "label",
+      "text": "Induction plenum",
+      "target": {
+        "anchor": "plenum.top"
+      },
+      "group": "powertrain",
+      "item": 22
+    },
+    {
+      "id": "ann-transaxle",
+      "type": "label",
+      "text": "Dual-clutch transaxle",
+      "target": {
+        "anchor": "transaxle.case"
+      },
+      "group": "powertrain",
+      "item": 23
+    },
+    {
+      "id": "ann-exhaust",
+      "type": "label",
+      "text": "Exhaust assembly",
+      "target": {
+        "anchor": "exhaust.tips"
+      },
+      "group": "powertrain",
+      "item": 24
+    },
+    {
+      "id": "ann-rear-diffuser",
+      "type": "label",
+      "text": "Rear diffuser",
+      "target": {
+        "anchor": "rear-diffuser.strakes"
+      },
+      "group": "aero",
+      "item": 25
+    },
+    {
+      "id": "ann-rear-body",
+      "type": "label",
+      "text": "Rear body panel",
+      "target": {
+        "anchor": "rear-body.haunch"
+      },
+      "group": "body",
+      "item": 26
+    },
+    {
+      "id": "ann-swan-neck-l",
+      "type": "label",
+      "text": "Swan-neck wing support",
+      "target": {
+        "anchor": "swan-neck-l.crest"
+      },
+      "group": "aero",
+      "item": 27
+    },
+    {
+      "id": "ann-rear-wing",
+      "type": "label",
+      "text": "Active rear wing",
+      "target": {
+        "anchor": "rear-wing.tip"
+      },
+      "group": "aero",
+      "item": 28
+    },
+    {
+      "id": "ann-biw",
+      "type": "label",
+      "text": "Body-in-white",
+      "target": {
+        "anchor": "biw.sill"
+      },
+      "group": "body",
+      "item": 29
+    },
+    {
+      "id": "ann-door-l",
+      "type": "label",
+      "text": "Door",
+      "target": {
+        "anchor": "door-l.handle"
+      },
+      "group": "body",
+      "item": 30
+    },
+    {
+      "id": "ann-fascia",
+      "type": "label",
+      "text": "Front fascia",
+      "target": {
+        "anchor": "front-fascia.nose"
+      },
+      "group": "body",
+      "item": 31
+    },
+    {
+      "id": "dim-length",
+      "type": "dimension",
+      "target": {
+        "position": [
+          960,
+          20,
+          2230
+        ]
+      },
+      "targetB": {
+        "position": [
+          960,
+          20,
+          -2340
+        ]
+      },
+      "value": "4570 mm",
+      "offset": [
+        0,
+        26
+      ],
+      "group": "dimensions",
+      "visibleWhen": {
+        "explodeMax": 0.15
+      }
+    }
+  ],
+  "interactions": {
+    "orbit": true,
+    "select": true,
+    "inspect": true,
+    "explode": {
+      "enabled": true,
+      "slider": true,
+      "autoStagger": true,
+      "easing": "ease-in-out",
+      "stops": [
+        0,
+        0.35,
+        1
+      ],
+      "traces": false
+    },
+    "xray": true,
+    "section": {
+      "enabled": true,
+      "axis": "x"
+    },
+    "isolate": true,
+    "ghost": true,
+    "flow": false,
+    "measure": true,
+    "tree": true
+  },
+  "behaviors": [
+    {
+      "type": "explode",
+      "assembly": "car",
+      "amount": 1,
+      "stagger": true,
+      "duration": 2600,
+      "easing": "ease-in-out",
+      "autoPlay": true
+    }
+  ],
+  "partsList": {
+    "style": "legend",
+    "position": "split",
+    "title": "Systems",
+    "materialKey": true
+  },
+  "detailViews": [
+    {
+      "id": "detail-corner",
+      "label": "A",
+      "target": {
+        "anchor": "wheel-fl.hub"
+      },
+      "magnification": 2.6,
+      "caption": "Centre-lock hub & caliper",
+      "placement": "left"
+    }
+  ],
+  "tour": {
+    "steps": [
+      {
+        "id": "overview",
+        "title": "The assembled car",
+        "caption": "A representative rear-engine GT track car: a bonded body-in-white carries the aero, chassis, powertrain and cockpit systems numbered in the legend.",
+        "camera": "auto",
+        "explode": 0,
+        "select": null
+      },
+      {
+        "id": "aero",
+        "title": "Aero package",
+        "caption": "Splitter, active front flaps, underbody diffusers, CFRP sills and a swan-neck rear wing work as one downforce system.",
+        "camera": {
+          "azimuth": 40,
+          "elevation": 18
+        },
+        "explode": 0.35,
+        "highlight": [
+          "splitter",
+          "front-aero",
+          "front-diffuser",
+          "sill-l",
+          "sill-r",
+          "rear-diffuser",
+          "swan-neck-l",
+          "swan-neck-r",
+          "rear-wing"
+        ]
+      },
+      {
+        "id": "body",
+        "title": "Body panels",
+        "caption": "Bonnet, fenders, roof and doors are slices of one surface, so they meet seamlessly when assembled.",
+        "camera": {
+          "azimuth": 58,
+          "elevation": 26
+        },
+        "explode": 1,
+        "highlight": [
+          "bonnet",
+          "fender-l",
+          "fender-r",
+          "roof",
+          "windscreen",
+          "door-l",
+          "door-r",
+          "rear-body",
+          "front-fascia"
+        ]
+      },
+      {
+        "id": "chassis",
+        "title": "Chassis corners",
+        "caption": "Double wishbones at the front, multi-link at the rear, carbon-ceramic brakes and forged centre-lock wheels. Detail A magnifies the front-left hub.",
+        "camera": {
+          "azimuth": 64,
+          "elevation": 20
+        },
+        "explode": 1,
+        "highlight": [
+          "lower-arm-fl",
+          "upper-arm-fl",
+          "coilover-fl",
+          "brake-fl",
+          "wheel-fl",
+          "lower-arm-fr",
+          "upper-arm-fr",
+          "coilover-fr",
+          "brake-fr",
+          "wheel-fr",
+          "lower-arm-rl",
+          "upper-link-rl",
+          "toe-link-rl",
+          "coilover-rl",
+          "brake-rl",
+          "wheel-rl",
+          "lower-arm-rr",
+          "upper-link-rr",
+          "toe-link-rr",
+          "coilover-rr",
+          "brake-rr",
+          "wheel-rr",
+          "steering-rack"
+        ]
+      },
+      {
+        "id": "powertrain",
+        "title": "Powertrain",
+        "caption": "The flat-six sits behind the rear axle with its plenum on top; the dual-clutch transaxle and drive shafts sit ahead of it, the centre-exit exhaust behind.",
+        "camera": {
+          "azimuth": 120,
+          "elevation": 24
+        },
+        "explode": 1,
+        "highlight": [
+          "engine",
+          "plenum",
+          "transaxle",
+          "driveshaft-l",
+          "driveshaft-r",
+          "exhaust",
+          "radiator-centre",
+          "radiator-l",
+          "radiator-r"
+        ]
+      },
+      {
+        "id": "cockpit",
+        "title": "Cockpit and safety cell",
+        "caption": "Bucket seats, dashboard module and the bolted roll cage.",
+        "camera": {
+          "azimuth": 30,
+          "elevation": 30
+        },
+        "explode": 1,
+        "highlight": [
+          "seat-l",
+          "seat-r",
+          "dashboard",
+          "steering-wheel",
+          "roll-cage"
+        ]
+      },
+      {
+        "id": "drawing",
+        "title": "As a publication drawing",
+        "caption": "The same scene as vector line art with balloons and the systems legend — export it as SVG, a drawing sheet or a journal figure.",
+        "renderMode": "illustration",
+        "camera": "auto",
+        "explode": 1
+      }
+    ]
+  },
+  "metadata": {
+    "author": "spatial-diagram skill",
+    "revision": "A",
+    "domainPack": "automotive",
+    "notes": "Representative geometry inspired by a user-supplied exploded systems poster of a rear-engine GT track car. Generic, unbranded vehicle: proportions approximate a 4.57 m two-door coupé; no OEM model, part numbers, mass or performance claims. Body panels are superellipse lofts; vents, glazing seals, fasteners, wiring, fuel and hydraulic systems are omitted or symbolic. Exploding bonded and welded structure explains packaging, not a service procedure.",
+    "sources": [],
+    "auditExceptions": [
+      {
+        "code": "audit:intersecting",
+        "components": [
+          "roll-cage",
+          "rear-body"
+        ],
+        "reason": "Rear cage stays pass through the parcel shelf to the shock towers."
+      },
+      {
+        "code": "audit:intersecting",
+        "components": [
+          "dashboard",
+          "roll-cage"
+        ],
+        "reason": "A-pillar cage tubes pass through the dashboard ends, which are notched around them."
+      },
+      {
+        "code": "audit:intersecting",
+        "components": [
+          "swan-neck-r",
+          "rear-wing"
+        ],
+        "reason": "The right swan-neck bolts onto the wing upper surface (the left one is its semantic parent)."
+      },
+      {
+        "code": "audit:intersecting",
+        "components": [
+          "door-l",
+          "roll-cage"
+        ],
+        "reason": "Bounds only: the diagonal A-pillar cage tube runs ~60 mm inboard of the door shut line (checked at z 450–560)."
+      },
+      {
+        "code": "audit:intersecting",
+        "components": [
+          "door-r",
+          "roll-cage"
+        ],
+        "reason": "Bounds only: the diagonal A-pillar cage tube runs ~60 mm inboard of the door shut line (checked at z 450–560)."
+      },
+      {
+        "code": "audit:intersecting",
+        "components": [
+          "roof",
+          "roll-cage"
+        ],
+        "reason": "Bounds only: the main-hoop shoulder passes ~170 mm below the roof edge."
+      }
+    ]
+  }
+}

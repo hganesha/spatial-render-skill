@@ -17,6 +17,7 @@ Three authoring levels. Always use the **lowest level that reads correctly**.
 | `extrude` | `profile: [[x,y,z]…]`, `depth`, `bevel` | closed 2D polygon extruded along +Z |
 | `lathe` | `profile: [[r,y]…]`, `segments` | revolved around +Y |
 | `tube` | `path: [pts]`, `radius` | swept tube — cables, conduits |
+| `loft` | `sections: [{z, width, top, bottom, x?, exponent?}]`, `exponent`, `segments`, `subdivisions`, `arc`, `thickness` | superellipse cross-sections along local **+Z** — body shells, hulls, fuselages, ducts (see below) |
 | `compound` | `parts: [{geometry, material, transform, name}]` | **Level 3 escape hatch** — nested defs are built recursively |
 | `import` | unsupported | rejected; use built-in recipes/primitives/compounds |
 
@@ -24,9 +25,33 @@ Axis conventions: cylinders/lathes/motors speak **+Y**. Rotate with
 `transform.rotation` (Euler degrees XYZ). E.g. `rotation: [90, 0, 0]` aims a
 motor along +Z.
 
+### Lofts and panel slicing
+
+A loft sweeps superellipse sections (`exponent` 2 = ellipse, 3–4 = car-body
+boxy) along +Z. `subdivisions` Catmull-Rom-smooths between authored sections
+(use 1 when you sample sections densely yourself). Without `arc` the loft is a
+closed solid; `thickness` alone makes a hollow tube.
+
+`arc: [startDeg, endDeg]` keeps part of the ring (0° = +X side, 90° = top,
+180° = −X, 270° = bottom) as a **closed shell panel** (`thickness` defaults to
+0.6% of the section size). Panels sliced from the *same* sections with adjacent
+arcs tile seamlessly when assembled and explode apart cleanly — a bonnet
+`[70, 110]` between fenders `[0, 69.4]` and `[110.6, 180]` (leave ~0.5° seams).
+An open-topped tub is an arc that wraps through the bottom, e.g. `[121, 419]`.
+
+Wheel arches without booleans: keep `top` fixed and raise the section centre
+(`(top + bottom) / 2`) along the arch curve near each axle; the panel's side
+edge (θ = 0) then follows the arch. Sample sections every ~40–60 mm around the
+arch ends. See `examples/track-car-exploded` (its sections are generated, but
+the shipped scene.json is plain data an agent can edit).
+
 ## Level 2 — Recipes (preferred)
 
 Recipes are parametric compounds with sane defaults. `params` override.
+`references/recipe-gallery.png` shows every recipe at its defaults (each
+normalized to its cell, labelled with its real size); open
+`examples/recipe-gallery/index.html` to orbit and inspect them. Rebuild both with
+`npm run gallery` after adding a recipe.
 
 | Recipe | Key params | Builds |
 |---|---|---|
@@ -60,6 +85,29 @@ Recipes are parametric compounds with sane defaults. `params` override.
 | `duct` | `width, height, depth, wall` | open duct with flanges |
 | `battery-cell` | `radius, height` | can + terminal |
 | `generic-recipe` | `size` | chamfered box fallback |
+
+### Vehicle & motorsport recipes (`kit/engine/recipes-vehicle.js`)
+
+| Recipe | Key params | Builds · axis |
+|---|---|---|
+| `wheel` | `radius, width, rimRadius, spokes, twin, centerLock, tireMaterial, rimMaterial, nutMaterial` | tyre + rim barrel + (twin) spokes + hub + centre-lock nut · axis +Y, outer face +Y |
+| `brake-assembly` | `radius, thickness, hatRadius, hatHeight, holes, caliperAngle, caliperMaterial, discMaterial` | disc + bell + cross-drilling + monoblock caliper · axis +Y |
+| `coilover` | `length, radius, coils, wire, damperRadius, springMaterial` | damper, shaft, perch, top mount, helical spring (component material) · axis +Y |
+| `control-arm` | `span, depth, radius, shape: a-arm\|link` | wishbone or single link with bushings · lies in XZ, inner pivots x = 0, ball joint at +x |
+| `steering-rack` | `length, radius` | housing, bellows, tie rods, pinion tower · along X |
+| `bucket-seat` | `width, height, depth, padMaterial, accentMaterial` | shell, cushion, bolsters, harness slots · faces +Z, origin at base |
+| `steering-wheel` | `radius, grip, markerMaterial` | rim, three spokes, hub, 12 o'clock marker, paddles · faces +Y, 12 o'clock +Z |
+| `roll-cage` | `width, height, length, radius, topRatio, doorBars` | main hoop, A-pillar/roof bars, stays, diagonals, door bars · origin floor centre, front +Z |
+| `airfoil-wing` | `span, chord, thickness, camber, angle, elements, endplates, endplateHeight, mounts` | inverted (downforce) cambered main plane + slotted flap + endplates · span X, leading edge +Z |
+| `flat-engine` | `cylinders, length, width, height, coverMaterial, headerMaterial` | horizontally opposed block, barrels, heads, cam covers, runners, headers, accessory drive · crank along Z, flywheel +Z |
+| `intake-plenum` | `length, width, height, runners` | plenum, throttle bodies (+Z), runner stubs · base at y = 0 |
+| `transaxle` | `length, width, height` | bell housing (−Z), differential across X, gearcase, actuator, cooler |
+| `radiator` | `width, height, depth, tanks, coreMaterial` | vented core, frame, side tanks, fittings · core faces +Z |
+| `headlamp` | `radius, depth, modules, ledMaterial, housingMaterial` | cup housing, body-colour bezel, LED modules, DRL ring, lens · lens faces +Y |
+| `exhaust` | `span, mufflerRadius, length, tips, tipRadius, tipLength, tipMaterial` | transverse silencer, centre tips (+Y), inlet pipes (−Y) |
+
+Rotate +Y-axis recipes into place with `transform.rotation` (wheels on a car
+facing +Z: `[0, 0, -90]` for the +X side, `[0, 0, 90]` for −X).
 
 Recipe philosophy: a recipe owns the **canonical, inseparable** form of a part.
 Anything a viewer might want to see exploded separately (covers, gaskets,

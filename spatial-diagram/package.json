@@ -1,23 +1,29 @@
 {
   "name": "spatial-diagram",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "directories": {
     "example": "examples"
   },
   "scripts": {
     "validate": "node scripts/validate-scene.mjs --all",
     "export": "node scripts/export-scene.mjs --all",
-    "capture": "node scripts/capture-scene.mjs examples/gpu-exploded/index.html -o examples/gpu-exploded/capture.png",
+    "capture": "node scripts/capture-scene.mjs examples/gpu-exploded/index.html -o examples/gpu-exploded/capture.png --contact-sheet examples/gpu-exploded/contact-sheet.png",
     "serve": "node scripts/serve.mjs . --port 8080",
     "test": "node --test tests/regression.mjs",
     "test:browser": "node tests/browser.mjs",
     "sync-schema": "node scripts/sync-schema.mjs",
-    "test:blueprint": "node tests/blueprint-browser.mjs"
+    "test:blueprint": "node tests/blueprint-browser.mjs",
+    "test:features": "node tests/features-browser.mjs",
+    "figure": "node scripts/export-figure.mjs",
+    "diff": "node scripts/scene-diff.mjs",
+    "gallery": "node scripts/build-gallery.mjs --capture",
+    "new-scene": "node scripts/new-scene.mjs",
+    "build:element": "node scripts/build-element.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "Declarative interactive 3D technical diagrams with WebGL and isometric architectural SVG blueprint renderers.",
+  "description": "Declarative interactive 3D technical diagrams: WebGL, isometric blueprint and publication-illustration vector renderers, figure exports, tours and agent audits.",
   "dependencies": {
     "puppeteer": "^24.43.1"
   },

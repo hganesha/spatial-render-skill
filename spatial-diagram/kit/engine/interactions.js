@@ -24,7 +24,8 @@ export function createInteractionSystem(THREE) {
       azimuth: o.azimuth, elevation: o.elevation, distance: o.distance,
       targetAzimuth: o.azimuth, targetElevation: o.elevation, targetDistance: o.distance,
       targetCenter: o.target.clone(),
-      autoRotate: 0
+      autoRotate: 0,
+      userFramed: false
     };
 
     let enabled = o.enabled !== false, rotationEnabled=true;
@@ -71,12 +72,13 @@ export function createInteractionSystem(THREE) {
         last = { x: e.clientX, y: e.clientY };
       } else if (mode === 'pan' && pointers.size === 1) {
         const dx = e.clientX - last.x, dy = e.clientY - last.y;
+        if (dx || dy) state.userFramed = true;
         panBy(dx, dy);
         last = { x: e.clientX, y: e.clientY };
       } else if (mode === 'pinch' && pointers.size === 2) {
         const pts = [...pointers.values()];
         const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
-        if (pinchStart > 0 && dist > 0) zoomBy(pinchStart / dist);
+        if (pinchStart > 0 && dist > 0) {zoomBy(pinchStart / dist);state.userFramed = true;}
         pinchStart = dist;
       }
     }
@@ -89,6 +91,7 @@ export function createInteractionSystem(THREE) {
       if (!enabled) return;
       e.preventDefault();
       const factor = Math.exp(e.deltaY * 0.0011 * o.zoomSpeed);
+      state.userFramed = true;
       zoomBy(factor);
     }
     function zoomBy(factor) {
@@ -217,7 +220,7 @@ export function createInteractionSystem(THREE) {
     const state = {
       explode: 0, explodeTarget: 0,
       xray: false, section: false, isolate: false, ghost: false, flow: true,
-      selected: null, hovered: null,
+      selected: null, hovered: null, highlight: new Set(), diff: new Map(),
       sectionAxis: 'y', sectionPosition: 0
     };
     const baseMaterials = new Map(); // mesh -> material snapshot
@@ -246,7 +249,12 @@ export function createInteractionSystem(THREE) {
         const isHovered = state.hovered === compId;
         let mat = base;
 
-        if (state.isolate && state.selected && compId !== state.selected) {
+        const diffKind = state.diff.get(compId);
+        if (state.highlight.size && !state.isolate && !state.ghost) {
+          mat = state.highlight.has(compId) ? highlightVersion(base) : state.highlightGhost === false ? base : ghostVersion(base, 0.2);
+        } else if (diffKind && !state.isolate && !state.ghost && !state.xray) {
+          mat = tintVersion(base, diffKind === 'added' ? 0x22c55e : 0xf59e0b);
+        } else if (state.isolate && state.selected && compId !== state.selected) {
           mat = ghostVersion(base, 0.06);
         } else if (state.ghost && state.selected && compId !== state.selected) {
           mat = ghostVersion(base, 0.22);
@@ -298,6 +306,15 @@ export function createInteractionSystem(THREE) {
       if (ghostCache.has(key)) return ghostCache.get(key);
       const m = base.clone();
       if (m.emissive) { m.emissive.setHex(0xff9a3c); m.emissiveIntensity = 0.55; }
+      ghostCache.set(key, m);
+      return m;
+    }
+    function tintVersion(base, hex) {
+      const key = base.uuid + ':tint:' + hex;
+      if (ghostCache.has(key)) return ghostCache.get(key);
+      const m = base.clone();
+      if (m.color) m.color.lerp(new THREE.Color(hex), 0.55);
+      if (m.emissive) { m.emissive.setHex(hex); m.emissiveIntensity = 0.35; }
       ghostCache.set(key, m);
       return m;
     }

@@ -28,12 +28,17 @@ const MODULE_ORDER = [
   'schema-validation.js',
   'spec-math.js',
   'materials.js',
+  'recipes-vehicle.js',
   'geometry.js',
   'assembly.js',
   'annotations.js',
   'interactions.js',
   'renderer.js',
+  'section-caps.js',
   'blueprint.js',
+  'visual-audit.js',
+  'scene-diff.js',
+  'tour.js',
   'ui.js',
   'scene-compiler.js',
   'index.js'
@@ -60,7 +65,12 @@ global.SpatialDiagram = {
   ENGINE_VERSION: ENGINE_VERSION,
   normalizeSpec: normalizeSpec,
   validateSceneSpec: validateSceneSpec,
-  auditScene: auditScene
+  auditScene: auditScene,
+  diffScenes: diffScenes,
+  formatDiff: formatDiff,
+  RENDER_MODES: RENDER_MODES,
+  VIEW_PRESETS: VIEW_PRESETS,
+  FIGURE_PRESETS: FIGURE_PRESETS
 };
 })(typeof window !== 'undefined' ? window : globalThis);
 `;
@@ -113,7 +123,10 @@ export function buildHtml(scenePath, opts = {}) {
 <script>${engine}</script>
 <script id="scene-spec" type="application/json">
 ${specRaw.replace(/</g, '\\u003c')}
-</script>
+</script>${opts.compareWith ? `
+<script id="compare-spec" type="application/json">
+${JSON.stringify(opts.compareWith).replace(/</g, '\\u003c')}
+</script>` : ''}
 <script>
 (function () {
   try {
@@ -123,6 +136,7 @@ ${specRaw.replace(/</g, '\\u003c')}
       THREE: window.THREE,
       container: container,
       spec: spec,
+      urlState: true,
       onEvent: function (evt) {
         if (evt && evt.type === 'scene:loaded') {
           console.log('[spatial-diagram] scene loaded:', evt.sceneId, evt.components + ' components');
@@ -130,6 +144,9 @@ ${specRaw.replace(/</g, '\\u003c')}
       }
     });
     window.sceneEngine = engine;
+    var compare = document.getElementById('compare-spec');
+    if (compare) engine.compare(JSON.parse(compare.textContent));
+    container.focus({ preventScroll: true });
   } catch (e) {
     console.error(e);
     var d = document.createElement('div');

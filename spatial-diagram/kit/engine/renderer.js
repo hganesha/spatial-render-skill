@@ -134,7 +134,8 @@ export function createRendererSystem(THREE) {
       return true;
     }
 
-    function frameBounds(box, padding) {
+    // Returns {target, distance, zoom}; orthographic zoom is applied unless apply===false.
+    function frameBounds(box, padding, apply = true) {
       if (!box) return;
       const center = box.getCenter(new THREE.Vector3());
       const radius = box.getSize(new THREE.Vector3()).length() / 2 || 50;
@@ -148,9 +149,9 @@ export function createRendererSystem(THREE) {
       for(const x of [box.min.x,box.max.x]) for(const y of [box.min.y,box.max.y]) for(const z of [box.min.z,box.max.z])
         projected.expandByPoint(new THREE.Vector3(x,y,z).sub(center).applyQuaternion(inverse));
       const size=projected.getSize(new THREE.Vector3());
-      camera.zoom=Math.min((camera.right-camera.left)/Math.max(size.x,.001),(camera.top-camera.bottom)/Math.max(size.y,.001))/(padding || 1.22);
-      camera.updateProjectionMatrix();
-      return { target: center.toArray(), distance: radius * 3 };
+      const zoom=Math.min((camera.right-camera.left)/Math.max(size.x,.001),(camera.top-camera.bottom)/Math.max(size.y,.001))/(padding || 1.22);
+      if(apply) {camera.zoom=zoom;camera.updateProjectionMatrix();}
+      return { target: center.toArray(), distance: radius * 3, zoom };
     }
 
     function fitShadowCamera(box) {
@@ -183,6 +184,18 @@ export function createRendererSystem(THREE) {
       resize, frameBounds, fitShadowCamera, setGroundY,
       styleColors: st,
       render() { renderer.render(scene, camera); },
+      // Detail insets: [{rect:{x,y,w,h} in CSS px from top-left, camera}]
+      renderInsets(insets) {
+        if(!insets.length) return;
+        const size=renderer.getSize(new THREE.Vector2());
+        renderer.setScissorTest(true);
+        for(const inset of insets) {
+          const {x,y,w,h}=inset.rect,bottom=size.y-y-h;
+          renderer.setViewport(x,bottom,w,h);renderer.setScissor(x,bottom,w,h);
+          renderer.render(scene,inset.camera);
+        }
+        renderer.setScissorTest(false);renderer.setViewport(0,0,size.x,size.y);renderer.setScissor(0,0,size.x,size.y);
+      },
       dispose() {
         scene.background?.dispose();
         groundGroup.traverse(o=>{o.geometry?.dispose();if(o.material) [].concat(o.material).forEach(m=>m.dispose());});

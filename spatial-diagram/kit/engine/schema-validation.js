@@ -9,12 +9,14 @@ export function validateSchema(schema, value) {
       return visit(target, data, path);
     }
     if (rule.type) {
-      const valid = rule.type === 'object' ? data !== null && typeof data === 'object' && !Array.isArray(data)
-        : rule.type === 'array' ? Array.isArray(data)
-        : rule.type === 'integer' ? Number.isInteger(data)
-        : rule.type === 'number' ? typeof data === 'number' && Number.isFinite(data)
-        : typeof data === rule.type;
-      if (!valid) { error(`must be ${rule.type}.`); return errors; }
+      const matches = type => type === 'object' ? data !== null && typeof data === 'object' && !Array.isArray(data)
+        : type === 'array' ? Array.isArray(data)
+        : type === 'integer' ? Number.isInteger(data)
+        : type === 'number' ? typeof data === 'number' && Number.isFinite(data)
+        : type === 'null' ? data === null
+        : typeof data === type;
+      const types = [].concat(rule.type);
+      if (!types.some(matches)) { error(`must be ${types.join(' or ')}.`); return errors; }
     }
     if (rule.enum && !rule.enum.some(item => JSON.stringify(item) === JSON.stringify(data))) error(`must be one of ${rule.enum.join(', ')}.`);
     if (typeof data === 'number') {
