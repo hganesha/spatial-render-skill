@@ -8,15 +8,20 @@ reliability half of the product.
 | `spec-math.js` | pure-JS spec math: transforms, AABBs, camera projection, explode vectors, `validateSceneSpec`, `auditScene` (no external dependencies; CLI and engine inject bounds from the real geometry builders) |
 | `schema-data.js` / `schema-validation.js` | generated Scene Schema and offline evaluator for its JSON Schema vocabulary |
 | `materials.js` | presets, finishes, procedural textures (pcb-traces, brushed, vents, carbon, knurl) |
-| `geometry.js` | Level-1 primitives + Level-2 recipes → part lists |
+| `geometry.js` | Level-1 primitives (incl. `loft`) + Level-2 recipes → part lists; audit patch groups for shells, rings and tubes |
+| `recipes-vehicle.js` | vehicle & motorsport recipes (wheel, brakes, coilover, arms, seat, cage, wing, flat engine, transaxle, …) registered into `RECIPES` |
 | `assembly.js` | object hierarchy, explode interpolation, bounds, anchors |
-| `annotations.js` | SVG overlay projected from 3D anchors (labels, dimensions, leaders, occlusion dimming) |
+| `annotations.js` | SVG overlay projected from 3D anchors: cards/balloons, free or margin layout, dimensions, parts list, traces, measurements, detail frames, collapse chip, link highlighting, layout audit |
 | `interactions.js` | orbit rig, raycast picking, mode state machine (xray/section/isolate/ghost/flow) |
 | `renderer.js` | WebGL stage: switchable cameras, lighting, ground, tone mapping |
-| `blueprint.js` | vector isometric faces/feature edges/silhouettes, drawing sheet, connectors and SVG serialization |
-| `ui.js` | title plate, toolbar, inspect card, legend, toasts |
+| `section-caps.js` | cross-section loops of clipped meshes → hatched WebGL cap meshes and vector cap polygons |
+| `blueprint.js` | vector renderer with `blueprint` and `illustration` themes: faces, crease/silhouette weights, hidden lines, caps, detail insets, off-screen panels, SVG serialization |
+| `visual-audit.js` | rendered-view audit (framing, labels over geometry, stray/unlabeled parts) |
+| `scene-diff.js` | pure revision diff between two specs (runtime overlay + CLI) |
+| `tour.js` | tour step normalization and assembly-instruction derivation |
+| `ui.js` | title plate, grouped toolbar, export menu, inspect card, parts tree, tooltip, tour captions, diff legend, help, live region |
 | `scene-compiler.js` | spec → materials + geometry parts bridge |
-| `index.js` | `createEngine()` public API |
+| `index.js` | `createEngine()` public API: loading/reconciliation, follow framing, peek/local explode, panels and figure exports, measure, diff, tours, share links, keyboard |
 
 ## Entry
 

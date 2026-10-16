@@ -18,7 +18,7 @@ const frames=(n=2)=>page.evaluate(n=>new Promise(resolve=>{let i=0;const tick=()
 const click=id=>page.click(`.sd-toolbar [data-id="${id}"]`);
 const lines=()=>page.$eval('.sd-blueprint-geometry',el=>el.innerHTML);
 async function openScene(name,mode='webgl') {
-  const spec=JSON.parse(fs.readFileSync(path.join(ROOT,'examples',name,'scene.json')));spec.scene.renderMode=mode;
+  const spec=JSON.parse(fs.readFileSync(path.join(ROOT,'examples',name,'scene.json')));spec.scene.renderMode=mode;delete spec.detailViews;delete spec.tour;
   const json=path.join(out,`${name}.scene.json`),html=path.join(out,`${name}.html`);
   fs.writeFileSync(json,JSON.stringify(spec,null,2));fs.writeFileSync(html,buildHtml(json));
   await page.goto(pathToFileURL(html).href,{waitUntil:'load'});await page.waitForFunction(()=>window.sceneEngine);

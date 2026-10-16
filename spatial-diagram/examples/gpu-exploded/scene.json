@@ -21,6 +21,11 @@
       "enabled": true,
       "grid": true,
       "shadows": true
+    },
+    "illustration": {
+      "spotColor": "#D55E00",
+      "shading": "tonal",
+      "palette": "okabe-ito"
     }
   },
   "materials": {
@@ -108,7 +113,7 @@
               1,
               0
             ],
-            "distance": 0.0,
+            "distance": 0,
             "order": 0
           }
         },
@@ -145,7 +150,7 @@
               12,
               0
             ],
-            "distance": 12.0,
+            "distance": 12,
             "order": 7
           },
           "properties": {
@@ -185,7 +190,7 @@
               26,
               0
             ],
-            "distance": 26.0,
+            "distance": 26,
             "order": 6
           },
           "properties": {
@@ -228,7 +233,7 @@
               42,
               0
             ],
-            "distance": 42.0,
+            "distance": 42,
             "order": 5
           },
           "material": "silicon"
@@ -263,7 +268,7 @@
               42,
               0
             ],
-            "distance": 42.0,
+            "distance": 42,
             "order": 5
           },
           "anchors": {
@@ -304,7 +309,7 @@
               42,
               0
             ],
-            "distance": 42.0,
+            "distance": 42,
             "order": 5
           },
           "anchors": {
@@ -345,7 +350,7 @@
               42,
               0
             ],
-            "distance": 42.0,
+            "distance": 42,
             "order": 5
           },
           "anchors": {
@@ -386,7 +391,7 @@
               42,
               0
             ],
-            "distance": 42.0,
+            "distance": 42,
             "order": 5
           },
           "anchors": {
@@ -427,7 +432,7 @@
               42,
               0
             ],
-            "distance": 42.0,
+            "distance": 42,
             "order": 5
           },
           "anchors": {
@@ -468,7 +473,7 @@
               42,
               0
             ],
-            "distance": 42.0,
+            "distance": 42,
             "order": 5
           },
           "anchors": {
@@ -507,7 +512,7 @@
               58,
               0
             ],
-            "distance": 58.0,
+            "distance": 58,
             "order": 4
           },
           "xray": "outer"
@@ -547,7 +552,7 @@
               74,
               0
             ],
-            "distance": 74.0,
+            "distance": 74,
             "order": 3
           },
           "xray": "outer"
@@ -1325,7 +1330,7 @@
               0,
               0
             ],
-            "distance": 85.0,
+            "distance": 85,
             "order": 0
           }
         },
@@ -1400,7 +1405,7 @@
               -58,
               0
             ],
-            "distance": 58.0,
+            "distance": 58,
             "order": 0
           }
         },
@@ -1434,11 +1439,11 @@
           },
           "explode": {
             "direction": [
-              60,
-              -80,
-              30
+              24,
+              -74,
+              12
             ],
-            "distance": 104.4030650891055,
+            "distance": 78.71467461661771,
             "order": 0
           }
         },
@@ -1468,10 +1473,10 @@
           "explode": {
             "direction": [
               0,
-              205,
+              168,
               18
             ],
-            "distance": 205.7887266105702,
+            "distance": 168.96153408394468,
             "order": 1
           }
         }
@@ -1487,8 +1492,8 @@
         "anchor": "gpu.top"
       },
       "offset": [
-        30,
-        -18
+        100,
+        -22
       ],
       "group": "silicon",
       "emphasis": "primary",
@@ -1502,8 +1507,8 @@
         "anchor": "hbm-2"
       },
       "offset": [
-        -36,
-        -16
+        -160,
+        6
       ],
       "side": "left",
       "group": "silicon"
@@ -1516,8 +1521,8 @@
         "anchor": "interposer.top"
       },
       "offset": [
-        -120,
-        18
+        -170,
+        26
       ],
       "side": "left",
       "group": "silicon"
@@ -1558,8 +1563,8 @@
         "anchor": "vapor-chamber.top"
       },
       "offset": [
-        -40,
-        -10
+        -130,
+        -8
       ],
       "side": "left",
       "group": "thermal"
@@ -1567,13 +1572,13 @@
     {
       "id": "ann-fin",
       "type": "label",
-      "text": "Finned stack \u00b7 heat pipes",
+      "text": "Finned stack · heat pipes",
       "target": {
         "anchor": "fin-stack-left.top"
       },
       "offset": [
-        -42,
-        -12
+        -230,
+        -4
       ],
       "side": "left",
       "group": "thermal"
@@ -1586,8 +1591,8 @@
         "anchor": "fan-left.top"
       },
       "offset": [
-        -40,
-        -14
+        -230,
+        -30
       ],
       "side": "left",
       "group": "thermal"
@@ -1614,8 +1619,8 @@
         "anchor": "power-connector.port"
       },
       "offset": [
-        30,
-        -20
+        80,
+        -34
       ],
       "group": "power",
       "emphasis": "warning",
@@ -1624,13 +1629,13 @@
     {
       "id": "ann-pcie",
       "type": "label",
-      "text": "PCIe 5.0 \u00d716 edge",
+      "text": "PCIe 5.0 ×16 edge",
       "target": {
         "anchor": "pcie-fingers.tip"
       },
       "offset": [
-        28,
-        18
+        90,
+        34
       ],
       "group": "io",
       "side": "auto"
@@ -1657,8 +1662,8 @@
         "anchor": "backplate"
       },
       "offset": [
-        34,
-        14
+        150,
+        34
       ],
       "group": "structure",
       "side": "auto"
@@ -1690,7 +1695,12 @@
       "enabled": true,
       "slider": true,
       "autoStagger": true,
-      "easing": "ease-in-out"
+      "easing": "ease-in-out",
+      "stops": [
+        0,
+        0.45,
+        1
+      ]
     },
     "xray": true,
     "section": {
@@ -1726,6 +1736,126 @@
     "notes": "Representative teaching geometry with exaggerated package thicknesses. No SKU, capacity, process or thermal-performance claim. GPU and HBM share an interposer above organic substrate and PCB. TSVs, solder joints, mounting holes and detailed connector pinout are omitted. Exploding soldered layers explains construction; it is not a service procedure.",
     "sources": [
       "https://pr.tsmc.com/english/news/3136"
+    ]
+  },
+  "partsList": {
+    "title": "Parts list",
+    "position": "right",
+    "columns": [
+      "item",
+      "description",
+      "qty",
+      "material"
+    ]
+  },
+  "detailViews": [
+    {
+      "id": "detail-vrm",
+      "label": "A",
+      "target": {
+        "anchor": "vrm-inductor-1"
+      },
+      "magnification": 4,
+      "caption": "VRM power stage",
+      "placement": "left"
+    }
+  ],
+  "tour": {
+    "steps": [
+      {
+        "id": "overview",
+        "title": "The assembled module",
+        "caption": "A representative accelerator card: PCB, cooler, power delivery and I/O. Hover a part to peek it out; double-click the cooler to explode just that stack.",
+        "camera": "auto",
+        "explode": 0,
+        "modes": {
+          "traces": false
+        },
+        "annotationGroups": {
+          "silicon": true,
+          "thermal": true,
+          "power": true,
+          "io": true,
+          "structure": true,
+          "dimensions": true
+        }
+      },
+      {
+        "id": "cooling",
+        "title": "Cooling stack",
+        "caption": "Fans push air through two finned stacks bonded to a vapor chamber, which spreads heat from the die across the whole fin area.",
+        "camera": {
+          "azimuth": 30,
+          "elevation": 18
+        },
+        "explode": 0.45,
+        "highlight": [
+          "fan-left",
+          "fan-right",
+          "fin-stack-left",
+          "fin-stack-right",
+          "vapor-chamber",
+          "thermal-pad"
+        ],
+        "modes": {
+          "traces": true
+        }
+      },
+      {
+        "id": "package",
+        "title": "Package layers",
+        "caption": "The GPU die and six HBM stack envelopes sit on a silicon interposer, which sits on an organic substrate soldered to the PCB. Thicknesses are exaggerated for legibility.",
+        "camera": {
+          "azimuth": 52,
+          "elevation": 30
+        },
+        "explode": 1,
+        "highlight": [
+          "gpu",
+          "hbm-1",
+          "hbm-2",
+          "hbm-3",
+          "hbm-4",
+          "hbm-5",
+          "hbm-6",
+          "interposer",
+          "substrate"
+        ],
+        "modes": {
+          "traces": true
+        }
+      },
+      {
+        "id": "power",
+        "title": "Power delivery",
+        "caption": "The 12VHPWR connector feeds representative VRM stages beside the package; Detail A magnifies one power stage.",
+        "camera": {
+          "azimuth": 70,
+          "elevation": 24
+        },
+        "explode": 1,
+        "highlight": [
+          "power-connector",
+          "vrm-inductor-1",
+          "vrm-inductor-2",
+          "vrm-inductor-3",
+          "vrm-inductor-4",
+          "cap-bank-1",
+          "cap-bank-2",
+          "pwm-controller"
+        ]
+      },
+      {
+        "id": "drawing",
+        "title": "Publication drawing",
+        "caption": "The same scene as weighted vector line art — export it as SVG, a drawing sheet or a journal-sized figure from the Export menu.",
+        "renderMode": "illustration",
+        "camera": "auto",
+        "explode": 1,
+        "modes": {
+          "traces": true
+        }
+      }
     ]
   }
 }

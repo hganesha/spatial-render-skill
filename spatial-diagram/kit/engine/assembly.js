@@ -136,23 +136,62 @@ export function createAssemblySystem(THREE) {
   function deg(d) { return (d || 0) * Math.PI / 180; }
 
   // Apply explode amount to hierarchy. amount in [0,1].
-  // options: { easing, assemblyId, stagger }
+  // options: { easing, assemblyId, stagger, componentIds:Set }
+  // Each component keeps its own amount so a subtree can explode locally.
   function applyExplode(hierarchy, amount, options) {
     const opts = options || {};
-    const easing = opts.easing || 'ease-in-out';
     for (const [id, data] of hierarchy.componentData) {
       if (opts.assemblyId && data.assemblySpec.id !== opts.assemblyId) continue;
-      const node = hierarchy.componentNodes.get(id);
-      if (!node) continue;
-      const stagger = opts.stagger === false ? clamp01(amount) : staggeredAmount(amount, data.order, data.maxOrder);
-      const t = applyEasing(stagger, easing);
-      const v = data.explodeVector;
-      node.position.set(
-        data.basePosition.x + v[0] * t,
-        data.basePosition.y + v[1] * t,
-        data.basePosition.z + v[2] * t
-      );
+      if (opts.componentIds && !opts.componentIds.has(id)) continue;
+      data.explodeAmount = amount;
+      data.explodeStagger = opts.stagger !== false;
+      data.explodeEasing = opts.easing || 'ease-in-out';
+      placeComponent(hierarchy, id, data);
     }
+  }
+
+  function placeComponent(hierarchy, id, data) {
+    const node = hierarchy.componentNodes.get(id);
+    if (!node) return;
+    const amount = data.explodeAmount || 0;
+    const stagger = data.explodeStagger === false ? clamp01(amount) : staggeredAmount(amount, data.order, data.maxOrder);
+    const t = applyEasing(stagger, data.explodeEasing || 'ease-in-out');
+    const v = data.explodeVector, peek = data.peekOffset || [0, 0, 0];
+    node.position.set(
+      data.basePosition.x + v[0] * t + peek[0],
+      data.basePosition.y + v[1] * t + peek[1],
+      data.basePosition.z + v[2] * t + peek[2]
+    );
+  }
+
+  // Semantic descendants (parent links), excluding the root itself.
+  function descendantsOf(hierarchy, rootId) {
+    const out = new Set(), queue = [rootId];
+    while (queue.length) {
+      const current = queue.shift();
+      for (const [id, data] of hierarchy.componentData) if (data.parent === current && !out.has(id) && id !== rootId) {out.add(id);queue.push(id);}
+    }
+    return out;
+  }
+
+  // offsets: Map(componentId -> assembly-space vec3). Missing ids return to zero.
+  function setPeekOffsets(hierarchy, offsets) {
+    for (const [id, data] of hierarchy.componentData) {
+      const next = offsets.get(id) || null, prev = data.peekOffset || null;
+      if (!next && !prev) continue;
+      data.peekOffset = next;
+      placeComponent(hierarchy, id, data);
+    }
+  }
+
+  // World-space displacement of a component from its assembled pose (explode + peek).
+  function componentDisplacementWorld(hierarchy, id) {
+    const data = hierarchy.componentData.get(id), node = hierarchy.componentNodes.get(id);
+    if (!data || !node || !node.parent) return null;
+    node.parent.updateWorldMatrix(true, false);
+    const current = node.parent.localToWorld(node.position.clone());
+    const base = node.parent.localToWorld(data.basePosition.clone());
+    return current.sub(base);
   }
 
   function computeBounds(hierarchy, includeInvisible) {
@@ -185,5 +224,5 @@ export function createAssemblySystem(THREE) {
     return anchorName ? null : componentWorldCenter(hierarchy,id);
   }
 
-  return { buildHierarchy, applyExplode, computeBounds, componentWorldCenter, componentAnchorWorld, applyTransform, disposeHierarchy };
+  return { buildHierarchy, applyExplode, placeComponent, descendantsOf, setPeekOffsets, componentDisplacementWorld, computeBounds, componentWorldCenter, componentAnchorWorld, applyTransform, disposeHierarchy };
 }

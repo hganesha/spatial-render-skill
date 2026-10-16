@@ -34,7 +34,7 @@
     },
     "cable-amber": {
       "preset": "emissive-amber",
-      "emissiveIntensity": 1.0
+      "emissiveIntensity": 1
     },
     "accent-teal": {
       "preset": "emissive-cyan",
@@ -169,7 +169,7 @@
         },
         {
           "id": "server-1",
-          "label": "GPU server \u00b7 slot 1",
+          "label": "GPU server · slot 1",
           "geometry": {
             "kind": "server-blade",
             "params": {
@@ -211,7 +211,7 @@
         },
         {
           "id": "server-2",
-          "label": "GPU server \u00b7 slot 2",
+          "label": "GPU server · slot 2",
           "geometry": {
             "kind": "server-blade",
             "params": {
@@ -253,7 +253,7 @@
         },
         {
           "id": "server-3",
-          "label": "GPU server \u00b7 slot 3",
+          "label": "GPU server · slot 3",
           "geometry": {
             "kind": "server-blade",
             "params": {
@@ -295,7 +295,7 @@
         },
         {
           "id": "server-4",
-          "label": "GPU server \u00b7 slot 4",
+          "label": "GPU server · slot 4",
           "geometry": {
             "kind": "server-blade",
             "params": {
@@ -366,7 +366,7 @@
         },
         {
           "id": "server-5",
-          "label": "GPU server \u00b7 slot 5",
+          "label": "GPU server · slot 5",
           "geometry": {
             "kind": "server-blade",
             "params": {
@@ -408,7 +408,7 @@
         },
         {
           "id": "server-6",
-          "label": "GPU server \u00b7 slot 6",
+          "label": "GPU server · slot 6",
           "geometry": {
             "kind": "server-blade",
             "params": {
@@ -858,7 +858,7 @@
     {
       "id": "ann-rack",
       "type": "label",
-      "text": "42U rack \u00b7 44 kW",
+      "text": "42U rack · 44 kW",
       "target": {
         "anchor": "rack-frame.top"
       },
@@ -872,7 +872,7 @@
     {
       "id": "ann-tor",
       "type": "label",
-      "text": "ToR switch \u00b7 51.2 Tbps",
+      "text": "ToR switch · 51.2 Tbps",
       "target": {
         "anchor": "tor-switch.ports"
       },
@@ -885,7 +885,7 @@
     {
       "id": "ann-server",
       "type": "label",
-      "text": "8-GPU nodes (\u00d74)",
+      "text": "8-GPU nodes (×4)",
       "target": {
         "anchor": "server-2.front"
       },
@@ -899,7 +899,7 @@
     {
       "id": "ann-nvme",
       "type": "label",
-      "text": "NVMe shelf \u00b7 24 drives",
+      "text": "NVMe shelf · 24 drives",
       "target": {
         "anchor": "drive-shelf"
       },
@@ -967,6 +967,20 @@
       ],
       "group": "thermal",
       "emphasis": "secondary"
+    },
+    {
+      "id": "ann-sensor",
+      "type": "label",
+      "text": "Environmental sensor",
+      "target": {
+        "anchor": "sensor-hub"
+      },
+      "offset": [
+        -36,
+        -14
+      ],
+      "side": "left",
+      "group": "thermal"
     }
   ],
   "interactions": {
@@ -998,5 +1012,54 @@
     "author": "spatial-diagram skill",
     "domainPack": "data-center",
     "notes": "Rack units are representative; blades are 88 mm for visual clarity."
+  },
+  "tour": {
+    "steps": [
+      {
+        "id": "rack",
+        "title": "42U GPU rack",
+        "caption": "Four 8-GPU nodes, an NVMe shelf, a top-of-rack switch and a 3-phase PDU in one 44 kW rack.",
+        "camera": "auto",
+        "explode": 0,
+        "modes": {
+          "flow": true
+        }
+      },
+      {
+        "id": "network",
+        "title": "Network fabric",
+        "caption": "Each node uplinks to the ToR switch; pulses show traffic direction.",
+        "camera": {
+          "azimuth": 20,
+          "elevation": 14
+        },
+        "explode": 0.6,
+        "highlight": [
+          "tor-switch",
+          "tor-cage",
+          "server-1",
+          "server-2",
+          "server-3",
+          "server-4"
+        ],
+        "modes": {
+          "flow": true
+        }
+      },
+      {
+        "id": "power",
+        "title": "Power distribution",
+        "caption": "The vertical PDU feeds every chassis from the rear.",
+        "camera": {
+          "azimuth": 120,
+          "elevation": 16
+        },
+        "explode": 0.6,
+        "highlight": [
+          "pdu",
+          "pdu-outlets"
+        ]
+      }
+    ]
   }
 }

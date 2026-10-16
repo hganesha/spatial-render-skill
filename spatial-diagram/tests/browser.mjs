@@ -24,8 +24,10 @@ function check(name,pass,details={}) {
 const frames=(n=2)=>page.evaluate(n=>new Promise(resolve=>{let count=0;const tick=()=>++count>=n?resolve():requestAnimationFrame(tick);requestAnimationFrame(tick);}),n);
 const click=id=>page.click(`.sd-toolbar [data-id="${id}"]`);
 async function openScene(name) {
-  const source=path.join(ROOT,'examples',name,'scene.json'),target=path.join(out,`${name}.html`);
-  fs.writeFileSync(target,buildHtml(source));
+  // Detail-view insets render with their own cameras; covered by tests/features-browser.mjs.
+  const spec=JSON.parse(fs.readFileSync(path.join(ROOT,'examples',name,'scene.json')));delete spec.detailViews;delete spec.tour;
+  const source=path.join(out,`${name}.scene.json`),target=path.join(out,`${name}.html`);
+  fs.writeFileSync(source,JSON.stringify(spec));fs.writeFileSync(target,buildHtml(source));
   await page.goto(pathToFileURL(target).href,{waitUntil:'load'});
   await page.waitForFunction(()=>window.sceneEngine);
   await page.evaluate(()=>sceneEngine.explode(1,{immediate:true,stagger:false}));await frames();
@@ -52,7 +54,7 @@ try {
   await page.screenshot({path:path.join(out,'gpu-selected.png')});
   await page.focus('.sd-slider');await page.keyboard.press('Home');await frames();
   check('keyboard explode slider reaches assembled pose',await page.evaluate(()=>Math.abs(metrics('gpu').position[1]-4)<1e-5));
-  await click('auto-explode');await page.waitForFunction(()=>Math.abs(sceneEngine.getState().modes.explode-1)<1e-5);await frames();
+  await click('explode-exploded');await page.waitForFunction(()=>Math.abs(sceneEngine.getState().modes.explode-1)<1e-5);await frames();
   check('Auto explode reaches final pose',await page.evaluate(()=>Math.abs(metrics('gpu').position[1]-46)<1e-5));
   await click('xray');check('X-Ray fades explicitly marked cooler',await page.evaluate(()=>metrics('fan-left').opacity===.14 && metrics('gpu').opacity===1));await click('xray');
   for(const [mode,opacity] of [['isolate',.06],['ghost',.22]]) {await click(mode);check(`${mode} keeps selected GPU and fades context`,await page.evaluate(opacity=>metrics('gpu').opacity===1 && metrics('pcb').opacity===opacity,opacity));await click(mode);}

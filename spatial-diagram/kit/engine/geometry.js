@@ -1,6 +1,10 @@
 // geometry.js — geometry builders: Level-1 primitives and Level-2 parametric recipes.
 // Every builder returns {kind:'compound', parts:[...]} or {kind:'single', geometry}.
 // Parts: { geometry, position, rotation, scale, material, name }.
+// geometry.userData.auditGroups = [[[firstVertex, endVertex], ...], ...] — each group is a
+// list of vertex ranges bounded as one box — lets audits bound hollow shells, rings
+// and tubes by conservative patches instead of one box that swallows their interior.
+import { createVehicleRecipes } from './recipes-vehicle.js';
 
 function part(geometry, opts) {
   opts = opts || {};
@@ -105,12 +109,190 @@ export function createGeometrySystem(THREE) {
 
   function buildLathe(g) {
     const pts = (g.profile || [[2, 0, 0], [5, 0, 0], [5, 10, 0], [2, 10, 0]]).map((p) => new THREE.Vector2(Math.abs(p[0]), p[1]));
-    return single(new THREE.LatheGeometry(pts, g.segments || 28));
+    const segments = g.segments || 28, geo = new THREE.LatheGeometry(pts, segments);
+    geo.userData.auditGroups = chunkRanges(segments + 1, pts.length, Math.max(1, Math.round(segments / 24)));
+    return single(geo);
   }
 
   function buildTube(g) {
     const path = new THREE.CatmullRomCurve3((g.path || [[0, 0, 0], [0, 10, 0]]).map((p) => new THREE.Vector3(p[0], p[1], p[2])));
-    return single(new THREE.TubeGeometry(path, g.segments || 32, g.radius != null ? g.radius : 1, 10, false));
+    const segments = g.segments || 32, geo = new THREE.TubeGeometry(path, segments, g.radius != null ? g.radius : 1, 10, false);
+    geo.userData.auditGroups = chunkRanges(segments + 1, 11, Math.max(1, Math.round(segments / 16)));
+    return single(geo);
+  }
+
+  // Groups covering `rings` consecutive rings of `perRing` vertices, `step` rings each (overlapping by one).
+  function chunkRanges(rings, perRing, step) {
+    const out = [];
+    for (let i = 0; i < rings - 1; i += step) out.push([[i * perRing, Math.min(rings, i + step + 1) * perRing]]);
+    return out.length ? out : [[[0, rings * perRing]]];
+  }
+
+  // Concatenate indexed/non-indexed geometries (position, normal, uv); audit groups are re-based.
+  function mergeGeometries(list) {
+    const positions = [], normals = [], uvs = [], indices = [], groups = [];
+    let offset = 0;
+    for (const geo of list) {
+      const pos = geo.getAttribute('position'), nor = geo.getAttribute('normal'), uv = geo.getAttribute('uv');
+      for (let i = 0; i < pos.count; i++) {
+        positions.push(pos.getX(i), pos.getY(i), pos.getZ(i));
+        normals.push(nor ? nor.getX(i) : 0, nor ? nor.getY(i) : 1, nor ? nor.getZ(i) : 0);
+        uvs.push(uv ? uv.getX(i) : 0, uv ? uv.getY(i) : 0);
+      }
+      if (geo.index) for (let i = 0; i < geo.index.count; i++) indices.push(geo.index.getX(i) + offset);
+      else for (let i = 0; i < pos.count; i++) indices.push(i + offset);
+      for (const group of geo.userData.auditGroups || [[[0, pos.count]]]) groups.push(group.map(([a, b]) => [a + offset, b + offset]));
+      offset += pos.count;
+      geo.dispose();
+    }
+    const out = new THREE.BufferGeometry();
+    out.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    out.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+    out.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    out.setIndex(indices);
+    out.userData.auditGroups = groups;
+    return out;
+  }
+
+  // Grid surface from rows of points; every triangle is wound so its normal agrees
+  // with expected(i, j) (an outward hint), which keeps arbitrary profiles closed and visible.
+  function gridSurface(rows, expected, opts = {}) {
+    const rowCount = rows.length, colCount = rows[0].length, positions = [], uvs = [], indices = [];
+    rows.forEach((row, i) => row.forEach((p, j) => {positions.push(p[0], p[1], p[2]);uvs.push(j / Math.max(1, colCount - 1), i / Math.max(1, rowCount - 1));}));
+    const at = (i, j) => i * colCount + j, v = k => new THREE.Vector3(positions[k * 3], positions[k * 3 + 1], positions[k * 3 + 2]);
+    const add = (a, b, c, hint) => {
+      const n = new THREE.Vector3().subVectors(v(b), v(a)).cross(new THREE.Vector3().subVectors(v(c), v(a)));
+      if (n.lengthSq() < 1e-14) return;
+      if (n.dot(hint) < 0) indices.push(a, c, b); else indices.push(a, b, c);
+    };
+    const cols = opts.wrap ? colCount : colCount - 1;
+    for (let i = 0; i < rowCount - 1; i++) for (let j = 0; j < cols; j++) {
+      const j1 = (j + 1) % colCount, hint = expected(i, j);
+      add(at(i, j), at(i, j1), at(i + 1, j), hint);
+      add(at(i, j1), at(i + 1, j1), at(i + 1, j), hint);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    geo.setIndex(indices);geo.computeVertexNormals();
+    geo.userData.auditGroups = opts.groups || [[[0, rowCount * colCount]]];
+    return geo;
+  }
+
+  // Revolve a 2D profile [[r, y], ...] around +Y. closed: profile is a loop (solid ring);
+  // smooth:false gives each profile edge its own normals (crisp discs, rims, cups).
+  function revolveProfile(profile, segments = 32, opts = {}) {
+    const pts = profile.map(p => [Math.max(0, p[0]), p[1]]);
+    const closed = opts.closed !== false;
+    if (closed && (pts[0][0] !== pts[pts.length - 1][0] || pts[0][1] !== pts[pts.length - 1][1])) pts.push(pts[0].slice());
+    let area = 0;for (let i = 0; i < pts.length - 1; i++) area += pts[i][0] * pts[i + 1][1] - pts[i + 1][0] * pts[i][1];
+    const sign = area >= 0 ? 1 : -1;
+    const ring = (r, y, i) => {const a = i / segments * Math.PI * 2;return [r * Math.cos(a), y, r * Math.sin(a)];};
+    const hintFor = (j0, j1, i) => {
+      const dr = pts[j1][0] - pts[j0][0], dy = pts[j1][1] - pts[j0][1], a = (i + .5) / segments * Math.PI * 2;
+      const nr = sign * dy, ny = -sign * dr;
+      return new THREE.Vector3(nr * Math.cos(a), ny, nr * Math.sin(a));
+    };
+    const strips = [];
+    if (opts.smooth) {
+      const rows = [];
+      for (let i = 0; i <= segments; i++) rows.push(pts.map(p => ring(p[0], p[1], i)));
+      strips.push(gridSurface(rows, (i, j) => hintFor(j, Math.min(j + 1, pts.length - 1), i), {groups: chunkRanges(segments + 1, pts.length, Math.max(1, Math.round(segments / 32)))}));
+    } else {
+      for (let j = 0; j < pts.length - 1; j++) {
+        if (Math.hypot(pts[j + 1][0] - pts[j][0], pts[j + 1][1] - pts[j][1]) < 1e-9) continue;
+        const rows = [];
+        for (let i = 0; i <= segments; i++) rows.push([ring(pts[j][0], pts[j][1], i), ring(pts[j + 1][0], pts[j + 1][1], i)]);
+        strips.push(gridSurface(rows, i => hintFor(j, j + 1, i), {groups: chunkRanges(segments + 1, 2, Math.max(1, Math.round(segments / 32)))}));
+      }
+    }
+    return strips.length === 1 ? strips[0] : mergeGeometries(strips);
+  }
+
+  // Cylinder whose axis runs from a to b (vertices baked; part position stays at origin).
+  function cylinderBetween(a, b, radius, segments = 14, radiusB) {
+    const start = new THREE.Vector3(...a), end = new THREE.Vector3(...b), dir = end.clone().sub(start), length = dir.length();
+    const geo = new THREE.CylinderGeometry(radiusB ?? radius, radius, Math.max(length, 1e-3), segments, 1, false);
+    geo.applyMatrix4(new THREE.Matrix4().compose(start.clone().add(end).multiplyScalar(.5),
+      new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize()), new THREE.Vector3(1, 1, 1)));
+    return geo;
+  }
+
+  // Loft: superellipse cross-sections along local +Z, e.g. body shells, hulls, fuselages.
+  // Section {z, width, top, bottom, x?, exponent?}; exponent 2 = ellipse, higher = boxier.
+  // arc [startDeg, endDeg] keeps part of the ring (0° = +X side, 90° = top) as a shell
+  // panel; thickness makes a closed shell. Panels sliced from one loft tile seamlessly.
+  function buildLoft(g) {
+    const raw = (g.sections || []).map(s => ({x: s.x || 0, z: s.z, width: Math.max(0, s.width), top: s.top, bottom: s.bottom, exponent: s.exponent ?? g.exponent ?? 2.5})).sort((a, b) => a.z - b.z);
+    if (raw.length < 2) throw new Error('Loft needs at least two sections.');
+    const sub = Math.max(1, g.subdivisions ?? 2), keys = ['x', 'z', 'width', 'top', 'bottom', 'exponent'], sections = [];
+    for (let k = 0; k < raw.length - 1; k++) for (let s = 0; s < sub; s++) {
+      const t = s / sub, p0 = raw[Math.max(0, k - 1)], p1 = raw[k], p2 = raw[k + 1], p3 = raw[Math.min(raw.length - 1, k + 2)];
+      const out = {};
+      for (const key of keys) {
+        const a = p0[key], b = p1[key], c = p2[key], d = p3[key];
+        out[key] = .5 * ((2 * b) + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
+      }
+      out.width = Math.max(0, out.width);out.exponent = Math.max(1.2, out.exponent);
+      if (out.top < out.bottom) out.top = out.bottom;
+      sections.push(out);
+    }
+    sections.push({...raw[raw.length - 1]});
+    const segments = Math.max(6, g.segments || 32), arc = Array.isArray(g.arc) ? g.arc.map(a => a * Math.PI / 180) : null;
+    const size = Math.max(...sections.map(s => Math.max(s.width, s.top - s.bottom)));
+    const thickness = g.thickness ?? (arc ? Math.max(.5, size * .006) : 0);
+    const thetas = arc ? Array.from({length: segments + 1}, (_, j) => arc[0] + (arc[1] - arc[0]) * j / segments) : Array.from({length: segments}, (_, j) => j / segments * Math.PI * 2);
+    const point = (s, th, inset) => {
+      const c = Math.cos(th), sn = Math.sin(th), e = 2 / s.exponent;
+      const hw = Math.max(0, s.width / 2 - inset), hh = Math.max(0, (s.top - s.bottom) / 2 - inset), cy = (s.top + s.bottom) / 2;
+      return [s.x + hw * Math.sign(c) * Math.abs(c) ** e, cy + hh * Math.sign(sn) * Math.abs(sn) ** e, s.z];
+    };
+    const centre = s => new THREE.Vector3(s.x, (s.top + s.bottom) / 2, s.z);
+    const radial = (rows, i, j, flip) => {
+      const p = rows[i][j], q = rows[i + 1][(j + 1) % rows[i].length], c = centre(sections[i]);
+      const h = new THREE.Vector3((p[0] + q[0]) / 2 - c.x, (p[1] + q[1]) / 2 - c.y, 0);
+      if (h.lengthSq() < 1e-12) h.set(Math.cos(thetas[j]), Math.sin(thetas[j]), 0);
+      return flip ? h.negate() : h;
+    };
+    const patch = Math.max(1, Math.round(segments / 12)), slab = 1, cols = thetas.length;
+    const parts = [];
+    const outerRows = sections.map(s => thetas.map(th => point(s, th, 0)));
+    parts.push(gridSurface(outerRows, (i, j) => radial(outerRows, i, j, false), {wrap: !arc, groups: thickness ? groupPatches(sections.length, cols, slab, patch) : slabGroups(sections.length, cols, slab)}));
+    if (thickness) {
+      const innerRows = sections.map(s => thetas.map(th => point(s, th, thickness)));
+      parts.push(gridSurface(innerRows, (i, j) => radial(innerRows, i, j, true), {wrap: !arc, groups: groupPatches(sections.length, cols, slab, patch)}));
+      if (arc) for (const [j, sign] of [[0, -1], [cols - 1, 1]]) {
+        const th = thetas[j], hint = new THREE.Vector3(-Math.sin(th) * sign, Math.cos(th) * sign, 0);
+        parts.push(gridSurface(sections.map((s, i) => [outerRows[i][j], innerRows[i][j]]), () => hint.clone(), {groups: chunkRanges(sections.length, 2, slab)}));
+      }
+      for (const [i, z] of [[0, -1], [sections.length - 1, 1]]) {
+        const rows = [outerRows[i], innerRows[i]].map(r => arc ? r : [...r, r[0]]);
+        parts.push(gridSurface(rows.map(r => r), () => new THREE.Vector3(0, 0, z), {groups: Array.from({length: Math.ceil(rows[0].length / patch)}, (_, k) => [[k * patch, Math.min(rows[0].length, k * patch + patch + 1)], [rows[0].length + k * patch, rows[0].length + Math.min(rows[0].length, k * patch + patch + 1)]])}));
+      }
+    } else {
+      for (const [i, z] of [[0, -1], [sections.length - 1, 1]]) {
+        const c = centre(sections[i]).toArray(), ringPts = [...outerRows[i], outerRows[i][0]];
+        parts.push(gridSurface([ringPts, ringPts.map(() => c)], () => new THREE.Vector3(0, 0, z)));
+      }
+    }
+    return single(mergeGeometries(parts));
+  }
+
+  // Shell patches: blocks of `slab` rings × `patch` columns, as per-row vertex ranges.
+  function groupPatches(rows, cols, slab, patch) {
+    const groups = [];
+    for (let i = 0; i < rows - 1; i += slab) for (let j = 0; j < cols; j += patch) {
+      const ranges = [];
+      for (let r = i; r <= Math.min(rows - 1, i + slab); r++) ranges.push([r * cols + j, r * cols + Math.min(cols, j + patch + 1)]);
+      groups.push(ranges);
+    }
+    return groups;
+  }
+  // Solid lofts: whole cross-section slabs, which always enclose the solid.
+  function slabGroups(rows, cols, slab) {
+    const groups = [];
+    for (let i = 0; i < rows - 1; i += slab) groups.push([[i * cols, Math.min(rows, i + slab + 1) * cols]]);
+    return groups;
   }
 
   // ------------------------------------------------------------ recipes
@@ -681,6 +863,7 @@ export function createGeometrySystem(THREE) {
     'battery-cell': recipeBatteryCell,
     'generic-recipe': recipeGeneric
   };
+  Object.assign(RECIPES, createVehicleRecipes(THREE, {part, compound, single, buildBox, buildChamferBox, buildRoundedBox, buildCylinder, buildSphere, buildTorus, buildTube, buildExtrude, buildLoft, revolveProfile, cylinderBetween, mergeGeometries, roundedRectShape}));
 
   function buildGeometry(def) {
     const g = def || { kind: 'box' };
@@ -698,6 +881,7 @@ export function createGeometrySystem(THREE) {
       case 'extrude': return buildExtrude(g);
       case 'lathe': return buildLathe(g);
       case 'tube': return buildTube(g);
+      case 'loft': return buildLoft(g);
       case 'compound': return buildCompound(g);
       case 'import': throw new Error('External mesh import is not supported.');
       default: throw new Error('Unknown geometry kind: ' + kind);
@@ -740,14 +924,18 @@ export function createGeometrySystem(THREE) {
     if (auditBoundsCache.has(key)) return auditBoundsCache.get(key);
     const built = buildGeometry(def);
     const parts = built.kind === 'single' ? [part(built.geometry)] : built.parts;
-    const boxes = parts.map(p => {
+    const boxes = parts.flatMap(p => {
       const matrix = new THREE.Matrix4().compose(new THREE.Vector3().fromArray(p.position),
         new THREE.Quaternion().setFromEuler(new THREE.Euler(...p.rotation)), new THREE.Vector3().fromArray(p.scale));
-      const b = new THREE.Box3().makeEmpty(), v = new THREE.Vector3();
-      const vertices = p.geometry.getAttribute('position');
-      for (let i=0; i<vertices.count; i++) b.expandByPoint(v.fromBufferAttribute(vertices,i).applyMatrix4(matrix));
+      const v = new THREE.Vector3(), vertices = p.geometry.getAttribute('position');
+      const groups = p.geometry.userData?.auditGroups?.length ? p.geometry.userData.auditGroups : [[[0, vertices.count]]];
+      const out = groups.map(group => {
+        const b = new THREE.Box3().makeEmpty();
+        for (const [start, end] of group) for (let i = start; i < Math.min(end, vertices.count); i++) b.expandByPoint(v.fromBufferAttribute(vertices, i).applyMatrix4(matrix));
+        return b;
+      }).filter(b => !b.isEmpty()).map(b => ({min: b.min.toArray(), max: b.max.toArray()}));
       p.geometry.dispose();
-      return {min:b.min.toArray(),max:b.max.toArray()};
+      return out;
     });
     auditBoundsCache.set(key,boxes);
     return boxes;

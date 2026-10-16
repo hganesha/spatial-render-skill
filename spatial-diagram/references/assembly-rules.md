@@ -57,13 +57,32 @@ Good explosions *explain* the assembly:
   drifts sideways reads as "broken", not "exploded".
 
 Guideline magnitudes: minor parts 30–80 units, sub-assemblies 100–200,
-outer shells 150–350, for typical scene radius 150–400. The engine frames
-assembled ∪ fully exploded bounds, so explosion size sets the zoom — don't make the
-explosion 3× the object size.
+outer shells 150–350, for typical scene radius 150–400. Auto-framing follows the
+pose on screen (`scene.camera.followExplode`, default on): the assembled object is
+framed tightly and the camera widens as parts leave. One part with a huge vector
+still sets the zoom of the whole exploded view — `part:stranded` in the visual
+audit catches it. Small decorative parts (badges, LEDs) should ride with the part
+they sit on (copy its vector) rather than fly off unlabeled
+(`part:unlabeled-emissive`).
 
 Derived vectors (fallback only): away from parent's position, or assembly
 `explode.direction`. Author explicitly whenever the derived direction would be
 wrong (e.g. radial fastener patterns).
+
+## What the explode order also drives
+
+The same semantics feed four features, so get them right once:
+
+- **Stagger** — lower `explode.order` leaves first.
+- **Assembly instructions** (`engine.instructionSteps()`, **Steps** button,
+  `exportInstructions()`): parts with a zero vector are the base (step 1); the
+  rest are installed in *reverse* explode order, at most six per step. If the
+  steps read wrongly, the explode order is wrong.
+- **Local explode** (double-click, `engine.explodeSubtree(id)`): separates the
+  semantic descendants of a part (or of its parent, for a leaf). Parent links
+  therefore decide what comes apart together.
+- **Peek** (hover in the assembled pose): slides the part *and its descendants*
+  18% along its vector. Parts whose subtree is most of the scene do not peek.
 
 ## Contact discipline
 

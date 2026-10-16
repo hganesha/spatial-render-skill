@@ -4,10 +4,13 @@ description: >
   Reusable 3D diagramming capability for agents. Generate, edit, validate, and
   export interactive 3D technical diagrams (exploded assemblies, systems
   topologies, cutaways) from a declarative JSON Scene Spec. WebGL/Three.js
-  rendering with SVG precision annotations, plus isometric architectural SVG
-  blueprint rendering. Use when the user wants a technical
-  diagram, exploded view, assembly visualization, rack/system view, or an
-  interactive 3D explanation of how something is built or connected.
+  rendering with SVG precision annotations, isometric blueprint and
+  publication-style vector illustration (balloons, parts lists, hatched sections,
+  detail views, journal-sized SVG/PDF, drawing sheets, assembly instructions),
+  guided tours, and rendered-view audits. Use when the user wants a technical
+  diagram, exploded view, assembly visualization, rack/system view, a figure for a
+  paper or manual, or an interactive 3D explanation of how something is built or
+  connected.
 ---
 
 # Spatial Diagram Skill
@@ -49,8 +52,13 @@ Identify the subject, audience, and purpose. Decide:
   `cutaway`, `schematic-3d`, `editorial-scene`.
 - **Fidelity**: how true to life must proportions be? Default `representative`.
 - **Interaction needs**: explode? x-ray? flow? selection?
-- **Render mode**: shaded `webgl` (default) or isometric architectural `blueprint`.
-  Read `references/design-grammar.md` for blueprint projection and export limits.
+- **Render mode**: shaded `webgl` (default), isometric `blueprint`, or
+  publication line art `illustration`. Read `references/design-grammar.md`.
+- **Deliverable**: interactive page, or a figure (journal SVG/PDF, drawing sheet,
+  assembled ⎮ exploded comparison, assembly instructions)? Figures want
+  `labelLayout: "margins"` and usually balloons + a parts list.
+- **Story**: will a reader need a guided tour (`tour.steps`) or step-by-step
+  assembly (derived from explode order — see `references/assembly-rules.md`)?
 
 ### 2. Decompose
 List components before writing JSON:
@@ -66,16 +74,21 @@ Write the Scene Spec (see `references/geometry-guidelines.md` for the recipe
 catalog and `references/assembly-rules.md` for transform semantics):
 
 ```bash
+node scripts/new-scene.mjs my-scene --type exploded-view   # optional valid starter (also technical-assembly | systems-topology | cutaway)
 # author or edit examples/.../scene.json (or any path), then:
 node scripts/validate-scene.mjs path/to/scene.json --strict
 ```
+Look at `references/recipe-gallery.png` to pick recipes by sight.
 
 Key rules:
 - `transform.position/rotation/scale` are authored in **assembly space** —
   flat and predictable. `parent` is **semantic** (explode direction, inspect
   tree, detach audits); it does not rescale the child transform.
 - Use Level-2 recipes (`chip-package`, `finned-heatsink`, `fan`, `motor`,
-  `impeller`, `rack`, `server-blade`, …) before composing primitives by hand.
+  `impeller`, `rack`, `server-blade`, `wheel`, `brake-assembly`, `coilover`,
+  `flat-engine`, `airfoil-wing`, `roll-cage`, …) before composing primitives by hand.
+  Smooth shells (car bodies, hulls) are `loft`s; slice adjacent panels from the
+  same sections with `arc` so they tile when assembled.
   Reserve Level-3 (`compound` with custom parts) for shapes recipes can't
   express.
 - For contacting stacks, assign explicit `explode.order` values: outer covers
@@ -84,6 +97,10 @@ Key rules:
   engine only derives them as a fallback.
 - Attach labels to **anchors** (`"target": {"anchor": "gpu.top"}`), not to raw
   coordinates, so they track components through explode/rotate.
+- Small decorative parts (badges, LEDs) ride with their host: copy its explode
+  vector instead of flying them off unlabeled.
+- Use `explode.stops` for the meaningful intermediate pose, `detailViews` for
+  parts too small to read, and `properties.partNumber/qty` if a parts list ships.
 
 Fix every error and every warning you can justify; see
 `references/quality-standards.md` for what each audit means.
@@ -96,16 +113,29 @@ node scripts/serve.mjs . --port 8080     # optional live preview
 The export is a **self-contained HTML** (Three.js + runtime + spec inlined)
 that runs from `file://` with no network — that is the shareable deliverable.
 
+Figures straight from the spec (headless; needs puppeteer or playwright):
+```bash
+node scripts/export-figure.mjs scene.json --kind svg --figure double-column --labels margins --balloons -o fig.svg
+node scripts/export-figure.mjs scene.json --kind pdf --figure single-column -o fig.pdf
+node scripts/export-figure.mjs scene.json --kind sheet -o sheet.svg          # front/top/right/iso + title block + dimensions
+node scripts/export-figure.mjs scene.json --kind sheet --views front,left,back,top -o strip.svg   # poster-style view strip
+node scripts/export-figure.mjs scene.json --kind comparison -o ab.svg        # assembled | exploded
+node scripts/export-figure.mjs scene.json --kind instructions -o steps.svg
+node scripts/export-figure.mjs scene.json --kind video --video turntable -o spin.webm
+```
+
 ### 5. Evaluate (mandatory)
 ```bash
-node scripts/capture-scene.mjs out/index.html -o out/capture.png --wait 4500
+node scripts/capture-scene.mjs out/index.html -o out/capture.png \
+     --contact-sheet out/sheet.png --audit out/audit.json --strict
 # requires: npm i puppeteer (or playwright)
 ```
-Look at the screenshot. Check against `references/quality-standards.md`:
-framing, interpenetration, detached parts, label placement/occlusion,
-material readability, explode legibility. Also run the engine's own audit
-(`validate()` in the runtime = the same schema/geometry checks as the CLI,
-plus live annotation layout checks).
+Look at the **contact sheet** (assembled, 50%, exploded, Blueprint,
+Illustration, four azimuths) — not just the hero capture. Check against
+`references/quality-standards.md`. Fix every rendered-view audit warning
+(`label:over-geometry`, `frame:underfilled`, `part:stranded`,
+`part:unlabeled-emissive`, crossing leaders…); the audit is the machine-readable
+half of "look at it". For figures, also open the exported SVG/PDF itself.
 
 ### 6. Refine
 Patch the **spec**, re-validate, re-render, re-capture. Never regenerate from
@@ -119,6 +149,10 @@ replace the stage while restoring those interaction choices.
 ## Editing an existing scene
 
 Read the current `scene.json`, apply minimal JSON edits, keep ids stable.
+Before handing a revision back, run
+`node scripts/scene-diff.mjs before.json after.json --html diff.html` and check
+that only the intended parts changed (added green, moved/changed amber, removed
+red).
 Typical edits:
 - reposition: change `transform.position` of one component
 - re-annotate: adjust `offset` / `side` / `group`
@@ -138,33 +172,43 @@ exaggerated thicknesses in metadata, and source any product-specific claims.
 
 | Mode | How |
 |---|---|
-| Interactive HTML | `scripts/export-scene.mjs` (primary deliverable) |
-| PNG | capture script, or the in-app **PNG** button |
-| Vector SVG blueprint | Switch to **Blueprint**, then **SVG** (`engine.exportSVG()`) |
-| GLB | in-app **GLB** button (`GLTFExporter`) |
-| Scene JSON | in-app **JSON** button — the editable source of truth |
+| Interactive HTML | `scripts/export-scene.mjs` (primary deliverable; share links via `#sd=`) |
+| Embed in docs/MDX | `npm run build:element` → `<spatial-diagram src="scene.json">` |
+| PNG (screen or print dpi) | capture script, Export ▾ → PNG, `exportPNG({figure, dpi})` |
+| Vector SVG / PDF | Blueprint or Illustration, Export ▾ → SVG / Journal SVG, `export-figure --kind svg|pdf` |
+| Comparison, drawing sheet, instructions | Export ▾, or `export-figure --kind comparison|sheet|instructions` |
+| Contact sheet | Export ▾, `capture-scene --contact-sheet` |
+| Video (WebM) | Export ▾ → Turntable video, `exportVideo({kind})` |
+| GLB | Export ▾ → GLB (`GLTFExporter`) |
+| Scene JSON | Export ▾ → JSON — the editable source of truth |
 
-The toolbar switches **3D / Blueprint** without rebuilding component geometry.
-For a blueprint-first document set `scene.renderMode: "blueprint"`. Blueprint
-uses orthographic isometry (45° azimuth, 35.264° elevation), blue drawing paper,
-feature edges, silhouettes and projected annotations. Drag pans; wheel/pinch
-zooms. **SVG** exports actual vector faces, lines and labels; **PNG** captures
-the active renderer. JSON saves the render mode. WebGL itself remains a raster
-view. See `references/design-grammar.md` for illustration limitations.
+The toolbar switches **3D / Blueprint / Illustration** without rebuilding
+component geometry; set `scene.renderMode` to start in a vector mode. Blueprint
+is locked isometric on navy paper; Illustration is orbitable orthographic line
+art on white paper with weighted silhouettes, one spot colour and hatched section
+caps. JSON saves the render mode. See `references/design-grammar.md` for figure
+presets and illustration limitations.
 
 ## Runtime API (for embedded use)
 
 ```js
-const engine = SpatialDiagram.createEngine({ THREE, container, spec, onEvent });
+const engine = SpatialDiagram.createEngine({ THREE, container, spec, onEvent, urlState });
 engine.explode(0.75, { duration: 900, stagger: true });
-engine.select('gpu');            // inspect card
-engine.setRenderMode('blueprint'); // webgl | blueprint; keeps assembly/selection
-engine.exportSVG();              // blueprint geometry + annotations
-engine.toggleMode('xray');       // xray | section | isolate | ghost | flow
+engine.explodeSubtree('vapor-chamber');  // local explode
+engine.select('gpu');                    // inspect card
+engine.setRenderMode('illustration');    // webgl | blueprint | illustration
+engine.setAnnotationStyle('balloon'); engine.setLabelLayout('margins');
+engine.toggleMode('xray');               // xray | section | isolate | ghost | flow | traces | measure
 engine.updateSpec({ scene: { title: 'Rev B' } });
-engine.validate();               // { structural, audits }
-await engine.exportPNG(); // active WebGL/blueprint image + labels; UI excluded
-await engine.exportGLB(); engine.exportJSON();
+engine.validate();                       // { structural, audits, layout }
+engine.auditVisual();                    // rendered-view audit at assembled + exploded
+engine.compare(previousSpec);            // revision diff overlay
+engine.tour.start(); engine.tour.start('instructions'); engine.tour.setProgress(1.5);
+engine.exportSVG({ figure: 'double-column' });
+await engine.exportComparison(); await engine.exportSheet(); await engine.exportInstructions();
+await engine.exportContactSheet(); await engine.exportVideo({ kind: 'turntable' });
+await engine.exportPNG({ figure: 'single-column', dpi: 300 });
+await engine.exportGLB(); engine.exportJSON(); engine.shareURL();
 ```
 
 ## Hard rules
@@ -175,7 +219,8 @@ await engine.exportGLB(); engine.exportJSON();
 3. **Reuse before invention.** Second diagram of a new kind must reuse schema,
    recipes, interactions — no bespoke renderer. If a recipe is missing, add one
    to `kit/engine/geometry.js` and document it in `references/geometry-guidelines.md`.
-4. **Validate + look.** Never ship a diagram you haven't seen a capture of.
+4. **Validate + look.** Never ship a diagram you haven't seen a contact sheet of,
+   and fix the rendered-view audit warnings.
 5. **Editability is a feature.** Keep ids stable and specs clean enough that a
    later agent can modify them without full regeneration.
 
@@ -189,9 +234,14 @@ kit/engine/                  ← runtime modules (bundled by export-scene.mjs)
 kit/vendor/                  ← pinned Three.js r147 + GLTFExporter (MIT)
 scripts/validate-scene.mjs   ← structural validation + geometry audits (zero-dep)
 scripts/export-scene.mjs     ← scene.json → self-contained interactive HTML
-scripts/capture-scene.mjs    ← screenshot for the evaluation loop
+scripts/capture-scene.mjs    ← screenshot + contact sheet + rendered-view audit
+scripts/export-figure.mjs    ← headless SVG/PDF/PNG/sheet/instructions/video from a spec
+scripts/scene-diff.mjs       ← revision diff (text, JSON, HTML viewer)
+scripts/new-scene.mjs        ← valid starter scene per scene type
+scripts/build-gallery.mjs    ← recipe catalog scene + references/recipe-gallery.png
+scripts/build-element.mjs    ← <spatial-diagram> web component bundle (dist/)
 scripts/serve.mjs            ← local preview server
-examples/                    ← gpu-exploded, data-center-rack, mechanical-pump
+examples/                    ← gpu-exploded, data-center-rack, mechanical-pump, track-car-exploded, recipe-gallery
 ```
 
 When adding a recipe or interaction, update the matching reference file in the
