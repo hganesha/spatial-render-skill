@@ -1,0 +1,25 @@
+{
+  "name": "spatial-diagram",
+  "version": "1.2.0",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "validate": "node scripts/validate-scene.mjs --all",
+    "export": "node scripts/export-scene.mjs --all",
+    "capture": "node scripts/capture-scene.mjs examples/gpu-exploded/index.html -o examples/gpu-exploded/capture.png",
+    "serve": "node scripts/serve.mjs . --port 8080",
+    "test": "node --test tests/regression.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "sync-schema": "node scripts/sync-schema.mjs",
+    "test:blueprint": "node tests/blueprint-browser.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Declarative interactive 3D technical diagrams with WebGL and isometric architectural SVG blueprint renderers.",
+  "dependencies": {
+    "puppeteer": "^24.43.1"
+  },
+  "type": "module"
+}

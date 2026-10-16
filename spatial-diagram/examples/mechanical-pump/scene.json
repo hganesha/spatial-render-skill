@@ -1,0 +1,1413 @@
+{
+  "$schema": "../../schemas/scene.schema.json",
+  "scene": {
+    "id": "mechanical-pump",
+    "title": "End-Suction Centrifugal Pump",
+    "description": "Exploded cutaway of a coupled centrifugal pump: casing, impeller, shaft, seal cartridge, coupling, and motor. Reuses the same engine, schema, and interaction vocabulary as the GPU diagram.",
+    "type": "exploded-view",
+    "style": "precision-editorial",
+    "camera": {
+      "mode": "isometric",
+      "projection": "perspective",
+      "azimuth": 32,
+      "elevation": 26,
+      "fov": 36,
+      "framing": "fit-padded"
+    },
+    "units": "mm",
+    "fidelity": "representative",
+    "lighting": "studio",
+    "ground": {
+      "enabled": true,
+      "grid": true,
+      "shadows": true
+    }
+  },
+  "materials": {
+    "pump-blue": {
+      "preset": "aluminum",
+      "color": "#2f6db3",
+      "roughness": 0.5,
+      "metalness": 0.45
+    },
+    "copper-impeller": {
+      "preset": "copper",
+      "roughness": 0.34
+    },
+    "gasket-orange": {
+      "preset": "rubber",
+      "color": "#e8622c",
+      "roughness": 0.85
+    },
+    "accent-teal": {
+      "preset": "emissive-cyan",
+      "emissiveIntensity": 0.9
+    }
+  },
+  "assemblies": [
+    {
+      "id": "pump-module",
+      "label": "Pump Assembly",
+      "explode": {
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "distance": 90,
+        "order": "hierarchy"
+      },
+      "components": [
+        {
+          "id": "baseplate",
+          "label": "Baseplate",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              420,
+              26,
+              500
+            ]
+          },
+          "material": "steel-dark",
+          "transform": {
+            "position": [
+              -60,
+              -60,
+              -340
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              13,
+              0
+            ]
+          },
+          "properties": {
+            "role": "structure"
+          },
+          "explode": [
+            0,
+            -43,
+            0
+          ]
+        },
+        {
+          "id": "pump-housing",
+          "label": "Volute casing",
+          "geometry": {
+            "kind": "pump-housing",
+            "params": {
+              "radius": 62,
+              "width": 74,
+              "inletR": 22,
+              "outletR": 17
+            }
+          },
+          "material": "pump-blue",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -180
+            ]
+          },
+          "anchors": {
+            "front": [
+              0,
+              0,
+              63
+            ],
+            "outlet": [
+              26,
+              70,
+              0
+            ],
+            "center": [
+              0,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "pressure-boundary",
+            "material": "ductile iron"
+          },
+          "xray": "outer",
+          "explode": [
+            -40,
+            31,
+            -34
+          ]
+        },
+        {
+          "id": "casing-cover",
+          "label": "Casing cover",
+          "geometry": {
+            "kind": "cylinder",
+            "radius": 64,
+            "height": 8,
+            "segments": 36
+          },
+          "material": "pump-blue",
+          "parent": "pump-housing",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -137
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "face": [
+              0,
+              5,
+              0
+            ]
+          },
+          "properties": {
+            "role": "pressure-boundary"
+          },
+          "explode": [
+            0,
+            12,
+            127
+          ]
+        },
+        {
+          "id": "casing-gasket",
+          "label": "Casing gasket",
+          "geometry": {
+            "kind": "cylinder",
+            "radius": 58,
+            "height": 2,
+            "segments": 36
+          },
+          "material": "gasket-orange",
+          "parent": "casing-cover",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -142
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "sealing"
+          },
+          "explode": [
+            0,
+            12,
+            161
+          ]
+        },
+        {
+          "id": "impeller",
+          "label": "Closed impeller",
+          "geometry": {
+            "kind": "impeller",
+            "params": {
+              "radius": 52,
+              "hubR": 15,
+              "blades": 6,
+              "height": 28,
+              "shroud": true
+            }
+          },
+          "material": "copper-impeller",
+          "parent": "pump-housing",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -170
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "eye": [
+              0,
+              0,
+              16
+            ]
+          },
+          "properties": {
+            "role": "rotor",
+            "specificSpeed": "1500 (US)"
+          },
+          "explode": [
+            0,
+            37,
+            136
+          ]
+        },
+        {
+          "id": "wear-ring",
+          "label": "Wear ring",
+          "geometry": {
+            "kind": "torus",
+            "radius": 52,
+            "tube": 2.5,
+            "segments": 36
+          },
+          "material": "brass",
+          "parent": "pump-housing",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -152
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "wear-surface"
+          },
+          "explode": [
+            0,
+            62,
+            144
+          ]
+        },
+        {
+          "id": "shaft",
+          "label": "Pump shaft",
+          "geometry": {
+            "kind": "cylinder",
+            "radius": 9,
+            "height": 210,
+            "segments": 20
+          },
+          "material": "chrome",
+          "parent": "impeller",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -250
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "drive-end": [
+              0,
+              -105,
+              0
+            ]
+          },
+          "properties": {
+            "role": "transmission"
+          },
+          "explode": [
+            0,
+            18,
+            -59
+          ]
+        },
+        {
+          "id": "seal-cartridge",
+          "label": "Mechanical seal",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 24,
+                  "height": 34,
+                  "segments": 24
+                },
+                "material": "steel-dark"
+              },
+              {
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 28,
+                  "height": 5,
+                  "segments": 24
+                },
+                "material": "brushed-steel",
+                "transform": {
+                  "position": [
+                    0,
+                    17,
+                    0
+                  ]
+                }
+              },
+              {
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 28,
+                  "height": 5,
+                  "segments": 24
+                },
+                "material": "brushed-steel",
+                "transform": {
+                  "position": [
+                    0,
+                    -17,
+                    0
+                  ]
+                }
+              }
+            ]
+          },
+          "parent": "shaft",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -238
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "sealing",
+            "type": "cartridge"
+          },
+          "explode": [
+            0,
+            31,
+            -8
+          ]
+        },
+        {
+          "id": "seal-gland",
+          "label": "Seal gland plate",
+          "geometry": {
+            "kind": "flange",
+            "params": {
+              "radius": 34,
+              "thickness": 6,
+              "bolts": 4,
+              "boltCircle": 25,
+              "neckR": 12,
+              "neckH": 4
+            }
+          },
+          "material": "brushed-steel",
+          "parent": "seal-cartridge",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -262
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "sealing"
+          },
+          "explode": [
+            0,
+            49,
+            -34
+          ]
+        },
+        {
+          "id": "bearing-housing",
+          "label": "Bearing housing",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 30,
+                  "height": 90,
+                  "segments": 26
+                },
+                "material": "pump-blue"
+              },
+              {
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 34,
+                  "height": 8,
+                  "segments": 26
+                },
+                "material": "pump-blue",
+                "transform": {
+                  "position": [
+                    0,
+                    45,
+                    0
+                  ]
+                }
+              },
+              {
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 34,
+                  "height": 8,
+                  "segments": 26
+                },
+                "material": "pump-blue",
+                "transform": {
+                  "position": [
+                    0,
+                    -45,
+                    0
+                  ]
+                }
+              }
+            ]
+          },
+          "parent": "shaft",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -320
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              45,
+              0
+            ]
+          },
+          "properties": {
+            "role": "radial-support",
+            "bearings": "duplex angular contact"
+          },
+          "explode": [
+            0,
+            55,
+            -110
+          ]
+        },
+        {
+          "id": "oil-sight",
+          "label": "Oil level sight glass",
+          "geometry": {
+            "kind": "sphere",
+            "radius": 7,
+            "segments": 18
+          },
+          "material": "glass",
+          "parent": "bearing-housing",
+          "transform": {
+            "position": [
+              -30,
+              26,
+              -320
+            ]
+          },
+          "properties": {
+            "role": "maintenance"
+          },
+          "explode": [
+            -70,
+            18,
+            -110
+          ]
+        },
+        {
+          "id": "coupling",
+          "label": "Flexible coupling",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 26,
+                  "height": 18,
+                  "segments": 22
+                },
+                "material": "steel-dark",
+                "transform": {
+                  "position": [
+                    0,
+                    -12,
+                    0
+                  ]
+                }
+              },
+              {
+                "geometry": {
+                  "kind": "cylinder",
+                  "radius": 26,
+                  "height": 18,
+                  "segments": 22
+                },
+                "material": "steel-dark",
+                "transform": {
+                  "position": [
+                    0,
+                    12,
+                    0
+                  ]
+                }
+              },
+              {
+                "geometry": {
+                  "kind": "torus",
+                  "radius": 18,
+                  "tube": 4,
+                  "segments": 20
+                },
+                "material": "gasket-orange",
+                "transform": {
+                  "position": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    90,
+                    0,
+                    0
+                  ]
+                }
+              }
+            ]
+          },
+          "parent": "shaft",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -400
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "transmission",
+            "type": "jaw coupling"
+          },
+          "explode": [
+            0,
+            18,
+            -204
+          ]
+        },
+        {
+          "id": "coupling-guard",
+          "label": "Coupling guard",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "geometry": {
+                  "kind": "torus",
+                  "radius": 40,
+                  "tube": 2,
+                  "segments": 36
+                },
+                "transform": {
+                  "position": [
+                    0,
+                    -22,
+                    0
+                  ],
+                  "rotation": [
+                    90,
+                    0,
+                    0
+                  ]
+                },
+                "material": "plastic-gray",
+                "name": "guard-ring"
+              },
+              {
+                "geometry": {
+                  "kind": "torus",
+                  "radius": 40,
+                  "tube": 2,
+                  "segments": 36
+                },
+                "transform": {
+                  "position": [
+                    0,
+                    22,
+                    0
+                  ],
+                  "rotation": [
+                    90,
+                    0,
+                    0
+                  ]
+                },
+                "material": "plastic-gray",
+                "name": "guard-ring"
+              },
+              {
+                "geometry": {
+                  "kind": "box",
+                  "size": [
+                    4,
+                    44,
+                    4
+                  ]
+                },
+                "transform": {
+                  "position": [
+                    -40,
+                    0,
+                    0
+                  ]
+                },
+                "material": "plastic-gray",
+                "name": "guard-rail"
+              },
+              {
+                "geometry": {
+                  "kind": "box",
+                  "size": [
+                    4,
+                    44,
+                    4
+                  ]
+                },
+                "transform": {
+                  "position": [
+                    40,
+                    0,
+                    0
+                  ]
+                },
+                "material": "plastic-gray",
+                "name": "guard-rail"
+              },
+              {
+                "geometry": {
+                  "kind": "box",
+                  "size": [
+                    4,
+                    44,
+                    4
+                  ]
+                },
+                "transform": {
+                  "position": [
+                    0,
+                    0,
+                    -40
+                  ]
+                },
+                "material": "plastic-gray",
+                "name": "guard-rail"
+              },
+              {
+                "geometry": {
+                  "kind": "box",
+                  "size": [
+                    4,
+                    44,
+                    4
+                  ]
+                },
+                "transform": {
+                  "position": [
+                    0,
+                    0,
+                    40
+                  ]
+                },
+                "material": "plastic-gray",
+                "name": "guard-rail"
+              }
+            ]
+          },
+          "parent": "coupling",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -395
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "safety"
+          },
+          "xray": "outer",
+          "explode": [
+            0,
+            93,
+            -204
+          ]
+        },
+        {
+          "id": "motor",
+          "label": "Drive motor",
+          "geometry": {
+            "kind": "motor",
+            "params": {
+              "radius": 52,
+              "length": 140,
+              "fins": 11,
+              "shaftR": 11,
+              "shaftL": 34,
+              "feet": false,
+              "terminal": true
+            }
+          },
+          "material": "pump-blue",
+          "parent": "coupling",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -490
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "terminal": [
+              0,
+              56,
+              -14
+            ]
+          },
+          "properties": {
+            "role": "prime-mover",
+            "power": "45 kW",
+            "rpm": 1485,
+            "efficiency": "IE4"
+          },
+          "explode": [
+            0,
+            0,
+            -297
+          ]
+        },
+        {
+          "id": "motor-feet",
+          "label": "Motor mounting feet",
+          "geometry": {
+            "kind": "compound",
+            "parts": [
+              {
+                "geometry": {
+                  "kind": "box",
+                  "size": [
+                    70,
+                    16,
+                    40
+                  ]
+                },
+                "material": "steel-dark",
+                "transform": {
+                  "position": [
+                    -38,
+                    -59,
+                    0
+                  ]
+                }
+              },
+              {
+                "geometry": {
+                  "kind": "box",
+                  "size": [
+                    70,
+                    16,
+                    40
+                  ]
+                },
+                "material": "steel-dark",
+                "transform": {
+                  "position": [
+                    38,
+                    -59,
+                    0
+                  ]
+                }
+              }
+            ]
+          },
+          "parent": "motor",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -490
+            ]
+          },
+          "properties": {
+            "role": "structure"
+          },
+          "explode": [
+            0,
+            -55,
+            -297
+          ]
+        },
+        {
+          "id": "inlet-flange",
+          "label": "Suction flange (DN100)",
+          "geometry": {
+            "kind": "flange",
+            "params": {
+              "radius": 42,
+              "thickness": 8,
+              "bolts": 8,
+              "boltCircle": 32,
+              "neckR": 22,
+              "neckH": 22
+            }
+          },
+          "material": "brushed-steel",
+          "parent": "pump-housing",
+          "transform": {
+            "position": [
+              -60,
+              20,
+              -112
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "face": [
+              0,
+              28,
+              0
+            ]
+          },
+          "properties": {
+            "role": "suction-nozzle",
+            "nominal": "DN100"
+          },
+          "explode": [
+            0,
+            18,
+            187
+          ]
+        },
+        {
+          "id": "outlet-flange",
+          "label": "Discharge flange (DN80)",
+          "geometry": {
+            "kind": "flange",
+            "params": {
+              "radius": 34,
+              "thickness": 8,
+              "bolts": 8,
+              "boltCircle": 26,
+              "neckR": 17,
+              "neckH": 20
+            }
+          },
+          "material": "brushed-steel",
+          "parent": "pump-housing",
+          "transform": {
+            "position": [
+              -34,
+              90,
+              -180
+            ]
+          },
+          "anchors": {
+            "face": [
+              0,
+              28,
+              0
+            ]
+          },
+          "properties": {
+            "role": "discharge-nozzle",
+            "nominal": "DN80"
+          },
+          "explode": [
+            40,
+            93,
+            -34
+          ]
+        },
+        {
+          "id": "pressure-gauge",
+          "label": "Discharge pressure gauge",
+          "geometry": {
+            "kind": "gauge",
+            "params": {
+              "radius": 18,
+              "depth": 9
+            }
+          },
+          "parent": "outlet-flange",
+          "transform": {
+            "position": [
+              -34,
+              122,
+              -180
+            ],
+            "rotation": [
+              0,
+              0,
+              -0.5
+            ]
+          },
+          "properties": {
+            "role": "instrumentation",
+            "range": "0\u201316 bar"
+          },
+          "explode": [
+            80,
+            111,
+            0
+          ]
+        },
+        {
+          "id": "drain-plug",
+          "label": "Casing drain",
+          "geometry": {
+            "kind": "bolt",
+            "params": {
+              "radius": 5,
+              "length": 12,
+              "headR": 9,
+              "headH": 4
+            }
+          },
+          "material": "brass",
+          "parent": "pump-housing",
+          "transform": {
+            "position": [
+              -60,
+              -44,
+              -180
+            ],
+            "rotation": [
+              0,
+              0,
+              0.7
+            ]
+          },
+          "properties": {
+            "role": "maintenance"
+          },
+          "explode": [
+            -90,
+            -43,
+            -34
+          ]
+        },
+        {
+          "id": "cover-bolt-1",
+          "label": "Casing bolt",
+          "geometry": {
+            "kind": "bolt",
+            "params": {
+              "radius": 4,
+              "length": 16,
+              "headR": 7,
+              "headH": 3.5
+            }
+          },
+          "parent": "casing-cover",
+          "transform": {
+            "position": [
+              -110,
+              20,
+              -127
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "fastener"
+          },
+          "explode": [
+            -50,
+            12,
+            178
+          ]
+        },
+        {
+          "id": "cover-bolt-2",
+          "label": "Casing bolt",
+          "geometry": {
+            "kind": "bolt",
+            "params": {
+              "radius": 4,
+              "length": 16,
+              "headR": 7,
+              "headH": 3.5
+            }
+          },
+          "parent": "casing-cover",
+          "transform": {
+            "position": [
+              -10,
+              20,
+              -127
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "fastener"
+          },
+          "explode": [
+            50,
+            12,
+            178
+          ]
+        },
+        {
+          "id": "cover-bolt-3",
+          "label": "Casing bolt",
+          "geometry": {
+            "kind": "bolt",
+            "params": {
+              "radius": 4,
+              "length": 16,
+              "headR": 7,
+              "headH": 3.5
+            }
+          },
+          "parent": "casing-cover",
+          "transform": {
+            "position": [
+              -60,
+              70,
+              -127
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "fastener"
+          },
+          "explode": [
+            0,
+            37,
+            178
+          ]
+        },
+        {
+          "id": "cover-bolt-4",
+          "label": "Casing bolt",
+          "geometry": {
+            "kind": "bolt",
+            "params": {
+              "radius": 4,
+              "length": 16,
+              "headR": 7,
+              "headH": 3.5
+            }
+          },
+          "parent": "casing-cover",
+          "transform": {
+            "position": [
+              -60,
+              -30,
+              -127
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "fastener"
+          },
+          "explode": [
+            0,
+            -24,
+            178
+          ]
+        },
+        {
+          "id": "nameplate",
+          "label": "Nameplate",
+          "geometry": {
+            "kind": "badge",
+            "params": {
+              "width": 46,
+              "depth": 22,
+              "height": 1.2
+            }
+          },
+          "material": "accent-teal",
+          "parent": "motor",
+          "transform": {
+            "position": [
+              -60,
+              75,
+              -490
+            ]
+          },
+          "properties": {
+            "role": "identification",
+            "model": "ES-100x80-315"
+          },
+          "explode": [
+            0,
+            80,
+            -297
+          ]
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "id": "ann-impeller",
+      "type": "label",
+      "text": "6-vane closed impeller",
+      "target": {
+        "anchor": "impeller.eye"
+      },
+      "offset": [
+        34,
+        -18
+      ],
+      "group": "hydraulics",
+      "emphasis": "primary"
+    },
+    {
+      "id": "ann-casing",
+      "type": "label",
+      "text": "Volute casing \u00b7 ductile iron",
+      "target": {
+        "anchor": "pump-housing.center"
+      },
+      "offset": [
+        -42,
+        -14
+      ],
+      "side": "left",
+      "group": "hydraulics"
+    },
+    {
+      "id": "ann-inlet",
+      "type": "callout",
+      "text": "Suction DN100",
+      "target": {
+        "anchor": "inlet-flange.face"
+      },
+      "offset": [
+        30,
+        -16
+      ],
+      "group": "connections",
+      "emphasis": "warning"
+    },
+    {
+      "id": "ann-outlet",
+      "type": "callout",
+      "text": "Discharge DN80",
+      "target": {
+        "anchor": "outlet-flange.face"
+      },
+      "offset": [
+        32,
+        -16
+      ],
+      "group": "connections",
+      "emphasis": "warning"
+    },
+    {
+      "id": "ann-seal",
+      "type": "label",
+      "text": "Cartridge mechanical seal",
+      "target": {
+        "anchor": "seal-cartridge"
+      },
+      "offset": [
+        -38,
+        -12
+      ],
+      "side": "left",
+      "group": "drivetrain"
+    },
+    {
+      "id": "ann-bearing",
+      "type": "label",
+      "text": "Bearing housing",
+      "target": {
+        "anchor": "bearing-housing.top"
+      },
+      "offset": [
+        -36,
+        -12
+      ],
+      "side": "left",
+      "group": "drivetrain"
+    },
+    {
+      "id": "ann-coupling",
+      "type": "label",
+      "text": "Flexible coupling",
+      "target": {
+        "anchor": "coupling"
+      },
+      "offset": [
+        30,
+        16
+      ],
+      "group": "drivetrain"
+    },
+    {
+      "id": "ann-motor",
+      "type": "label",
+      "text": "45 kW IE4 motor",
+      "target": {
+        "anchor": "motor.terminal"
+      },
+      "offset": [
+        34,
+        -16
+      ],
+      "group": "drivetrain"
+    },
+    {
+      "id": "ann-gauge",
+      "type": "label",
+      "text": "Discharge gauge",
+      "target": {
+        "anchor": "pressure-gauge"
+      },
+      "offset": [
+        32,
+        -14
+      ],
+      "group": "instrumentation"
+    },
+    {
+      "id": "dim-motor",
+      "type": "dimension",
+      "text": "Motor length",
+      "value": "140 mm",
+      "target": {
+        "anchor": "motor"
+      },
+      "targetB": {
+        "anchor": "coupling"
+      },
+      "offset": [
+        0,
+        -28
+      ],
+      "group": "dimensions",
+      "emphasis": "secondary"
+    }
+  ],
+  "interactions": {
+    "orbit": true,
+    "select": true,
+    "inspect": true,
+    "explode": {
+      "enabled": true,
+      "slider": true,
+      "autoStagger": true,
+      "easing": "ease-in-out"
+    },
+    "xray": true,
+    "section": {
+      "enabled": true,
+      "axis": "z"
+    },
+    "isolate": true,
+    "ghost": true,
+    "flow": false,
+    "annotationGroups": [
+      "hydraulics",
+      "connections",
+      "drivetrain",
+      "instrumentation",
+      "dimensions"
+    ]
+  },
+  "behaviors": [
+    {
+      "type": "explode",
+      "assembly": "pump-module",
+      "amount": 0.65,
+      "stagger": true,
+      "duration": 2200,
+      "easing": "ease-in-out",
+      "autoPlay": true
+    }
+  ],
+  "metadata": {
+    "author": "spatial-diagram skill",
+    "domainPack": "rotating-equipment",
+    "notes": "Deliberate reusability test: different domain, same scene schema, same geometry recipe system, same interaction vocabulary. Internal casing/seal bores are simplified; acknowledged envelope overlap is not certified physical clearance.",
+    "auditExceptions": [
+      {
+        "code": "audit:intersecting",
+        "components": [
+          "shaft",
+          "seal-gland"
+        ],
+        "reason": "Representative seal-gland is a solid envelope; the shaft bore is omitted. The shaft intentionally passes through that envelope. This is not a fit/clearance model."
+      },
+      {
+        "code": "audit:intersecting",
+        "components": [
+          "coupling-guard",
+          "motor"
+        ],
+        "reason": "The open cage rings have bounding boxes spanning their empty centers. The motor shaft passes through those open centers, clear of the guard rails; AABB overlap is a conservative false positive."
+      }
+    ]
+  }
+}

@@ -1,0 +1,1002 @@
+{
+  "$schema": "../../schemas/scene.schema.json",
+  "scene": {
+    "id": "data-center-rack",
+    "title": "GPU Compute Rack",
+    "description": "42U rack with four GPU server blades, top-of-rack switch, PDU, and cabling with live flow. Second scene type rendered by the same engine as gpu-exploded.",
+    "type": "systems-topology",
+    "style": "precision-editorial",
+    "camera": {
+      "mode": "isometric",
+      "projection": "perspective",
+      "azimuth": 38,
+      "elevation": 18,
+      "fov": 34,
+      "framing": "fit-padded"
+    },
+    "units": "mm",
+    "fidelity": "representative",
+    "lighting": "dramatic",
+    "ground": {
+      "enabled": true,
+      "grid": true,
+      "shadows": true
+    }
+  },
+  "materials": {
+    "rack-black": {
+      "preset": "steel-dark",
+      "texture": "vents"
+    },
+    "cable-cyan": {
+      "preset": "emissive-cyan",
+      "emissiveIntensity": 0.7
+    },
+    "cable-amber": {
+      "preset": "emissive-amber",
+      "emissiveIntensity": 1.0
+    },
+    "accent-teal": {
+      "preset": "emissive-cyan",
+      "emissiveIntensity": 0.9
+    }
+  },
+  "assemblies": [
+    {
+      "id": "rack",
+      "label": "42U Rack",
+      "explode": {
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "distance": 420
+      },
+      "components": [
+        {
+          "id": "rack-frame",
+          "label": "Rack enclosure",
+          "geometry": {
+            "kind": "rack",
+            "params": {
+              "width": 600,
+              "depth": 1000,
+              "height": 2000,
+              "postW": 14,
+              "sidePanels": false
+            }
+          },
+          "material": "rack-black",
+          "transform": {
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              2000,
+              0
+            ],
+            "front-top": [
+              0,
+              1900,
+              500
+            ]
+          },
+          "properties": {
+            "role": "structure",
+            "units": 42
+          },
+          "xray": "outer",
+          "explode": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "tor-switch",
+          "label": "Top-of-rack switch",
+          "geometry": {
+            "kind": "server-blade",
+            "params": {
+              "width": 440,
+              "height": 44,
+              "depth": 420
+            }
+          },
+          "material": "steel-dark",
+          "transform": {
+            "position": [
+              0,
+              1780,
+              40
+            ]
+          },
+          "anchors": {
+            "ports": [
+              0,
+              0,
+              215
+            ]
+          },
+          "properties": {
+            "role": "network",
+            "ports": 64,
+            "bandwidth": "51.2 Tbps"
+          },
+          "explode": [
+            0,
+            260,
+            220
+          ]
+        },
+        {
+          "id": "tor-cage",
+          "label": "Switch port cage",
+          "geometry": {
+            "kind": "port-row",
+            "params": {
+              "count": 8,
+              "spacing": 42,
+              "width": 26,
+              "height": 12,
+              "depth": 18,
+              "pins": 0
+            }
+          },
+          "material": "steel-dark",
+          "parent": "tor-switch",
+          "transform": {
+            "position": [
+              0,
+              1780,
+              262
+            ]
+          },
+          "properties": {
+            "role": "network-io"
+          },
+          "explode": [
+            0,
+            300,
+            320
+          ]
+        },
+        {
+          "id": "server-1",
+          "label": "GPU server \u00b7 slot 1",
+          "geometry": {
+            "kind": "server-blade",
+            "params": {
+              "width": 440,
+              "height": 88,
+              "depth": 780
+            }
+          },
+          "material": "aluminum",
+          "transform": {
+            "position": [
+              0,
+              420,
+              -20
+            ]
+          },
+          "anchors": {
+            "front": [
+              0,
+              0,
+              395
+            ],
+            "left": [
+              -225,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "compute",
+            "gpus": 8,
+            "node": "node-01"
+          },
+          "explode": [
+            -520,
+            0,
+            160
+          ]
+        },
+        {
+          "id": "server-2",
+          "label": "GPU server \u00b7 slot 2",
+          "geometry": {
+            "kind": "server-blade",
+            "params": {
+              "width": 440,
+              "height": 88,
+              "depth": 780
+            }
+          },
+          "material": "aluminum",
+          "transform": {
+            "position": [
+              0,
+              530,
+              -20
+            ]
+          },
+          "anchors": {
+            "front": [
+              0,
+              0,
+              395
+            ],
+            "left": [
+              -225,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "compute",
+            "gpus": 8,
+            "node": "node-02"
+          },
+          "explode": [
+            -520,
+            70,
+            160
+          ]
+        },
+        {
+          "id": "server-3",
+          "label": "GPU server \u00b7 slot 3",
+          "geometry": {
+            "kind": "server-blade",
+            "params": {
+              "width": 440,
+              "height": 88,
+              "depth": 780
+            }
+          },
+          "material": "aluminum",
+          "transform": {
+            "position": [
+              0,
+              660,
+              -20
+            ]
+          },
+          "anchors": {
+            "front": [
+              0,
+              0,
+              395
+            ],
+            "left": [
+              -225,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "compute",
+            "gpus": 8,
+            "node": "node-03"
+          },
+          "explode": [
+            -520,
+            140,
+            160
+          ]
+        },
+        {
+          "id": "server-4",
+          "label": "GPU server \u00b7 slot 4",
+          "geometry": {
+            "kind": "server-blade",
+            "params": {
+              "width": 440,
+              "height": 88,
+              "depth": 780
+            }
+          },
+          "material": "aluminum",
+          "transform": {
+            "position": [
+              0,
+              790,
+              -20
+            ]
+          },
+          "anchors": {
+            "front": [
+              0,
+              0,
+              395
+            ],
+            "left": [
+              -225,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "compute",
+            "gpus": 8,
+            "node": "node-04"
+          },
+          "explode": [
+            -520,
+            210,
+            160
+          ]
+        },
+        {
+          "id": "drive-shelf",
+          "label": "NVMe shelf",
+          "geometry": {
+            "kind": "server-blade",
+            "params": {
+              "width": 440,
+              "height": 88,
+              "depth": 700
+            }
+          },
+          "material": "steel-dark",
+          "transform": {
+            "position": [
+              0,
+              920,
+              -20
+            ]
+          },
+          "properties": {
+            "role": "storage",
+            "drives": 24
+          },
+          "explode": [
+            -520,
+            280,
+            160
+          ]
+        },
+        {
+          "id": "server-5",
+          "label": "GPU server \u00b7 slot 5",
+          "geometry": {
+            "kind": "server-blade",
+            "params": {
+              "width": 440,
+              "height": 88,
+              "depth": 780
+            }
+          },
+          "material": "aluminum",
+          "transform": {
+            "position": [
+              0,
+              1050,
+              -20
+            ]
+          },
+          "anchors": {
+            "front": [
+              0,
+              0,
+              395
+            ],
+            "left": [
+              -225,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "compute",
+            "gpus": 8,
+            "node": "node-05"
+          },
+          "explode": [
+            -520,
+            214,
+            160
+          ]
+        },
+        {
+          "id": "server-6",
+          "label": "GPU server \u00b7 slot 6",
+          "geometry": {
+            "kind": "server-blade",
+            "params": {
+              "width": 440,
+              "height": 88,
+              "depth": 780
+            }
+          },
+          "material": "aluminum",
+          "transform": {
+            "position": [
+              0,
+              1180,
+              -20
+            ]
+          },
+          "anchors": {
+            "front": [
+              0,
+              0,
+              395
+            ],
+            "left": [
+              -225,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "compute",
+            "gpus": 8,
+            "node": "node-06"
+          },
+          "explode": [
+            -520,
+            257,
+            160
+          ]
+        },
+        {
+          "id": "blanking-1",
+          "label": "Blanking panel",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              440,
+              88,
+              6
+            ]
+          },
+          "material": "plastic-black",
+          "transform": {
+            "position": [
+              0,
+              1400,
+              480
+            ]
+          },
+          "properties": {
+            "role": "airflow-management"
+          },
+          "explode": [
+            0,
+            340,
+            300
+          ]
+        },
+        {
+          "id": "blanking-2",
+          "label": "Blanking panel",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              440,
+              88,
+              6
+            ]
+          },
+          "material": "plastic-black",
+          "transform": {
+            "position": [
+              0,
+              1520,
+              480
+            ]
+          },
+          "properties": {
+            "role": "airflow-management"
+          },
+          "explode": [
+            0,
+            380,
+            300
+          ]
+        },
+        {
+          "id": "pdu",
+          "label": "Power distribution unit",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              70,
+              1500,
+              110
+            ]
+          },
+          "material": "steel-dark",
+          "transform": {
+            "position": [
+              262,
+              900,
+              -280
+            ]
+          },
+          "anchors": {
+            "outlets": [
+              0,
+              200,
+              55
+            ]
+          },
+          "properties": {
+            "role": "power",
+            "rating": "44 kW",
+            "phases": 3
+          },
+          "explode": [
+            480,
+            0,
+            -120
+          ]
+        },
+        {
+          "id": "pdu-outlets",
+          "label": "Outlet bank",
+          "geometry": {
+            "kind": "port-row",
+            "params": {
+              "count": 6,
+              "spacing": 40,
+              "width": 22,
+              "height": 14,
+              "depth": 10,
+              "pins": 0
+            }
+          },
+          "material": "plastic-black",
+          "parent": "pdu",
+          "transform": {
+            "position": [
+              262,
+              1100,
+              -225
+            ]
+          },
+          "properties": {
+            "role": "power-out"
+          },
+          "explode": [
+            560,
+            40,
+            -120
+          ]
+        },
+        {
+          "id": "fan-tray-1",
+          "label": "Top fan tray",
+          "geometry": {
+            "kind": "fan",
+            "params": {
+              "size": 120,
+              "depth": 38,
+              "blades": 9
+            }
+          },
+          "material": "plastic-black",
+          "transform": {
+            "position": [
+              -140,
+              1912,
+              100
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "properties": {
+            "role": "cooling",
+            "cfm": 200
+          },
+          "explode": [
+            -120,
+            420,
+            60
+          ]
+        },
+        {
+          "id": "fan-tray-2",
+          "label": "Top fan tray",
+          "geometry": {
+            "kind": "fan",
+            "params": {
+              "size": 120,
+              "depth": 38,
+              "blades": 9
+            }
+          },
+          "material": "plastic-black",
+          "transform": {
+            "position": [
+              140,
+              1912,
+              100
+            ]
+          },
+          "properties": {
+            "role": "cooling",
+            "cfm": 200
+          },
+          "explode": [
+            120,
+            420,
+            60
+          ]
+        },
+        {
+          "id": "sensor-hub",
+          "label": "Environmental sensor",
+          "geometry": {
+            "kind": "badge",
+            "params": {
+              "width": 36,
+              "depth": 18,
+              "height": 1.2
+            }
+          },
+          "material": "accent-teal",
+          "transform": {
+            "position": [
+              -230,
+              1600,
+              470
+            ]
+          },
+          "properties": {
+            "role": "telemetry",
+            "metrics": "temp/humidity/pressure"
+          },
+          "explode": [
+            -380,
+            260,
+            260
+          ]
+        }
+      ]
+    }
+  ],
+  "connectors": [
+    {
+      "id": "net-1",
+      "label": "Fabric link 1",
+      "from": {
+        "anchor": "server-1.front"
+      },
+      "to": {
+        "anchor": "tor-cage"
+      },
+      "geometry": {
+        "kind": "cable",
+        "radius": 3,
+        "sag": 60,
+        "style": "flow"
+      },
+      "material": "cable-cyan",
+      "flow": {
+        "enabled": true,
+        "speed": 1.2,
+        "direction": "from-to"
+      },
+      "properties": {
+        "capacity": "800 Gb/s"
+      }
+    },
+    {
+      "id": "net-2",
+      "label": "Fabric link 2",
+      "from": {
+        "anchor": "server-2.front"
+      },
+      "to": {
+        "anchor": "tor-cage"
+      },
+      "geometry": {
+        "kind": "cable",
+        "radius": 3,
+        "sag": 50,
+        "style": "flow"
+      },
+      "material": "cable-cyan",
+      "flow": {
+        "enabled": true,
+        "speed": 1.2,
+        "direction": "from-to"
+      }
+    },
+    {
+      "id": "net-3",
+      "label": "Fabric link 3",
+      "from": {
+        "anchor": "server-3.front"
+      },
+      "to": {
+        "anchor": "tor-cage"
+      },
+      "geometry": {
+        "kind": "cable",
+        "radius": 3,
+        "sag": 40,
+        "style": "flow"
+      },
+      "material": "cable-cyan",
+      "flow": {
+        "enabled": true,
+        "speed": 1.2,
+        "direction": "from-to"
+      }
+    },
+    {
+      "id": "net-4",
+      "label": "Fabric link 4",
+      "from": {
+        "anchor": "server-4.front"
+      },
+      "to": {
+        "anchor": "tor-cage"
+      },
+      "geometry": {
+        "kind": "cable",
+        "radius": 3,
+        "sag": 30,
+        "style": "flow"
+      },
+      "material": "cable-cyan",
+      "flow": {
+        "enabled": true,
+        "speed": 1.2,
+        "direction": "from-to"
+      }
+    },
+    {
+      "id": "pwr-1",
+      "label": "Power feed",
+      "from": {
+        "anchor": "pdu.outlets"
+      },
+      "to": {
+        "anchor": "server-2.left"
+      },
+      "geometry": {
+        "kind": "pipe",
+        "radius": 5,
+        "sag": 20,
+        "style": "solid"
+      },
+      "material": "cable-amber",
+      "flow": {
+        "enabled": true,
+        "speed": 0.7,
+        "direction": "from-to",
+        "color": "#ffb35c"
+      },
+      "properties": {
+        "rating": "32 A"
+      }
+    },
+    {
+      "id": "pwr-2",
+      "label": "Power feed",
+      "from": {
+        "anchor": "pdu.outlets"
+      },
+      "to": {
+        "anchor": "tor-switch"
+      },
+      "geometry": {
+        "kind": "pipe",
+        "radius": 5,
+        "sag": 20,
+        "style": "solid"
+      },
+      "material": "cable-amber",
+      "flow": {
+        "enabled": true,
+        "speed": 0.7,
+        "direction": "from-to",
+        "color": "#ffb35c"
+      }
+    },
+    {
+      "id": "net-5",
+      "label": "Fabric link 5",
+      "from": {
+        "anchor": "server-5.front"
+      },
+      "to": {
+        "anchor": "tor-cage"
+      },
+      "geometry": {
+        "kind": "cable",
+        "radius": 3,
+        "sag": 26,
+        "style": "flow"
+      },
+      "material": "cable-cyan",
+      "flow": {
+        "enabled": true,
+        "speed": 1.2,
+        "direction": "from-to"
+      }
+    },
+    {
+      "id": "net-6",
+      "label": "Fabric link 6",
+      "from": {
+        "anchor": "server-6.front"
+      },
+      "to": {
+        "anchor": "tor-cage"
+      },
+      "geometry": {
+        "kind": "cable",
+        "radius": 3,
+        "sag": 22,
+        "style": "flow"
+      },
+      "material": "cable-cyan",
+      "flow": {
+        "enabled": true,
+        "speed": 1.2,
+        "direction": "from-to"
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "id": "ann-rack",
+      "type": "label",
+      "text": "42U rack \u00b7 44 kW",
+      "target": {
+        "anchor": "rack-frame.top"
+      },
+      "offset": [
+        36,
+        -16
+      ],
+      "group": "structure",
+      "emphasis": "primary"
+    },
+    {
+      "id": "ann-tor",
+      "type": "label",
+      "text": "ToR switch \u00b7 51.2 Tbps",
+      "target": {
+        "anchor": "tor-switch.ports"
+      },
+      "offset": [
+        34,
+        -18
+      ],
+      "group": "network"
+    },
+    {
+      "id": "ann-server",
+      "type": "label",
+      "text": "8-GPU nodes (\u00d74)",
+      "target": {
+        "anchor": "server-2.front"
+      },
+      "offset": [
+        -38,
+        -28
+      ],
+      "side": "left",
+      "group": "compute"
+    },
+    {
+      "id": "ann-nvme",
+      "type": "label",
+      "text": "NVMe shelf \u00b7 24 drives",
+      "target": {
+        "anchor": "drive-shelf"
+      },
+      "offset": [
+        -42,
+        8
+      ],
+      "side": "left",
+      "group": "compute"
+    },
+    {
+      "id": "ann-pdu",
+      "type": "label",
+      "text": "3-phase PDU",
+      "target": {
+        "anchor": "pdu.outlets"
+      },
+      "offset": [
+        32,
+        -14
+      ],
+      "group": "power"
+    },
+    {
+      "id": "ann-fan",
+      "type": "label",
+      "text": "Fan tray",
+      "target": {
+        "anchor": "fan-tray-2"
+      },
+      "offset": [
+        30,
+        -12
+      ],
+      "group": "thermal"
+    },
+    {
+      "id": "dim-height",
+      "type": "dimension",
+      "text": "Rack height",
+      "value": "2000 mm",
+      "target": {
+        "anchor": "rack-frame"
+      },
+      "targetB": {
+        "anchor": "rack-frame.top"
+      },
+      "offset": [
+        30,
+        0
+      ],
+      "group": "dimensions",
+      "emphasis": "secondary"
+    },
+    {
+      "id": "note-airflow",
+      "type": "note",
+      "text": "Front-to-back airflow",
+      "target": {
+        "anchor": "blanking-1"
+      },
+      "offset": [
+        32,
+        -20
+      ],
+      "group": "thermal",
+      "emphasis": "secondary"
+    }
+  ],
+  "interactions": {
+    "orbit": true,
+    "select": true,
+    "inspect": true,
+    "explode": {
+      "enabled": true,
+      "slider": true,
+      "autoStagger": true,
+      "easing": "ease-in-out"
+    },
+    "xray": true,
+    "section": false,
+    "isolate": true,
+    "ghost": true,
+    "flow": true,
+    "annotationGroups": [
+      "structure",
+      "network",
+      "compute",
+      "power",
+      "thermal",
+      "dimensions"
+    ]
+  },
+  "behaviors": [],
+  "metadata": {
+    "author": "spatial-diagram skill",
+    "domainPack": "data-center",
+    "notes": "Rack units are representative; blades are 88 mm for visual clarity."
+  }
+}

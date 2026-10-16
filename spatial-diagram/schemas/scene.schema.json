@@ -1,0 +1,1240 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://spatial-diagram.dev/schemas/scene.schema.json",
+  "title": "Spatial Diagram Scene Spec",
+  "description": "Declarative scene specification for the Spatial Diagram Engine. The agent describes WHAT exists and how it behaves; the engine decides HOW to render it.",
+  "type": "object",
+  "required": [
+    "scene",
+    "assemblies"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "scene": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "technical-assembly",
+            "systems-topology",
+            "exploded-view",
+            "cutaway",
+            "schematic-3d",
+            "simulation-frame",
+            "editorial-scene"
+          ],
+          "default": "technical-assembly"
+        },
+        "style": {
+          "type": "string",
+          "enum": [
+            "precision-editorial",
+            "blueprint",
+            "studio-light",
+            "schematic",
+            "holographic"
+          ],
+          "default": "precision-editorial"
+        },
+        "camera": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "isometric",
+                "perspective",
+                "orthographic",
+                "front",
+                "top",
+                "side",
+                "custom"
+              ],
+              "default": "isometric"
+            },
+            "projection": {
+              "type": "string",
+              "enum": [
+                "perspective",
+                "orthographic"
+              ],
+              "default": "perspective"
+            },
+            "target": {
+              "$ref": "#/$defs/vec3",
+              "default": [
+                0,
+                0,
+                0
+              ]
+            },
+            "distance": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "azimuth": {
+              "type": "number",
+              "description": "Degrees around Y. Default 45 for isometric."
+            },
+            "elevation": {
+              "type": "number",
+              "description": "Degrees above horizon. Default 30 for isometric."
+            },
+            "fov": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "exclusiveMaximum": 180,
+              "default": 38
+            },
+            "framing": {
+              "type": "string",
+              "enum": [
+                "fit",
+                "fit-padded",
+                "manual"
+              ],
+              "default": "fit-padded",
+              "description": "fit-padded auto-frames the computed bounds with margin; distance/target then act as biases."
+            }
+          }
+        },
+        "units": {
+          "type": "string",
+          "enum": [
+            "mm",
+            "cm",
+            "m",
+            "in",
+            "unitless"
+          ],
+          "default": "mm",
+          "description": "Interpretation of numeric lengths. The engine treats 1 unit = 1 scene unit regardless; units are semantic metadata and affect label rendering."
+        },
+        "fidelity": {
+          "type": "string",
+          "enum": [
+            "actual",
+            "representative",
+            "schematic",
+            "illustrative"
+          ],
+          "default": "representative",
+          "description": "Fidelity contract. 'actual' = dimensionally faithful; 'representative' = plausible proportions; 'schematic' = symbolic; 'illustrative' = expressive only."
+        },
+        "background": {
+          "oneOf": [
+            {
+              "type": "string",
+              "description": "CSS color"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "top": {
+                  "type": "string"
+                },
+                "bottom": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "top",
+                "bottom"
+              ]
+            }
+          ]
+        },
+        "lighting": {
+          "type": "string",
+          "enum": [
+            "studio",
+            "dramatic",
+            "flat",
+            "technical"
+          ],
+          "default": "studio"
+        },
+        "ground": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "grid": {
+              "type": "boolean",
+              "default": true
+            },
+            "shadows": {
+              "type": "boolean",
+              "default": true
+            },
+            "color": {
+              "type": "string"
+            },
+            "size": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "environment": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "toneMapping": {
+              "type": "string",
+              "enum": [
+                "aces",
+                "linear",
+                "reinhard",
+                "cineon"
+              ],
+              "default": "aces"
+            },
+            "exposure": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "default": 1.05
+            }
+          }
+        },
+        "renderMode": {
+          "type": "string",
+          "enum": [
+            "webgl",
+            "blueprint"
+          ],
+          "default": "webgl",
+          "description": "WebGL shaded geometry or true-vector isometric architectural blueprint. Independent of the WebGL style palette."
+        }
+      }
+    },
+    "materials": {
+      "type": "object",
+      "description": "Named material library. Components reference materials by name. Built-in presets may be overridden or extended here.",
+      "additionalProperties": {
+        "$ref": "#/$defs/material"
+      }
+    },
+    "assemblies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/assembly"
+      }
+    },
+    "connectors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/connector"
+      },
+      "default": []
+    },
+    "annotations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/annotation"
+      },
+      "default": []
+    },
+    "interactions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "orbit": {
+          "type": "boolean",
+          "default": true
+        },
+        "select": {
+          "type": "boolean",
+          "default": true
+        },
+        "inspect": {
+          "type": "boolean",
+          "default": true
+        },
+        "explode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "slider": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "autoStagger": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "easing": {
+                  "type": "string",
+                  "enum": [
+                    "linear",
+                    "ease-in-out",
+                    "ease-out",
+                    "back-out"
+                  ],
+                  "default": "ease-in-out"
+                }
+              }
+            }
+          ]
+        },
+        "xray": {
+          "type": "boolean",
+          "default": true
+        },
+        "section": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "axis": {
+                  "type": "string",
+                  "enum": [
+                    "x",
+                    "y",
+                    "z"
+                  ],
+                  "default": "y"
+                }
+              }
+            }
+          ]
+        },
+        "isolate": {
+          "type": "boolean",
+          "default": true
+        },
+        "ghost": {
+          "type": "boolean",
+          "default": true
+        },
+        "flow": {
+          "type": "boolean",
+          "default": true
+        },
+        "annotationGroups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Groups of annotations that can be toggled."
+        }
+      }
+    },
+    "behaviors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "explode"
+            ]
+          },
+          "assembly": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "stagger": {
+            "type": "boolean"
+          },
+          "duration": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "ms"
+          },
+          "easing": {
+            "type": "string",
+            "enum": [
+              "linear",
+              "ease-in-out",
+              "ease-out",
+              "back-out"
+            ]
+          },
+          "autoPlay": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "default": []
+    },
+    "state": {
+      "type": "object",
+      "description": "Initial dynamic state. Values may be referenced by components via state bindings in future revisions.",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Free-form: author, source, domain pack, revision notes."
+    }
+  },
+  "$defs": {
+    "vec3": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "transform": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "position": {
+          "$ref": "#/$defs/vec3",
+          "default": [
+            0,
+            0,
+            0
+          ]
+        },
+        "rotation": {
+          "$ref": "#/$defs/vec3",
+          "default": [
+            0,
+            0,
+            0
+          ],
+          "description": "Euler degrees XYZ."
+        },
+        "scale": {
+          "$ref": "#/$defs/vec3",
+          "default": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "preset": {
+          "type": "string",
+          "description": "Built-in preset name: aluminum, brushed-steel, steel-dark, copper, brass, gold, chrome, pcb-green, pcb-blue, solder-mask, silicon, ceramic, plastic-black, plastic-white, plastic-gray, rubber, glass, acrylic, emissive-amber, emissive-cyan, ghost. Preset provides defaults; explicit fields override."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "physical",
+            "basic",
+            "wireframe"
+          ],
+          "default": "standard"
+        },
+        "color": {
+          "type": "string"
+        },
+        "metalness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "roughness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "transparent": {
+          "type": "boolean"
+        },
+        "emissive": {
+          "type": "string"
+        },
+        "emissiveIntensity": {
+          "type": "number",
+          "minimum": 0
+        },
+        "clearcoat": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "transmission": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "ior": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "reflectivity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "flatShading": {
+          "type": "boolean"
+        },
+        "wireframe": {
+          "type": "boolean"
+        },
+        "side": {
+          "type": "string",
+          "enum": [
+            "front",
+            "back",
+            "double"
+          ]
+        },
+        "finish": {
+          "type": "string",
+          "enum": [
+            "matte",
+            "satin",
+            "polished",
+            "anodized",
+            "brushed",
+            "cast"
+          ],
+          "description": "Micro-surface hint that maps to roughness/metalness unless overridden."
+        },
+        "texture": {
+          "type": "string",
+          "enum": [
+            "none",
+            "pcb-traces",
+            "brushed",
+            "vents",
+            "carbon",
+            "knurl"
+          ],
+          "default": "none"
+        }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "kind": {
+              "enum": [
+                "box",
+                "chamferBox",
+                "roundedBox"
+              ]
+            },
+            "size": {
+              "$ref": "#/$defs/vec3"
+            },
+            "radius": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "size"
+          ]
+        },
+        {
+          "properties": {
+            "kind": {
+              "enum": [
+                "cylinder",
+                "cone",
+                "sphere",
+                "torus",
+                "plane"
+              ]
+            },
+            "radius": {
+              "type": "number",
+              "minimum": 0
+            },
+            "radiusTop": {
+              "type": "number",
+              "minimum": 0
+            },
+            "radiusBottom": {
+              "type": "number",
+              "minimum": 0
+            },
+            "height": {
+              "type": "number"
+            },
+            "width": {
+              "type": "number"
+            },
+            "depth": {
+              "type": "number"
+            },
+            "tube": {
+              "type": "number"
+            },
+            "arc": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 360
+            },
+            "segments": {
+              "type": "integer",
+              "minimum": 3
+            }
+          }
+        },
+        {
+          "properties": {
+            "kind": {
+              "enum": [
+                "extrude"
+              ]
+            },
+            "profile": {
+              "type": "array",
+              "description": "Closed 2D polygon in XY, extruded along Z.",
+              "items": {
+                "$ref": "#/$defs/vec3"
+              }
+            },
+            "depth": {
+              "type": "number"
+            },
+            "bevel": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "profile",
+            "depth"
+          ]
+        },
+        {
+          "properties": {
+            "kind": {
+              "enum": [
+                "lathe"
+              ]
+            },
+            "profile": {
+              "type": "array",
+              "description": "Radial profile points (x=radius, y=height).",
+              "items": {
+                "$ref": "#/$defs/vec3"
+              }
+            },
+            "segments": {
+              "type": "integer",
+              "minimum": 3
+            }
+          },
+          "required": [
+            "profile"
+          ]
+        },
+        {
+          "properties": {
+            "kind": {
+              "enum": [
+                "tube"
+              ]
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/vec3"
+              }
+            },
+            "radius": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "segments": {
+              "type": "integer",
+              "minimum": 3
+            }
+          },
+          "required": [
+            "path",
+            "radius"
+          ]
+        },
+        {
+          "properties": {
+            "kind": {
+              "enum": [
+                "compound"
+              ]
+            },
+            "parts": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "geometry"
+                ],
+                "properties": {
+                  "geometry": {
+                    "$ref": "#/$defs/geometry"
+                  },
+                  "material": {
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "$ref": "#/$defs/material"
+                      }
+                    ]
+                  },
+                  "transform": {
+                    "$ref": "#/$defs/transform"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "parts"
+          ]
+        },
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "description": "Level-2 recipe name: board, chip-package, finned-heatsink, fan, rack, server-blade, connector-port, port-row, dimm, capacitor, screw, bolt, flange, pipe, pipe-elbow, gauge, motor, impeller, pump-housing, vapor-chamber, thermal-pad, handle, led-row, inductor, badge, bracket, gpu-card, ssd, duct, battery-cell, generic-recipe",
+              "enum": [
+                "board",
+                "chip-package",
+                "finned-heatsink",
+                "fan",
+                "rack",
+                "server-blade",
+                "connector-port",
+                "port-row",
+                "dimm",
+                "capacitor",
+                "screw",
+                "bolt",
+                "flange",
+                "pipe",
+                "pipe-elbow",
+                "gauge",
+                "motor",
+                "impeller",
+                "pump-housing",
+                "vapor-chamber",
+                "thermal-pad",
+                "handle",
+                "led-row",
+                "inductor",
+                "badge",
+                "bracket",
+                "gpu-card",
+                "ssd",
+                "duct",
+                "battery-cell",
+                "generic-recipe"
+              ]
+            },
+            "params": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Recipe-specific dimensions. Recipes document their params in references/geometry-guidelines.md."
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        }
+      ],
+      "description": "Built-in primitives and recipes only. External mesh import is not supported."
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "id",
+        "geometry"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+          "description": "Semantic identity. Stable across revisions so scenes can be edited, not regenerated."
+        },
+        "label": {
+          "type": "string"
+        },
+        "geometry": {
+          "$ref": "#/$defs/geometry"
+        },
+        "material": {
+          "oneOf": [
+            {
+              "type": "string",
+              "description": "Material name from the scene material library or a built-in preset."
+            },
+            {
+              "$ref": "#/$defs/material"
+            }
+          ]
+        },
+        "parent": {
+          "type": "string",
+          "description": "Parent component or assembly id. Parent-child links define attachment and default explode directions."
+        },
+        "transform": {
+          "$ref": "#/$defs/transform"
+        },
+        "explode": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/vec3",
+              "description": "Explicit displacement vector at full explode."
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "direction": {
+                  "$ref": "#/$defs/vec3"
+                },
+                "distance": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "order": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Stagger order; lower leaves first."
+                }
+              }
+            }
+          ]
+        },
+        "anchors": {
+          "type": "object",
+          "description": "Named local-space attachment/label points.",
+          "additionalProperties": {
+            "$ref": "#/$defs/vec3"
+          }
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Semantic properties surfaced on inspect: partNumber, role, domain metadata, live-data bindings."
+        },
+        "fidelity": {
+          "type": "string",
+          "enum": [
+            "actual",
+            "representative",
+            "schematic",
+            "illustrative"
+          ]
+        },
+        "visible": {
+          "type": "boolean",
+          "default": true
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "xray": {
+          "type": "string",
+          "enum": [
+            "outer",
+            "inner",
+            "ignore"
+          ],
+          "description": "Role in x-ray inspection mode. 'outer' fades to reveal interior. Default heuristic: large enclosure-like recipes are 'outer'."
+        },
+        "selectable": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "assembly": {
+      "type": "object",
+      "required": [
+        "id",
+        "components"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "label": {
+          "type": "string"
+        },
+        "transform": {
+          "$ref": "#/$defs/transform"
+        },
+        "fidelity": {
+          "type": "string",
+          "enum": [
+            "actual",
+            "representative",
+            "schematic",
+            "illustrative"
+          ]
+        },
+        "explode": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "direction": {
+              "$ref": "#/$defs/vec3",
+              "description": "Default explode direction for children lacking explicit explode vectors."
+            },
+            "distance": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Default displacement magnitude."
+            },
+            "order": {
+              "type": "string",
+              "enum": [
+                "hierarchy",
+                "explicit",
+                "radial"
+              ],
+              "default": "hierarchy"
+            }
+          }
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        }
+      }
+    },
+    "connector": {
+      "type": "object",
+      "required": [
+        "id",
+        "from",
+        "to"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+        },
+        "label": {
+          "type": "string"
+        },
+        "from": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "to": {
+          "$ref": "#/$defs/endpoint"
+        },
+        "geometry": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "cable",
+                "pipe",
+                "bus",
+                "line",
+                "arrow"
+              ],
+              "default": "cable"
+            },
+            "radius": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "default": 1.2
+            },
+            "sag": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0
+            },
+            "via": {
+              "type": "array",
+              "description": "Optional intermediate control points.",
+              "items": {
+                "$ref": "#/$defs/vec3"
+              }
+            },
+            "style": {
+              "type": "string",
+              "enum": [
+                "solid",
+                "dashed",
+                "flow"
+              ],
+              "default": "solid"
+            }
+          }
+        },
+        "material": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/$defs/material"
+            }
+          ]
+        },
+        "flow": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "speed": {
+              "type": "number",
+              "minimum": 0,
+              "default": 1
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "from-to",
+                "to-from"
+              ],
+              "default": "from-to"
+            },
+            "color": {
+              "type": "string"
+            }
+          }
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "type": "string",
+          "description": "'componentId.anchorName' or 'componentId' (centroid) or 'assemblyId'."
+        },
+        "position": {
+          "$ref": "#/$defs/vec3"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "anchor"
+          ]
+        },
+        {
+          "required": [
+            "position"
+          ]
+        }
+      ]
+    },
+    "annotation": {
+      "type": "object",
+      "required": [
+        "id",
+        "target"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "label",
+            "callout",
+            "dimension",
+            "legend-item",
+            "note"
+          ],
+          "default": "label"
+        },
+        "text": {
+          "type": "string"
+        },
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "anchor": {
+              "type": "string"
+            },
+            "position": {
+              "$ref": "#/$defs/vec3"
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "anchor"
+              ]
+            },
+            {
+              "required": [
+                "position"
+              ]
+            }
+          ]
+        },
+        "targetB": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Second endpoint for dimension annotations.",
+          "properties": {
+            "anchor": {
+              "type": "string"
+            },
+            "position": {
+              "$ref": "#/$defs/vec3"
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "anchor"
+              ]
+            },
+            {
+              "required": [
+                "position"
+              ]
+            }
+          ]
+        },
+        "offset": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 3,
+          "description": "Screen-space x/y offset in pixels; optional third item retained for backward compatibility."
+        },
+        "side": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "auto"
+          ],
+          "default": "auto"
+        },
+        "leader": {
+          "type": "boolean",
+          "default": true
+        },
+        "group": {
+          "type": "string",
+          "description": "Annotation toggle group."
+        },
+        "emphasis": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "primary",
+            "secondary",
+            "warning"
+          ],
+          "default": "normal"
+        },
+        "value": {
+          "type": "string",
+          "description": "For dimensions: the measured text, e.g. '267 mm'. If omitted and units known, engine computes distance."
+        }
+      }
+    }
+  }
+}

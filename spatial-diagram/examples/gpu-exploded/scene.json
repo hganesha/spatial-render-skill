@@ -1,0 +1,1731 @@
+{
+  "$schema": "../../schemas/scene.schema.json",
+  "scene": {
+    "id": "gpu-assembly",
+    "title": "AI Accelerator Module",
+    "description": "Representative accelerator card with separately inspectable GPU die, HBM envelopes, silicon interposer, organic package substrate, PCB and cooling. Generic composite; not an NVIDIA product specification.",
+    "type": "technical-assembly",
+    "style": "precision-editorial",
+    "camera": {
+      "mode": "isometric",
+      "projection": "perspective",
+      "azimuth": 42,
+      "elevation": 22,
+      "fov": 36,
+      "framing": "fit-padded"
+    },
+    "units": "mm",
+    "fidelity": "representative",
+    "lighting": "studio",
+    "ground": {
+      "enabled": true,
+      "grid": true,
+      "shadows": true
+    }
+  },
+  "materials": {
+    "pc-green": {
+      "preset": "pcb-green",
+      "color": "#0d6b42"
+    },
+    "copper-heatsink": {
+      "preset": "copper",
+      "roughness": 0.38
+    },
+    "shroud-dark": {
+      "preset": "plastic-black",
+      "roughness": 0.52
+    },
+    "accent-teal": {
+      "preset": "emissive-cyan",
+      "emissiveIntensity": 0.9
+    }
+  },
+  "assemblies": [
+    {
+      "id": "gpu-module",
+      "label": "Accelerator Module",
+      "fidelity": "representative",
+      "explode": {
+        "direction": [
+          0,
+          1,
+          0
+        ],
+        "distance": 55,
+        "order": "hierarchy"
+      },
+      "components": [
+        {
+          "id": "pcb",
+          "label": "Main PCB",
+          "geometry": {
+            "kind": "board",
+            "params": {
+              "width": 267,
+              "depth": 112,
+              "thickness": 2
+            }
+          },
+          "material": "pc-green",
+          "transform": {
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "anchors": {
+            "left": [
+              -133.5,
+              0,
+              0
+            ],
+            "right": [
+              133.5,
+              0,
+              0
+            ],
+            "top": [
+              0,
+              1,
+              0
+            ],
+            "bottom": [
+              0,
+              -1,
+              0
+            ]
+          },
+          "properties": {
+            "role": "substrate",
+            "layers": 14,
+            "partNumber": "DEMO-PCB-267"
+          },
+          "explode": {
+            "direction": [
+              0,
+              1,
+              0
+            ],
+            "distance": 0.0,
+            "order": 0
+          }
+        },
+        {
+          "id": "substrate",
+          "label": "Organic package substrate",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              80,
+              1.6,
+              60
+            ]
+          },
+          "material": "pcb-blue",
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              -18,
+              1.8,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.8,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              12,
+              0
+            ],
+            "distance": 12.0,
+            "order": 7
+          },
+          "properties": {
+            "role": "package-substrate"
+          }
+        },
+        {
+          "id": "interposer",
+          "label": "Silicon interposer",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              72,
+              0.5,
+              50
+            ]
+          },
+          "material": "silicon",
+          "parent": "substrate",
+          "transform": {
+            "position": [
+              -18,
+              2.85,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.25,
+              0
+            ]
+          },
+          "explode": {
+            "direction": [
+              0,
+              26,
+              0
+            ],
+            "distance": 26.0,
+            "order": 6
+          },
+          "properties": {
+            "role": "interposer"
+          }
+        },
+        {
+          "id": "gpu",
+          "label": "GPU compute die",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              26,
+              1.8,
+              26
+            ]
+          },
+          "parent": "interposer",
+          "transform": {
+            "position": [
+              -18,
+              4,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.9,
+              0
+            ]
+          },
+          "properties": {
+            "role": "compute",
+            "function": "Generic accelerator die; no SKU or process claim"
+          },
+          "explode": {
+            "direction": [
+              0,
+              42,
+              0
+            ],
+            "distance": 42.0,
+            "order": 5
+          },
+          "material": "silicon"
+        },
+        {
+          "id": "hbm-1",
+          "label": "HBM stack",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              9,
+              1.8,
+              12
+            ]
+          },
+          "material": "silicon",
+          "parent": "interposer",
+          "transform": {
+            "position": [
+              -46,
+              4,
+              -14
+            ]
+          },
+          "properties": {
+            "role": "memory",
+            "function": "Stack envelope; internal DRAM dies and TSVs omitted"
+          },
+          "explode": {
+            "direction": [
+              0,
+              42,
+              0
+            ],
+            "distance": 42.0,
+            "order": 5
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.9,
+              0
+            ]
+          }
+        },
+        {
+          "id": "hbm-2",
+          "label": "HBM stack",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              9,
+              1.8,
+              12
+            ]
+          },
+          "material": "silicon",
+          "parent": "interposer",
+          "transform": {
+            "position": [
+              -46,
+              4,
+              0
+            ]
+          },
+          "properties": {
+            "role": "memory",
+            "function": "Stack envelope; internal DRAM dies and TSVs omitted"
+          },
+          "explode": {
+            "direction": [
+              0,
+              42,
+              0
+            ],
+            "distance": 42.0,
+            "order": 5
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.9,
+              0
+            ]
+          }
+        },
+        {
+          "id": "hbm-3",
+          "label": "HBM stack",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              9,
+              1.8,
+              12
+            ]
+          },
+          "material": "silicon",
+          "parent": "interposer",
+          "transform": {
+            "position": [
+              -46,
+              4,
+              14
+            ]
+          },
+          "properties": {
+            "role": "memory",
+            "function": "Stack envelope; internal DRAM dies and TSVs omitted"
+          },
+          "explode": {
+            "direction": [
+              0,
+              42,
+              0
+            ],
+            "distance": 42.0,
+            "order": 5
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.9,
+              0
+            ]
+          }
+        },
+        {
+          "id": "hbm-4",
+          "label": "HBM stack",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              9,
+              1.8,
+              12
+            ]
+          },
+          "material": "silicon",
+          "parent": "interposer",
+          "transform": {
+            "position": [
+              10,
+              4,
+              -14
+            ]
+          },
+          "properties": {
+            "role": "memory",
+            "function": "Stack envelope; internal DRAM dies and TSVs omitted"
+          },
+          "explode": {
+            "direction": [
+              0,
+              42,
+              0
+            ],
+            "distance": 42.0,
+            "order": 5
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.9,
+              0
+            ]
+          }
+        },
+        {
+          "id": "hbm-5",
+          "label": "HBM stack",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              9,
+              1.8,
+              12
+            ]
+          },
+          "material": "silicon",
+          "parent": "interposer",
+          "transform": {
+            "position": [
+              10,
+              4,
+              0
+            ]
+          },
+          "properties": {
+            "role": "memory",
+            "function": "Stack envelope; internal DRAM dies and TSVs omitted"
+          },
+          "explode": {
+            "direction": [
+              0,
+              42,
+              0
+            ],
+            "distance": 42.0,
+            "order": 5
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.9,
+              0
+            ]
+          }
+        },
+        {
+          "id": "hbm-6",
+          "label": "HBM stack",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              9,
+              1.8,
+              12
+            ]
+          },
+          "material": "silicon",
+          "parent": "interposer",
+          "transform": {
+            "position": [
+              10,
+              4,
+              14
+            ]
+          },
+          "properties": {
+            "role": "memory",
+            "function": "Stack envelope; internal DRAM dies and TSVs omitted"
+          },
+          "explode": {
+            "direction": [
+              0,
+              42,
+              0
+            ],
+            "distance": 42.0,
+            "order": 5
+          },
+          "anchors": {
+            "top": [
+              0,
+              0.9,
+              0
+            ]
+          }
+        },
+        {
+          "id": "thermal-pad",
+          "label": "TIM interface",
+          "geometry": {
+            "kind": "thermal-pad",
+            "params": {
+              "width": 66,
+              "depth": 46,
+              "height": 0.6
+            }
+          },
+          "parent": "gpu",
+          "transform": {
+            "position": [
+              -18,
+              5.2,
+              0
+            ]
+          },
+          "properties": {
+            "role": "thermal-interface"
+          },
+          "explode": {
+            "direction": [
+              0,
+              58,
+              0
+            ],
+            "distance": 58.0,
+            "order": 4
+          },
+          "xray": "outer"
+        },
+        {
+          "id": "vapor-chamber",
+          "label": "Vapor chamber",
+          "geometry": {
+            "kind": "vapor-chamber",
+            "params": {
+              "width": 140,
+              "depth": 96,
+              "height": 3
+            }
+          },
+          "parent": "thermal-pad",
+          "transform": {
+            "position": [
+              -15,
+              7,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              2,
+              0
+            ]
+          },
+          "properties": {
+            "role": "heat-spreader"
+          },
+          "explode": {
+            "direction": [
+              0,
+              74,
+              0
+            ],
+            "distance": 74.0,
+            "order": 3
+          },
+          "xray": "outer"
+        },
+        {
+          "id": "fin-stack-left",
+          "label": "Fin stack (left)",
+          "geometry": {
+            "kind": "finned-heatsink",
+            "params": {
+              "width": 62,
+              "depth": 92,
+              "baseH": 4,
+              "finH": 30,
+              "fins": 10,
+              "finT": 1.6,
+              "heatPipes": 2
+            }
+          },
+          "material": "aluminum",
+          "parent": "vapor-chamber",
+          "transform": {
+            "position": [
+              -52,
+              9.91,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              34,
+              0
+            ]
+          },
+          "properties": {
+            "role": "thermal",
+            "finCount": 10
+          },
+          "explode": {
+            "direction": [
+              0,
+              112,
+              -10
+            ],
+            "distance": 112.44554237496477,
+            "order": 2
+          },
+          "xray": "outer"
+        },
+        {
+          "id": "fin-stack-right",
+          "label": "Fin stack (right)",
+          "geometry": {
+            "kind": "finned-heatsink",
+            "params": {
+              "width": 62,
+              "depth": 92,
+              "baseH": 4,
+              "finH": 30,
+              "fins": 10,
+              "finT": 1.6,
+              "heatPipes": 2
+            }
+          },
+          "material": "aluminum",
+          "parent": "vapor-chamber",
+          "transform": {
+            "position": [
+              22,
+              9.91,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              34,
+              0
+            ]
+          },
+          "properties": {
+            "role": "thermal",
+            "finCount": 10
+          },
+          "explode": {
+            "direction": [
+              0,
+              112,
+              10
+            ],
+            "distance": 112.44554237496477,
+            "order": 2
+          },
+          "xray": "outer"
+        },
+        {
+          "id": "fan-left",
+          "label": "Axial fan",
+          "geometry": {
+            "kind": "fan",
+            "params": {
+              "size": 62,
+              "depth": 15,
+              "blades": 7
+            }
+          },
+          "material": "shroud-dark",
+          "parent": "fin-stack-left",
+          "transform": {
+            "position": [
+              -52,
+              51.41,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              8,
+              0
+            ]
+          },
+          "properties": {
+            "role": "active-cooling",
+            "rpm": 3200
+          },
+          "explode": {
+            "direction": [
+              0,
+              168,
+              -18
+            ],
+            "distance": 168.96153408394468,
+            "order": 1
+          },
+          "xray": "outer"
+        },
+        {
+          "id": "fan-right",
+          "label": "Axial fan",
+          "geometry": {
+            "kind": "fan",
+            "params": {
+              "size": 62,
+              "depth": 15,
+              "blades": 7
+            }
+          },
+          "material": "shroud-dark",
+          "parent": "fin-stack-right",
+          "transform": {
+            "position": [
+              22,
+              51.41,
+              0
+            ]
+          },
+          "anchors": {
+            "top": [
+              0,
+              8,
+              0
+            ]
+          },
+          "properties": {
+            "role": "active-cooling",
+            "rpm": 3200
+          },
+          "explode": {
+            "direction": [
+              0,
+              168,
+              18
+            ],
+            "distance": 168.96153408394468,
+            "order": 1
+          },
+          "xray": "outer"
+        },
+        {
+          "id": "screw-1",
+          "label": "Retention screw",
+          "geometry": {
+            "kind": "screw",
+            "params": {
+              "radius": 2.2,
+              "length": 9
+            }
+          },
+          "parent": "vapor-chamber",
+          "transform": {
+            "position": [
+              -15,
+              11,
+              -36
+            ]
+          },
+          "properties": {
+            "role": "fastener"
+          },
+          "explode": {
+            "direction": [
+              0,
+              210,
+              30
+            ],
+            "distance": 212.13203435596427,
+            "order": 0
+          }
+        },
+        {
+          "id": "screw-2",
+          "label": "Retention screw",
+          "geometry": {
+            "kind": "screw",
+            "params": {
+              "radius": 2.2,
+              "length": 9
+            }
+          },
+          "parent": "vapor-chamber",
+          "transform": {
+            "position": [
+              -15,
+              11,
+              -12
+            ]
+          },
+          "properties": {
+            "role": "fastener"
+          },
+          "explode": {
+            "direction": [
+              0,
+              210,
+              30
+            ],
+            "distance": 212.13203435596427,
+            "order": 0
+          }
+        },
+        {
+          "id": "screw-3",
+          "label": "Retention screw",
+          "geometry": {
+            "kind": "screw",
+            "params": {
+              "radius": 2.2,
+              "length": 9
+            }
+          },
+          "parent": "vapor-chamber",
+          "transform": {
+            "position": [
+              -15,
+              11,
+              12
+            ]
+          },
+          "properties": {
+            "role": "fastener"
+          },
+          "explode": {
+            "direction": [
+              0,
+              210,
+              -30
+            ],
+            "distance": 212.13203435596427,
+            "order": 0
+          }
+        },
+        {
+          "id": "screw-4",
+          "label": "Retention screw",
+          "geometry": {
+            "kind": "screw",
+            "params": {
+              "radius": 2.2,
+              "length": 9
+            }
+          },
+          "parent": "vapor-chamber",
+          "transform": {
+            "position": [
+              -15,
+              11,
+              36
+            ]
+          },
+          "properties": {
+            "role": "fastener"
+          },
+          "explode": {
+            "direction": [
+              0,
+              210,
+              -30
+            ],
+            "distance": 212.13203435596427,
+            "order": 0
+          }
+        },
+        {
+          "id": "vrm-inductor-1",
+          "label": "VRM inductor",
+          "geometry": {
+            "kind": "inductor",
+            "params": {
+              "width": 12,
+              "depth": 12,
+              "height": 7
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              70,
+              4.6,
+              -38
+            ]
+          },
+          "properties": {
+            "role": "power",
+            "phase": 1
+          },
+          "explode": {
+            "direction": [
+              48,
+              22,
+              -26
+            ],
+            "distance": 58.855755878248644,
+            "order": 0
+          }
+        },
+        {
+          "id": "vrm-inductor-2",
+          "label": "VRM inductor",
+          "geometry": {
+            "kind": "inductor",
+            "params": {
+              "width": 12,
+              "depth": 12,
+              "height": 7
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              88,
+              4.6,
+              -38
+            ]
+          },
+          "properties": {
+            "role": "power",
+            "phase": 2
+          },
+          "explode": {
+            "direction": [
+              58,
+              18,
+              -26
+            ],
+            "distance": 66.06057825965497,
+            "order": 0
+          }
+        },
+        {
+          "id": "vrm-inductor-3",
+          "label": "VRM inductor",
+          "geometry": {
+            "kind": "inductor",
+            "params": {
+              "width": 12,
+              "depth": 12,
+              "height": 7
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              70,
+              4.6,
+              38
+            ]
+          },
+          "properties": {
+            "role": "power",
+            "phase": 3
+          },
+          "explode": {
+            "direction": [
+              48,
+              22,
+              26
+            ],
+            "distance": 58.855755878248644,
+            "order": 0
+          }
+        },
+        {
+          "id": "vrm-inductor-4",
+          "label": "VRM inductor",
+          "geometry": {
+            "kind": "inductor",
+            "params": {
+              "width": 12,
+              "depth": 12,
+              "height": 7
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              88,
+              4.6,
+              38
+            ]
+          },
+          "properties": {
+            "role": "power",
+            "phase": 4
+          },
+          "explode": {
+            "direction": [
+              58,
+              18,
+              26
+            ],
+            "distance": 66.06057825965497,
+            "order": 0
+          }
+        },
+        {
+          "id": "cap-bank-1",
+          "label": "Capacitor bank",
+          "geometry": {
+            "kind": "capacitor",
+            "params": {
+              "radius": 5,
+              "height": 11
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              112,
+              6.5,
+              -18
+            ]
+          },
+          "properties": {
+            "role": "power-filtering"
+          },
+          "explode": {
+            "direction": [
+              55,
+              14,
+              -18
+            ],
+            "distance": 59.53990258641679,
+            "order": 0
+          }
+        },
+        {
+          "id": "cap-bank-2",
+          "label": "Capacitor bank",
+          "geometry": {
+            "kind": "capacitor",
+            "params": {
+              "radius": 5,
+              "height": 11
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              112,
+              6.5,
+              18
+            ]
+          },
+          "properties": {
+            "role": "power-filtering"
+          },
+          "explode": {
+            "direction": [
+              55,
+              14,
+              18
+            ],
+            "distance": 59.53990258641679,
+            "order": 0
+          }
+        },
+        {
+          "id": "pwm-controller",
+          "label": "PWM controller",
+          "geometry": {
+            "kind": "chip-package",
+            "params": {
+              "width": 9,
+              "depth": 9,
+              "substrateH": 1,
+              "dieH": 0.8,
+              "lidH": 1.1
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              58,
+              2.1,
+              -14
+            ]
+          },
+          "properties": {
+            "role": "power-control"
+          },
+          "explode": {
+            "direction": [
+              30,
+              38,
+              -14
+            ],
+            "distance": 50.39841267341661,
+            "order": 0
+          }
+        },
+        {
+          "id": "bios-chip",
+          "label": "Firmware flash",
+          "geometry": {
+            "kind": "chip-package",
+            "params": {
+              "width": 7,
+              "depth": 5,
+              "substrateH": 1,
+              "dieH": 0.7,
+              "lidH": 0.9
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              -96,
+              2,
+              34
+            ]
+          },
+          "properties": {
+            "role": "firmware"
+          },
+          "explode": {
+            "direction": [
+              -30,
+              38,
+              30
+            ],
+            "distance": 56.95612346359257,
+            "order": 0
+          }
+        },
+        {
+          "id": "mlcc-1",
+          "label": "MLCC bank",
+          "geometry": {
+            "kind": "capacitor",
+            "params": {
+              "radius": 1.6,
+              "height": 3.2
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              36,
+              2.6,
+              -34
+            ]
+          },
+          "properties": {
+            "role": "decoupling"
+          },
+          "explode": {
+            "direction": [
+              12,
+              30,
+              -30
+            ],
+            "distance": 44.090815370097204,
+            "order": 0
+          }
+        },
+        {
+          "id": "mlcc-2",
+          "label": "MLCC bank",
+          "geometry": {
+            "kind": "capacitor",
+            "params": {
+              "radius": 1.6,
+              "height": 3.2
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              44,
+              2.6,
+              -34
+            ]
+          },
+          "properties": {
+            "role": "decoupling"
+          },
+          "explode": {
+            "direction": [
+              16,
+              34,
+              -30
+            ],
+            "distance": 48.08326112068523,
+            "order": 0
+          }
+        },
+        {
+          "id": "power-connector",
+          "label": "12VHPWR input",
+          "geometry": {
+            "kind": "connector-port",
+            "params": {
+              "width": 30,
+              "height": 12,
+              "depth": 14,
+              "pins": 12
+            }
+          },
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              110,
+              7,
+              -42
+            ]
+          },
+          "anchors": {
+            "port": [
+              0,
+              0,
+              8
+            ]
+          },
+          "properties": {
+            "role": "power-in",
+            "rating": "600 W"
+          },
+          "explode": {
+            "direction": [
+              42,
+              40,
+              -48
+            ],
+            "distance": 75.28612089887484,
+            "order": 0
+          }
+        },
+        {
+          "id": "nvlink-connector",
+          "label": "Fabric connector",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              40,
+              6,
+              8
+            ]
+          },
+          "material": "gold",
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              -18,
+              3,
+              56
+            ]
+          },
+          "properties": {
+            "role": "interconnect"
+          },
+          "explode": {
+            "direction": [
+              -8,
+              40,
+              48
+            ],
+            "distance": 62.99206299209449,
+            "order": 0
+          }
+        },
+        {
+          "id": "pcie-fingers",
+          "label": "PCIe edge fingers",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              86,
+              1.2,
+              7
+            ]
+          },
+          "material": "gold",
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              -20,
+              -1.6,
+              -56
+            ]
+          },
+          "anchors": {
+            "tip": [
+              0,
+              0,
+              -4
+            ]
+          },
+          "properties": {
+            "role": "host-interface",
+            "lanes": 16
+          },
+          "explode": {
+            "direction": [
+              0,
+              -38,
+              -36
+            ],
+            "distance": 52.3450093132096,
+            "order": 0
+          }
+        },
+        {
+          "id": "io-bracket",
+          "label": "I/O bracket",
+          "geometry": {
+            "kind": "bracket",
+            "params": {
+              "width": 118,
+              "height": 112,
+              "thickness": 2.2
+            }
+          },
+          "material": "steel-dark",
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              -143,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "properties": {
+            "role": "mechanical"
+          },
+          "explode": {
+            "direction": [
+              -85,
+              0,
+              0
+            ],
+            "distance": 85.0,
+            "order": 0
+          }
+        },
+        {
+          "id": "io-ports",
+          "label": "Display outputs",
+          "geometry": {
+            "kind": "port-row",
+            "params": {
+              "count": 4,
+              "spacing": 22,
+              "width": 14,
+              "height": 7,
+              "depth": 12,
+              "pins": 0
+            }
+          },
+          "parent": "io-bracket",
+          "transform": {
+            "position": [
+              -152,
+              2,
+              -12
+            ],
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "properties": {
+            "role": "display-io",
+            "ports": 4
+          },
+          "explode": {
+            "direction": [
+              -115,
+              12,
+              0
+            ],
+            "distance": 115.62439189029277,
+            "order": 0
+          }
+        },
+        {
+          "id": "backplate",
+          "label": "Stiffening backplate",
+          "geometry": {
+            "kind": "box",
+            "size": [
+              240,
+              1.5,
+              100
+            ]
+          },
+          "material": "brushed-steel",
+          "parent": "pcb",
+          "transform": {
+            "position": [
+              0,
+              -2.4,
+              0
+            ]
+          },
+          "properties": {
+            "role": "mechanical",
+            "function": "anti-flex"
+          },
+          "explode": {
+            "direction": [
+              0,
+              -58,
+              0
+            ],
+            "distance": 58.0,
+            "order": 0
+          }
+        },
+        {
+          "id": "support-bracket",
+          "label": "Anti-sag bracket",
+          "geometry": {
+            "kind": "bracket",
+            "params": {
+              "width": 42,
+              "height": 34,
+              "thickness": 2
+            }
+          },
+          "material": "steel-dark",
+          "parent": "backplate",
+          "transform": {
+            "position": [
+              122,
+              -16,
+              30
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          },
+          "properties": {
+            "role": "mechanical"
+          },
+          "explode": {
+            "direction": [
+              60,
+              -80,
+              30
+            ],
+            "distance": 104.4030650891055,
+            "order": 0
+          }
+        },
+        {
+          "id": "badge",
+          "label": "Model badge",
+          "geometry": {
+            "kind": "badge",
+            "params": {
+              "width": 30,
+              "depth": 12,
+              "height": 0.8
+            }
+          },
+          "material": "accent-teal",
+          "parent": "fan-right",
+          "transform": {
+            "position": [
+              22,
+              59.31,
+              0
+            ]
+          },
+          "properties": {
+            "role": "branding"
+          },
+          "explode": {
+            "direction": [
+              0,
+              205,
+              18
+            ],
+            "distance": 205.7887266105702,
+            "order": 1
+          }
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "id": "ann-gpu",
+      "type": "label",
+      "text": "GPU compute die",
+      "target": {
+        "anchor": "gpu.top"
+      },
+      "offset": [
+        30,
+        -18
+      ],
+      "group": "silicon",
+      "emphasis": "primary",
+      "side": "auto"
+    },
+    {
+      "id": "ann-hbm",
+      "type": "label",
+      "text": "HBM stack envelopes (6)",
+      "target": {
+        "anchor": "hbm-2"
+      },
+      "offset": [
+        -36,
+        -16
+      ],
+      "side": "left",
+      "group": "silicon"
+    },
+    {
+      "id": "ann-interposer",
+      "type": "label",
+      "text": "Silicon interposer",
+      "target": {
+        "anchor": "interposer.top"
+      },
+      "offset": [
+        -120,
+        18
+      ],
+      "side": "left",
+      "group": "silicon"
+    },
+    {
+      "id": "ann-substrate",
+      "type": "label",
+      "text": "Organic package substrate",
+      "target": {
+        "anchor": "substrate.top"
+      },
+      "offset": [
+        130,
+        18
+      ],
+      "side": "right",
+      "group": "silicon"
+    },
+    {
+      "id": "ann-pad",
+      "type": "label",
+      "text": "Thermal interface",
+      "target": {
+        "anchor": "thermal-pad"
+      },
+      "offset": [
+        34,
+        -8
+      ],
+      "group": "thermal",
+      "side": "auto"
+    },
+    {
+      "id": "ann-vapor",
+      "type": "label",
+      "text": "Vapor chamber",
+      "target": {
+        "anchor": "vapor-chamber.top"
+      },
+      "offset": [
+        -40,
+        -10
+      ],
+      "side": "left",
+      "group": "thermal"
+    },
+    {
+      "id": "ann-fin",
+      "type": "label",
+      "text": "Finned stack \u00b7 heat pipes",
+      "target": {
+        "anchor": "fin-stack-left.top"
+      },
+      "offset": [
+        -42,
+        -12
+      ],
+      "side": "left",
+      "group": "thermal"
+    },
+    {
+      "id": "ann-fan",
+      "type": "label",
+      "text": "Axial fan 62 mm",
+      "target": {
+        "anchor": "fan-left.top"
+      },
+      "offset": [
+        -40,
+        -14
+      ],
+      "side": "left",
+      "group": "thermal"
+    },
+    {
+      "id": "ann-vrm",
+      "type": "label",
+      "text": "Representative VRM stages",
+      "target": {
+        "anchor": "vrm-inductor-1"
+      },
+      "offset": [
+        28,
+        -16
+      ],
+      "group": "power",
+      "side": "auto"
+    },
+    {
+      "id": "ann-power",
+      "type": "callout",
+      "text": "12VHPWR 600 W",
+      "target": {
+        "anchor": "power-connector.port"
+      },
+      "offset": [
+        30,
+        -20
+      ],
+      "group": "power",
+      "emphasis": "warning",
+      "side": "auto"
+    },
+    {
+      "id": "ann-pcie",
+      "type": "label",
+      "text": "PCIe 5.0 \u00d716 edge",
+      "target": {
+        "anchor": "pcie-fingers.tip"
+      },
+      "offset": [
+        28,
+        18
+      ],
+      "group": "io",
+      "side": "auto"
+    },
+    {
+      "id": "ann-io",
+      "type": "label",
+      "text": "Display outputs",
+      "target": {
+        "anchor": "io-ports"
+      },
+      "offset": [
+        -32,
+        -14
+      ],
+      "side": "left",
+      "group": "io"
+    },
+    {
+      "id": "ann-back",
+      "type": "label",
+      "text": "Steel backplate",
+      "target": {
+        "anchor": "backplate"
+      },
+      "offset": [
+        34,
+        14
+      ],
+      "group": "structure",
+      "side": "auto"
+    },
+    {
+      "id": "dim-length",
+      "type": "dimension",
+      "text": "Card length",
+      "value": "267 mm",
+      "target": {
+        "anchor": "pcb.left"
+      },
+      "targetB": {
+        "anchor": "pcb.right"
+      },
+      "offset": [
+        0,
+        -24
+      ],
+      "group": "dimensions",
+      "emphasis": "secondary"
+    }
+  ],
+  "interactions": {
+    "orbit": true,
+    "select": true,
+    "inspect": true,
+    "explode": {
+      "enabled": true,
+      "slider": true,
+      "autoStagger": true,
+      "easing": "ease-in-out"
+    },
+    "xray": true,
+    "section": {
+      "enabled": true,
+      "axis": "y"
+    },
+    "isolate": true,
+    "ghost": true,
+    "flow": false,
+    "annotationGroups": [
+      "silicon",
+      "thermal",
+      "power",
+      "io",
+      "structure",
+      "dimensions"
+    ]
+  },
+  "behaviors": [
+    {
+      "type": "explode",
+      "assembly": "gpu-module",
+      "amount": 1,
+      "stagger": true,
+      "duration": 2200,
+      "easing": "ease-in-out",
+      "autoPlay": true
+    }
+  ],
+  "metadata": {
+    "author": "spatial-diagram skill",
+    "domainPack": "compute-hardware",
+    "notes": "Representative teaching geometry with exaggerated package thicknesses. No SKU, capacity, process or thermal-performance claim. GPU and HBM share an interposer above organic substrate and PCB. TSVs, solder joints, mounting holes and detailed connector pinout are omitted. Exploding soldered layers explains construction; it is not a service procedure.",
+    "sources": [
+      "https://pr.tsmc.com/english/news/3136"
+    ]
+  }
+}
